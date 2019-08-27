@@ -28,8 +28,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.findallinfileregex",
-		"onCommand:extension.findallinfilestring"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
