@@ -10,6 +10,7 @@
 		"findallinfile"
 	],
 	"version": "0.0.1",
+	"publisher": "bnason-nf",
 	"author": {
 		"name": "Benbuck Nason",
 		"url": "https://github.com/bnason-nf"
