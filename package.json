@@ -3,13 +3,14 @@
 	"displayName": "FindAllInFile",
 	"description": "Find all occurrences of text in current file",
 	"keywords": [
-		"vscode",
-		"extension",
 		"find",
 		"findall",
-		"findallinfile"
+		"find all",
+		"findallinfile",
+		"find all in file",
+		"find all occurrences"
 	],
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"publisher": "bnason-nf",
 	"author": {
 		"name": "Benbuck Nason",
