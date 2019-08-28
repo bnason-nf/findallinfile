@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 // search for all occurrences of a search string within the current file
 function findallinfile(findText: string, useRegex: boolean) {
 	// create and use an output channel for the results
-	let outputChannel:vscode.OutputChannel = vscode.window.createOutputChannel("Find All In File");
+	let outputChannel: vscode.OutputChannel = vscode.window.createOutputChannel("Find All In File");
 	outputChannel.show();
 
 	// make sure there is an active editor window for us to use
@@ -15,18 +15,18 @@ function findallinfile(findText: string, useRegex: boolean) {
 	}
 
 	// get the active document
-	let doc:vscode.TextDocument = vscode.window.activeTextEditor.document;
+	let doc: vscode.TextDocument = vscode.window.activeTextEditor.document;
 
 	// print initial status message
 	outputChannel.appendLine(`Searching for ${useRegex ? "regex" : "string"} '${findText}' in '${doc.fileName}':`);
 
 	// search each line of the document
-	let lineCount:number = doc.lineCount;
-	let foundCount:number = 0;
-	let findRegex:RegExp = new RegExp(findText); // may not be used
-	for (let lineIndex:number = 0; lineIndex < lineCount; ++lineIndex) {
-		let line:vscode.TextLine = doc.lineAt(lineIndex);
-		let lineText:string = line.text;
+	let lineCount: number = doc.lineCount;
+	let foundCount: number = 0;
+	let findRegex: RegExp = new RegExp(findText); // may not be used
+	for (let lineIndex: number = 0; lineIndex < lineCount; ++lineIndex) {
+		let line: vscode.TextLine = doc.lineAt(lineIndex);
+		let lineText: string = line.text;
 		if ((useRegex && findRegex.test(lineText)) || (!useRegex && lineText.includes(findText))) {
 			// print matching line
 			outputChannel.appendLine(`line ${lineIndex}: ${lineText}`);
