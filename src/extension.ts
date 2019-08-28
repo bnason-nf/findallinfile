@@ -45,32 +45,30 @@ let lastFindString: string = '';
 // called once on extension init
 export function activate(context: vscode.ExtensionContext) {
 	// add command for searching with a regular expression
-	let regexCommand = vscode.commands.registerCommand('extension.findallinfileregex', async () => {
-		const findText = await vscode.window.showInputBox({
-			prompt: 'Find All In File Search Regex',
+	context.subscriptions.push(vscode.commands.registerCommand('findallinfile.findregex', () => {
+		vscode.window.showInputBox({
+			prompt: 'Please enter regular expression to search for',
 			value: lastFindRegex
+		}).then((findText) => {
+			if (findText) {
+				findallinfile(findText, true);
+				lastFindRegex = findText;
+			}
 		});
-
-		if (findText) {
-			findallinfile(findText, true);
-			lastFindRegex = findText;
-		}
-	});
-	context.subscriptions.push(regexCommand);
+	}));
 
 	// add command for searching with a string
-	let stringCommand = vscode.commands.registerCommand('extension.findallinfilestring', async () => {
-		const findText = await vscode.window.showInputBox({
-			prompt: 'Find All In File Search String',
+	context.subscriptions.push(vscode.commands.registerCommand('findallinfile.findstring', () => {
+		vscode.window.showInputBox({
+			prompt: 'Please enter string to search for',
 			value: lastFindString
+		}).then((findText) => {
+			if (findText) {
+				findallinfile(findText, false);
+				lastFindString = findText;
+			}
 		});
-
-		if (findText) {
-			findallinfile(findText, false);
-			lastFindString = findText;
-		}
-	});
-	context.subscriptions.push(stringCommand);
+	}));
 }
 
 // called once on extension destroy

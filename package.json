@@ -28,17 +28,18 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onCommand:findallinfile.findregex",
+		"onCommand:findallinfile.findstring"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.findallinfileregex",
+				"command": "findallinfile.findregex",
 				"title": "Find All In File (Regex)"
 			},
 			{
-				"command": "extension.findallinfilestring",
+				"command": "findallinfile.findstring",
 				"title": "Find All In File (String)"
 			}
 		]
