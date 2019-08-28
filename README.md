@@ -15,7 +15,7 @@ The Regex variant of the command allows you to search using a [regular expressio
 
 The String variant of the command just does a simple case-sensitive text search.
 
-In either case, you will first be asked to enter a search string, and then all the matching occurrences of your search should show up in the Output window in the `Find All In File` channel.
+In either case, you will first be asked to enter a search string, and then all the matching occurrences of your search should show up in the Output window in the `Find All In File` channel. Please note that this list does not have any support for selecting an occurrence to go to that location in the file.
 
 # Legal
 
