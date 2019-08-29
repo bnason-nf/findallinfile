@@ -18,7 +18,7 @@
 
 	<!-- magnifying glass -->
 	<g stroke-width="30" stroke="#6688AA" fill="none">
-		<ellipse id="glass" cx="180" cy="180" rx="150" ry="150"/>
+		<circle id="glass" cx="180" cy="180" r="150"/>
 		<line id="handle" x1="295" y1="295" x2="485" y2="485"/>
 	</g>
 </svg>
