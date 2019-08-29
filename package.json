@@ -2,6 +2,8 @@
 	"name": "findallinfile",
 	"displayName": "FindAllInFile",
 	"description": "Find all occurrences of text in current file",
+	"icon": "data/icon.png",
+	"version": "0.0.4",
 	"keywords": [
 		"find",
 		"findall",
@@ -10,24 +12,27 @@
 		"find all in file",
 		"find all occurrences"
 	],
-	"version": "0.0.3",
+	"categories": [
+		"Other"
+	],
 	"publisher": "bnason-nf",
 	"author": {
 		"name": "Benbuck Nason",
 		"url": "https://github.com/bnason-nf"
 	},
 	"homepage": "https://github.com/bnason-nf/findallinfile",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/bnason-nf/findallinfile"
+	},
 	"bugs": {
 		"url": "https://github.com/bnason-nf/findallinfile/issues"
 	},
-	"repository": "https://github.com/bnason-nf/findallinfile",
 	"license": "ISC",
-	"engines": {
-		"vscode": "^1.37.0"
+	"galleryBanner": {
+		"color": "#6688AA",
+		"theme": "dark"
 	},
-	"categories": [
-		"Other"
-	],
 	"activationEvents": [
 		"onCommand:findallinfile.findregex",
 		"onCommand:findallinfile.findstring"
@@ -48,9 +53,14 @@
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
+		"lint": "tslint --project tsconfig.json",
 		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile",
-		"test": "node ./out/test/runTest.js"
+		"pretest": "npm run lint && npm run compile",
+		"test": "node ./out/test/runTest.js",
+		"convert-icon": "magick convert -size 128x128 data/icon.svg data/icon.png"
+	},
+	"engines": {
+		"vscode": "^1.37.0"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
