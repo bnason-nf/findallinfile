@@ -1,76 +1,112 @@
 // Copyright 2019 Benbuck Nason
 
-import * as vscode from 'vscode';
+"use strict";
 
-// search for all occurrences of a search string within the current file
-function findallinfile(findText: string, useRegex: boolean) {
-	// create and use an output channel for the results
-	let outputChannel: vscode.OutputChannel = vscode.window.createOutputChannel("Find All In File");
-	outputChannel.show();
+import * as vscode from "vscode";
 
-	// make sure there is an active editor window for us to use
-	if (!vscode.window.activeTextEditor || !vscode.window.activeTextEditor.document) {
-		outputChannel.appendLine("No active editor");
-		return;
+class FileReference {
+	public readonly lineIndex: number;
+	public readonly lineText: string;
+
+	public constructor(lineIndex: number, lineText: string) {
+		this.lineIndex = lineIndex;
+		this.lineText = lineText;
+	}
+}
+
+function getActiveDocument(): vscode.TextDocument | undefined {
+	// Make sure there is an active editor window for us to use
+	if (vscode.window.activeTextEditor === undefined) {
+		return undefined;
 	}
 
-	// get the active document
-	let doc: vscode.TextDocument = vscode.window.activeTextEditor.document;
+	// Get the active document
+	return vscode.window.activeTextEditor.document;
+}
 
-	// print initial status message
-	outputChannel.appendLine(`Searching for ${useRegex ? "regex" : "string"} '${findText}' in '${doc.fileName}':`);
+// Search for all occurrences of a search string within the current file
+function findAllInFile(doc: vscode.TextDocument, findText: string, useRegex: boolean): FileReference[] {
+	const fileRefs: FileReference[] = [];
 
-	// search each line of the document
-	let lineCount: number = doc.lineCount;
-	let foundCount: number = 0;
-	let findRegex: RegExp = new RegExp(findText); // may not be used
-	for (let lineIndex: number = 0; lineIndex < lineCount; ++lineIndex) {
-		let line: vscode.TextLine = doc.lineAt(lineIndex);
-		let lineText: string = line.text;
+	// Search each line of the document
+	const lineCount: number = doc.lineCount;
+	const findRegex: RegExp = new RegExp(findText); // May not be used
+	for (let lineIndex: number = 0; lineIndex < lineCount; lineIndex += 1) {
+		const line: vscode.TextLine = doc.lineAt(lineIndex);
+		const lineText: string = line.text;
 		if ((useRegex && findRegex.test(lineText)) || (!useRegex && lineText.includes(findText))) {
-			// print matching line
-			outputChannel.appendLine(`line ${lineIndex}: ${lineText}`);
-			++foundCount;
+			fileRefs.push(new FileReference(lineIndex, lineText));
 		}
 	}
 
-	// print summary
-	outputChannel.appendLine(`Found ${foundCount} occurrences`);
+	return fileRefs;
 }
 
-// remember most recent searches for easy re-use
-let lastFindRegex: string = '';
-let lastFindString: string = '';
+// Output all occurrences of a search string within the current file
+function outputAllInFile(findText: string, useRegex: boolean): void {
+	// Create and use an output channel for the results
+	const outputChannel: vscode.OutputChannel = vscode.window.createOutputChannel("Find All In File");
+	outputChannel.show();
 
-// called once on extension init
-export function activate(context: vscode.ExtensionContext) {
-	// add command for searching with a regular expression
-	context.subscriptions.push(vscode.commands.registerCommand('findallinfile.findregex', () => {
+	// Get the active document
+	const doc: vscode.TextDocument | undefined = getActiveDocument();
+	if (doc === undefined) {
+		outputChannel.appendLine("No active editor document");
+
+		return;
+	}
+
+	// Print initial status message
+	outputChannel.appendLine(`Searching for ${useRegex ? "regex" : "string"} "${findText}" in "${doc.fileName}":`);
+
+	const fileRefs: FileReference[] = findAllInFile(doc, findText, useRegex);
+
+	fileRefs.forEach((fileRef: FileReference) => {
+		// Print matching line
+		outputChannel.appendLine(`line ${fileRef.lineIndex}: ${fileRef.lineText}`);
+	});
+
+	// Print summary
+	outputChannel.appendLine(`Found ${fileRefs.length} occurrences`);
+}
+
+
+// Remember most recent searches for easy re-use
+let lastFindRegex: string = "";
+let lastFindString: string = "";
+
+// Called once on extension init
+export function activate(context: vscode.ExtensionContext): void {
+	// Add command for searching with a regular expression
+	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findregex", () => {
 		vscode.window.showInputBox({
-			prompt: 'Please enter regular expression to search for',
-			value: lastFindRegex
-		}).then((findText) => {
-			if (findText) {
-				findallinfile(findText, true);
+			prompt: "Please enter regular expression to search for",
+			value: lastFindRegex,
+		}).then((findText: string | undefined) => {
+			if (findText !== undefined) {
+				outputAllInFile(findText, true);
+
 				lastFindRegex = findText;
 			}
 		});
 	}));
 
-	// add command for searching with a string
-	context.subscriptions.push(vscode.commands.registerCommand('findallinfile.findstring', () => {
+	// Add command for searching with a string
+	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findstring", () => {
 		vscode.window.showInputBox({
-			prompt: 'Please enter string to search for',
-			value: lastFindString
-		}).then((findText) => {
-			if (findText) {
-				findallinfile(findText, false);
+			prompt: "Please enter string to search for",
+			value: lastFindString,
+		}).then((findText: string | undefined) => {
+			if (findText !== undefined) {
+				outputAllInFile(findText, false);
+
 				lastFindString = findText;
 			}
 		});
 	}));
 }
 
-// called once on extension destroy
-export function deactivate() {
+// Called once on extension destroy
+export function deactivate(): void {
+	// Nothing to do
 }
