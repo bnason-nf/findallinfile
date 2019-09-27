@@ -30,11 +30,12 @@ function findAllInFile(doc: vscode.TextDocument, findText: string, useRegex: boo
 
 	// Search each line of the document
 	const lineCount: number = doc.lineCount;
-	const findRegex: RegExp = new RegExp(findText); // May not be used
+	const findRegex: RegExp | undefined = useRegex ? new RegExp(findText) : undefined;
 	for (let lineIndex: number = 0; lineIndex < lineCount; lineIndex += 1) {
 		const line: vscode.TextLine = doc.lineAt(lineIndex);
 		const lineText: string = line.text;
-		if ((useRegex && findRegex.test(lineText)) || (!useRegex && lineText.includes(findText))) {
+		const found: boolean = (findRegex === undefined) ? lineText.includes(findText) : findRegex.test(lineText);
+		if (found) {
 			fileRefs.push(new FileReference(lineIndex, lineText));
 		}
 	}
