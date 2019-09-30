@@ -2,6 +2,8 @@
 
 This is an extension for [Visual Studio Code](https://code.visualstudio.com/) that allows you to search for all the occurrences of a search string in the current file.
 
+Additionally, you can also view this extension directly on the Visual Studio Code [Marketplace page for Find All In file](https://marketplace.visualstudio.com/items?itemName=bnason-nf.findallinfile).
+
 # Usage
 
 After installing this extension in Visual Studio Code, you should have some new commands available:
