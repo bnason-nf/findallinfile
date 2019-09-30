@@ -35,7 +35,8 @@
 	},
 	"activationEvents": [
 		"onCommand:findallinfile.findregex",
-		"onCommand:findallinfile.findstring"
+		"onCommand:findallinfile.findstringcase",
+		"onCommand:findallinfile.findstringnocase"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -45,8 +46,12 @@
 				"title": "Find All In File (Regex)"
 			},
 			{
-				"command": "findallinfile.findstring",
-				"title": "Find All In File (String)"
+				"command": "findallinfile.findstringcase",
+				"title": "Find All In File (Case Sensitive String)"
+			},
+			{
+				"command": "findallinfile.findstringnocase",
+				"title": "Find All In File (Case Insensitive String)"
 			}
 		]
 	},
