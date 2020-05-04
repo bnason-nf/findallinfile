@@ -43,15 +43,18 @@
 		"commands": [
 			{
 				"command": "findallinfile.findregex",
-				"title": "Find All In File (Regex)"
+				"title": "Find Regex",
+				"category": "Find All In File"
 			},
 			{
 				"command": "findallinfile.findstringcase",
-				"title": "Find All In File (Case Sensitive String)"
+				"title": "Find Case Sensitive String",
+				"category": "Find All In File"
 			},
 			{
 				"command": "findallinfile.findstringnocase",
-				"title": "Find All In File (Case Insensitive String)"
+				"title": "Find Case Insensitive String",
+				"category": "Find All In File"
 			}
 		]
 	},
