@@ -56,7 +56,26 @@
 				"title": "Find Case Insensitive String",
 				"category": "Find All In File"
 			}
-		]
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "true",
+					"command": "findallinfile.findregex",
+					"group": "findallinfile"
+				},
+				{
+					"when": "true",
+					"command": "findallinfile.findstringcase",
+					"group": "findallinfile"
+				},
+				{
+					"when": "true",
+					"command": "findallinfile.findstringnocase",
+					"group": "findallinfile"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
