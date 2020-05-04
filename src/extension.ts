@@ -4,15 +4,8 @@
 
 import * as vscode from "vscode";
 
-class FileReference {
-	public readonly lineIndex: number;
-	public readonly lineText: string;
-
-	public constructor(lineIndex: number, lineText: string) {
-		this.lineIndex = lineIndex;
-		this.lineText = lineText;
-	}
-}
+import { FileReference } from "./fileReference";
+import { FindAllInFile } from "./findAllInFile";
 
 function getActiveDocument(): vscode.TextDocument | undefined {
 	// Make sure there is an active editor window for us to use
@@ -22,62 +15,6 @@ function getActiveDocument(): vscode.TextDocument | undefined {
 
 	// Get the active document
 	return vscode.window.activeTextEditor.document;
-}
-
-// Search for all occurrences of a search regex within the current file
-function findAllInFileRegex(doc: vscode.TextDocument, findText: string): FileReference[] {
-	const fileRefs: FileReference[] = [];
-
-	// Search each line of the document
-	const lineCount: number = doc.lineCount;
-	const findRegex: RegExp = new RegExp(findText);
-	for (let lineIndex: number = 0; lineIndex < lineCount; lineIndex += 1) {
-		const line: vscode.TextLine = doc.lineAt(lineIndex);
-		const lineText: string = line.text;
-		const found: boolean = findRegex.test(lineText);
-		if (found) {
-			fileRefs.push(new FileReference(lineIndex, lineText));
-		}
-	}
-
-	return fileRefs;
-}
-
-// Search for all occurrences of a case-sensitive search string within the current file
-function findAllInFileCase(doc: vscode.TextDocument, findText: string): FileReference[] {
-	const fileRefs: FileReference[] = [];
-
-	// Search each line of the document
-	const lineCount: number = doc.lineCount;
-	for (let lineIndex: number = 0; lineIndex < lineCount; lineIndex += 1) {
-		const line: vscode.TextLine = doc.lineAt(lineIndex);
-		const lineText: string = line.text;
-		const found: boolean = lineText.includes(findText);
-		if (found) {
-			fileRefs.push(new FileReference(lineIndex, lineText));
-		}
-	}
-
-	return fileRefs;
-}
-
-// Search for all occurrences of a case-insensitive search string within the current file
-function findAllInFileNoCase(doc: vscode.TextDocument, findText: string): FileReference[] {
-	const fileRefs: FileReference[] = [];
-
-	// Search each line of the document
-	const lineCount: number = doc.lineCount;
-	const findTextLower: string = findText.toLowerCase();
-	for (let lineIndex: number = 0; lineIndex < lineCount; lineIndex += 1) {
-		const line: vscode.TextLine = doc.lineAt(lineIndex);
-		const lineText: string = line.text;
-		const found: boolean = lineText.toLowerCase().includes(findTextLower);
-		if (found) {
-			fileRefs.push(new FileReference(lineIndex, lineText));
-		}
-	}
-
-	return fileRefs;
 }
 
 // Output all occurrences of a search string within the current file
@@ -98,16 +35,23 @@ function outputAllInFile(findText: string, useRegex: boolean, caseSensitive: boo
 	outputChannel.appendLine(`Searching for ${useRegex ? "regex" : caseSensitive ?
 		"case-sensitive string" : "case-insensitive string"} "${findText}" in "${doc.fileName}":`);
 
-	const fileRefs: FileReference[] = (useRegex ? findAllInFileRegex(doc, findText) :
-		(caseSensitive ? findAllInFileCase(doc, findText) : findAllInFileNoCase(doc, findText)));
+	const findAllInFile: FindAllInFile = new FindAllInFile();
 
-	fileRefs.forEach((fileRef: FileReference) => {
+	if (useRegex) {
+		findAllInFile.findRegex(doc, findText);
+	} else if (caseSensitive) {
+		findAllInFile.findCase(doc, findText);
+	} else {
+		findAllInFile.findNoCase(doc, findText);
+	}
+
+	findAllInFile.fileReferences.forEach((fileRef: FileReference) => {
 		// Print matching line
 		outputChannel.appendLine(`line ${fileRef.lineIndex}: ${fileRef.lineText}`);
 	});
 
 	// Print summary
-	outputChannel.appendLine(`Found ${fileRefs.length} occurrences`);
+	outputChannel.appendLine(`Found ${findAllInFile.fileReferences.length} occurrences`);
 }
 
 // Remember most recent searches for easy re-use
