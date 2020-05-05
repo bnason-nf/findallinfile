@@ -13,6 +13,9 @@ export class FindAllInFile {
 
 	// Search for all occurrences of a case-sensitive search string within the current file
 	public findCase(doc: vscode.TextDocument, findText: string): void {
+		// Clear the results
+		this.fileRefs.length = 0;
+
 		// Search each line of the document
 		const lineCount: number = doc.lineCount;
 		for (let lineIndex: number = 0; lineIndex < lineCount; lineIndex += 1) {
@@ -27,6 +30,9 @@ export class FindAllInFile {
 
 	// Search for all occurrences of a case-insensitive search string within the current file
 	public findNoCase(doc: vscode.TextDocument, findText: string): void {
+		// Clear the results
+		this.fileRefs.length = 0;
+
 		// Search each line of the document
 		const lineCount: number = doc.lineCount;
 		const findTextLower: string = findText.toLowerCase();
@@ -42,6 +48,9 @@ export class FindAllInFile {
 
 	// Search for all occurrences of a search regex within the current file
 	public findRegex(doc: vscode.TextDocument, findText: string): void {
+		// Clear the results
+		this.fileRefs.length = 0;
+
 		// Search each line of the document
 		const lineCount: number = doc.lineCount;
 		const findRegex: RegExp = new RegExp(findText);

@@ -7,16 +7,6 @@ import * as vscode from "vscode";
 import { FileReference } from "./fileReference";
 import { FindAllInFile } from "./findAllInFile";
 
-function getActiveDocument(): vscode.TextDocument | undefined {
-	// Make sure there is an active editor window for us to use
-	if (vscode.window.activeTextEditor === undefined) {
-		return undefined;
-	}
-
-	// Get the active document
-	return vscode.window.activeTextEditor.document;
-}
-
 // Output all occurrences of a search string within the current file
 function outputAllInFile(findText: string, useRegex: boolean, caseSensitive: boolean): void {
 	// Create and use an output channel for the results
@@ -24,7 +14,8 @@ function outputAllInFile(findText: string, useRegex: boolean, caseSensitive: boo
 	outputChannel.show();
 
 	// Get the active document
-	const doc: vscode.TextDocument | undefined = getActiveDocument();
+	const doc: vscode.TextDocument | undefined = (vscode.window.activeTextEditor === undefined) ? undefined :
+		vscode.window.activeTextEditor.document;
 	if (doc === undefined) {
 		outputChannel.appendLine("No active editor document");
 
