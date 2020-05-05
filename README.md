@@ -8,19 +8,19 @@ Additionally, you can also view this extension directly on the Visual Studio Cod
 
 After installing this extension in Visual Studio Code, you should have some new commands available:
 
-- Find All In File (Regex)
-- Find All In File (Case Sensitive String)
-- Find All In File (Case Insensitive String)
+- **Find All In File: Regex** - search using a [regular expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
+- **Find All In File: Case Sensitive String** - does a simple case-sensitive text search.
+- **Find All In File: Case Insensitive String** - does a simple case-insensitive text search.
 
 You can use these commands from the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette), then typing `"Find All In File"` and selecting the variant you want to use.
 
-The Regex variant of the command allows you to search using a [regular expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
+Alternately, you can bring up the context menu by right mouse clicking on an open editor document, and the same commands should be available, with slightly different names:
 
-The Case Sensitive String variant of the command just does a simple case-sensitive text search.
+- **Find Regex**
+- **Find Case Sensitive String**
+- **Find Case Insensitive String**
 
-The Case Insensitive String variant of the command is the same but case-insensitive.
-
-For each of these you will first be asked to enter a search string, and then all the matching occurrences of your search should show up in the Output window in the `Find All In File` channel. Please note that this list does not have any support for selecting an occurrence to go to that location in the file.
+For any of these methods you will first be asked to enter a search string, and then all the matching occurrences of your search should show up in the Output window in the `Find All In File` channel. Please note that this list does not have any support for selecting an occurrence to go to that location in the file.
 
 # Legal
 
