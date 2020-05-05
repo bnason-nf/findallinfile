@@ -1,5 +1,7 @@
 // Copyright 2019 Benbuck Nason
 
+"use strict";
+
 import * as vscode from "vscode";
 
 import { FileReference } from "./fileReference";

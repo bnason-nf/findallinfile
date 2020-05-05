@@ -1,5 +1,7 @@
 // Copyright 2019 Benbuck Nason
 
+"use strict";
+
 export class FileReference {
 	public readonly lineIndex: number;
 	public readonly lineText: string;
