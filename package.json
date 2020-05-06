@@ -75,6 +75,23 @@
 					"group": "findallinfile"
 				}
 			]
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "findallcontainer",
+					"title": "Find All In File",
+					"icon": "data/icon.svg"
+				}
+			]
+		},
+		"views": {
+			"findallcontainer": [
+				{
+					"id": "findallview",
+					"name": ""
+				}
+			]
 		}
 	},
 	"scripts": {

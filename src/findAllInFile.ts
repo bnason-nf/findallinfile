@@ -4,17 +4,17 @@
 
 import * as vscode from "vscode";
 
-import { IOutput } from "./iOutput";
+import { IOutputSink } from "./iOutputSink";
 
 // Search for all occurrences of a case-sensitive search string within the current file
-export function findCase(doc: vscode.TextDocument | undefined, findText: string, output: IOutput): void {
+export function findCase(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
 	if (doc === undefined) {
-		output.error("No active editor document");
+		outputSink.errorNoDocument();
 
 		return;
 	}
 
-	output.start(doc, findText, false, true);
+	outputSink.start(doc, findText, false, true);
 
 	// Search each line of the document
 	const lineCount: number = doc.lineCount;
@@ -23,22 +23,22 @@ export function findCase(doc: vscode.TextDocument | undefined, findText: string,
 		const lineText: string = line.text;
 		const found: boolean = lineText.includes(findText);
 		if (found) {
-			output.item(lineIndex, lineText);
+			outputSink.item(lineIndex, lineText);
 		}
 	}
 
-	output.end();
+	outputSink.end();
 }
 
 // Search for all occurrences of a case-insensitive search string within the current file
-export function findNoCase(doc: vscode.TextDocument | undefined, findText: string, output: IOutput): void {
+export function findNoCase(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
 	if (doc === undefined) {
-		output.error("No active editor document");
+		outputSink.errorNoDocument();
 
 		return;
 	}
 
-	output.start(doc, findText, false, false);
+	outputSink.start(doc, findText, false, false);
 
 	// Search each line of the document
 	const lineCount: number = doc.lineCount;
@@ -48,22 +48,22 @@ export function findNoCase(doc: vscode.TextDocument | undefined, findText: strin
 		const lineText: string = line.text;
 		const found: boolean = lineText.toLowerCase().includes(findTextLower);
 		if (found) {
-			output.item(lineIndex, lineText);
+			outputSink.item(lineIndex, lineText);
 		}
 	}
 
-	output.end();
+	outputSink.end();
 }
 
 // Search for all occurrences of a search regex within the current file
-export function findRegex(doc: vscode.TextDocument | undefined, findText: string, output: IOutput): void {
+export function findRegex(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
 	if (doc === undefined) {
-		output.error("No active editor document");
+		outputSink.errorNoDocument();
 
 		return;
 	}
 
-	output.start(doc, findText, true, true);
+	outputSink.start(doc, findText, true, true);
 
 	// Search each line of the document
 	const lineCount: number = doc.lineCount;
@@ -73,9 +73,9 @@ export function findRegex(doc: vscode.TextDocument | undefined, findText: string
 		const lineText: string = line.text;
 		const found: boolean = findRegExp.test(lineText);
 		if (found) {
-			output.item(lineIndex, lineText);
+			outputSink.item(lineIndex, lineText);
 		}
 	}
 
-	output.end();
+	outputSink.end();
 }

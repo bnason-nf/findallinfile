@@ -4,9 +4,9 @@
 
 import * as vscode from "vscode";
 
-export interface IOutput {
+export interface IOutputSink {
 	end(): void;
-	error(msg: string): void;
+	errorNoDocument(): void;
 	item(lineIndex: number, lineText: string): void;
 	start(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void;
 }

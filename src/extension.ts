@@ -5,7 +5,8 @@
 import * as vscode from "vscode";
 
 import * as findAllInFile from "./findAllInFile";
-import { FindResultsOutput } from "./findResultsOutput";
+import { TreeDataProvider } from "./treeDataProvider";
+import { TreeNode } from "./treeNode";
 
 function getActiveDocument(): vscode.TextDocument | undefined {
 	// Make sure there is an active editor window for us to use
@@ -17,56 +18,100 @@ function getActiveDocument(): vscode.TextDocument | undefined {
 	return vscode.window.activeTextEditor.document;
 }
 
+function createTreeView(provider: TreeDataProvider): vscode.TreeView<TreeNode> {
+	const treeViewOptions: vscode.TreeViewOptions<TreeNode> = {
+		canSelectMany: false,
+		showCollapseAll: false,
+		treeDataProvider: provider,
+	};
+
+	return vscode.window.createTreeView("findallview", treeViewOptions);
+}
+
 // Remember most recent searches for easy re-use
 let lastFindRegex: string = "";
 let lastFindString: string = "";
 
+function findRegex(): void {
+	vscode.window.showInputBox({
+		prompt: "Please enter regular expression to search for",
+		value: lastFindRegex,
+	}).then((findText: string | undefined) => {
+		if (findText !== undefined) {
+			const provider: TreeDataProvider = new TreeDataProvider();
+			const treeView: vscode.TreeView<TreeNode> = createTreeView(provider);
+
+			findAllInFile.findRegex(getActiveDocument(), findText, provider);
+
+			treeView.reveal(provider.getChildren()[0], { focus: true, select: false, expand: true });
+
+			lastFindRegex = findText;
+		}
+	});
+}
+
+function findStringCase(): void {
+	vscode.window.showInputBox({
+		prompt: "Please enter string to search for",
+		value: lastFindString,
+	}).then((findText: string | undefined) => {
+		if (findText !== undefined) {
+			const provider: TreeDataProvider = new TreeDataProvider();
+			const treeView: vscode.TreeView<TreeNode> = createTreeView(provider);
+
+			findAllInFile.findCase(getActiveDocument(), findText, provider);
+
+			treeView.reveal(provider.getChildren()[0], { focus: true, select: false, expand: true });
+
+			lastFindString = findText;
+		}
+	});
+}
+
+function findStringNoCase(): void {
+	vscode.window.showInputBox({
+		prompt: "Please enter string to search for",
+		value: lastFindString,
+	}).then((findText: string | undefined) => {
+		if (findText !== undefined) {
+			const provider: TreeDataProvider = new TreeDataProvider();
+			const treeView: vscode.TreeView<TreeNode> = createTreeView(provider);
+			treeView.reveal(provider.getChildren()[0]);
+
+			findAllInFile.findNoCase(getActiveDocument(), findText, provider);
+
+			treeView.reveal(provider.getChildren()[0], { focus: true, select: false, expand: true });
+
+			lastFindString = findText;
+		}
+	});
+}
+
+function viewResult(doc: vscode.TextDocument, line: number): void {
+	// Make sure document is showing
+	vscode.window.showTextDocument(doc);
+
+	// Go to the right line
+	// FIX: there must be a better way
+	const currentLine: number | undefined = vscode.window.activeTextEditor?.selection.start.line;
+	if (currentLine !== undefined) {
+		if (currentLine > line) {
+			vscode.commands.executeCommand("cursorMove", { to: "up", by: "line", value: currentLine - line });
+		} else if (currentLine < line) {
+			vscode.commands.executeCommand("cursorMove", { to: "down", by: "line", value: line - currentLine });
+		}
+	}
+
+	// Make sure line is showing
+	vscode.commands.executeCommand("revealLine", { lineNumber: line, at: "center" });
+}
+
 // Called once on extension init
 export function activate(context: vscode.ExtensionContext): void {
-	const outputChannel: vscode.OutputChannel = vscode.window.createOutputChannel("Find All In File");
-	const findResultsOutput: FindResultsOutput = new FindResultsOutput(outputChannel);
-
-	// Add command for searching with a regular expression
-	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findregex", () => {
-		vscode.window.showInputBox({
-			prompt: "Please enter regular expression to search for",
-			value: lastFindRegex,
-		}).then((findText: string | undefined) => {
-			if (findText !== undefined) {
-				findAllInFile.findRegex(getActiveDocument(), findText, findResultsOutput);
-
-				lastFindRegex = findText;
-			}
-		});
-	}));
-
-	// Add command for searching with a case-sensitive string
-	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findstringcase", () => {
-		vscode.window.showInputBox({
-			prompt: "Please enter string to search for",
-			value: lastFindString,
-		}).then((findText: string | undefined) => {
-			if (findText !== undefined) {
-				findAllInFile.findCase(getActiveDocument(), findText, findResultsOutput);
-
-				lastFindString = findText;
-			}
-		});
-	}));
-
-	// Add command for searching with a case insensitive string
-	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findstringnocase", () => {
-		vscode.window.showInputBox({
-			prompt: "Please enter string to search for",
-			value: lastFindString,
-		}).then((findText: string | undefined) => {
-			if (findText !== undefined) {
-				findAllInFile.findNoCase(getActiveDocument(), findText, findResultsOutput);
-
-				lastFindString = findText;
-			}
-		});
-	}));
+	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findregex", findRegex));
+	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findstringcase", findStringCase));
+	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findstringnocase", findStringNoCase));
+	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.viewResult", viewResult));
 }
 
 // Called once on extension destroy
