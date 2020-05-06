@@ -3,14 +3,21 @@
 "use strict";
 
 export class FindResult {
-	public readonly column: number | undefined;
+	public readonly columnBegin: number | undefined;
+	public readonly columnEnd: number | undefined;
 	public readonly line: number | undefined;
 	public readonly text: string;
 
 	// tslint:disable:no-unnecessary-initializer
-	public constructor(text: string, line: number | undefined = undefined, column: number | undefined = undefined) {
+	public constructor(
+		text: string,
+		line: number | undefined = undefined,
+		columnBegin: number | undefined = undefined,
+		columnEnd: number | undefined = undefined
+	) {
 		this.line = line;
-		this.column = column;
+		this.columnBegin = columnBegin;
+		this.columnEnd = columnEnd;
 		this.text = text;
 	}
 }

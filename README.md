@@ -27,7 +27,7 @@ Alternately, you can bring up the editor context menu by right mouse clicking on
 
 For any of these methods you will first be asked to enter a search string, and then all the matching occurrences of your search should show up in the Find All In File [Side Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_basic-layout). You can also manually show the Find All In File Side Bar by selecting the corresponding icon in the [Activity Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar).
 
-After you complete your search, you should see the results in the side bar, which you can use to quickly preview the matches that were found. If you click on one of the matches, it should take you to that location in the document.
+After you complete your search, you should see the results in the side bar, which you can use to quickly preview the matches that were found. If you click on one of the matches, it should take you to that location in the document with the match selected.
 
 # Legal
 

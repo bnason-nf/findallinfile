@@ -4,9 +4,11 @@
 
 import * as vscode from "vscode";
 
+import { FindResult } from "./findResult";
+
 export interface IOutputSink {
 	begin(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void;
 	end(): void;
-	item(text: string, line: number, column: number): void;
+	item(findResult: FindResult): void;
 	noDocument(): void;
 }

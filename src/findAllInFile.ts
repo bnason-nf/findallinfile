@@ -4,6 +4,7 @@
 
 import * as vscode from "vscode";
 
+import { FindResult } from "./findResult";
 import { IOutputSink } from "./iOutputSink";
 
 // Search for all occurrences of a case-sensitive search string within the current file
@@ -30,7 +31,7 @@ export function findCase(doc: vscode.TextDocument | undefined, findText: string,
 				break;
 			}
 			column += tmpColumn;
-			outputSink.item(text, line, column);
+			outputSink.item(new FindResult(text, line, column, column + findText.length));
 			tmpText = tmpText.substr(tmpColumn + 1);
 		}
 	}
@@ -63,7 +64,7 @@ export function findNoCase(doc: vscode.TextDocument | undefined, findText: strin
 				break;
 			}
 			column += tmpColumn;
-			outputSink.item(text, line, column);
+			outputSink.item(new FindResult(text, line, column, column + findText.length));
 			tmpText = tmpText.substr(tmpColumn + 1);
 		}
 	}
@@ -93,7 +94,7 @@ export function findRegex(doc: vscode.TextDocument | undefined, findText: string
 			if (match === null) {
 				break;
 			}
-			outputSink.item(text, line, match.index);
+			outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex));
 		}
 	}
 
