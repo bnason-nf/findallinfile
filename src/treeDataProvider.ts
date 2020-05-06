@@ -4,42 +4,42 @@
 
 import * as vscode from "vscode";
 
+import { FindResult } from "./findResult";
 import { IOutputSink } from "./iOutputSink";
-import { TreeNode } from "./treeNode";
 
-export class TreeDataProvider implements vscode.TreeDataProvider<TreeNode>, IOutputSink {
-	public readonly onDidChangeTreeData: vscode.Event<TreeNode> | undefined;
+export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IOutputSink {
+	public readonly onDidChangeTreeData: vscode.Event<FindResult> | undefined;
 
 	private doc: vscode.TextDocument | undefined;
-	private readonly eventEmitter: vscode.EventEmitter<TreeNode> = new vscode.EventEmitter<TreeNode>();
-	private readonly treeNodes: TreeNode[] = [];
+	private readonly eventEmitter: vscode.EventEmitter<FindResult> = new vscode.EventEmitter<FindResult>();
+	private readonly findResults: FindResult[] = [];
 
 	public constructor() {
 		this.onDidChangeTreeData = this.eventEmitter.event;
 	}
 
 	public end(): void {
-		const label: string = `Found ${this.treeNodes.length - 1} occurrences`;
-		this.treeNodes.push(new TreeNode(undefined, label));
+		const label: string = `Found ${this.findResults.length - 1} occurrences`;
+		this.findResults.push(new FindResult(undefined, label));
 		this.refreshTree();
 	}
 
 	public errorNoDocument(): void {
-		this.treeNodes.length = 0;
-		this.treeNodes.push(new TreeNode(undefined, "No active editor document"));
+		this.findResults.length = 0;
+		this.findResults.push(new FindResult(undefined, "No active editor document"));
 		this.refreshTree();
 	}
 
-	public getChildren(/* element: TreeNode */): TreeNode[] {
-		return this.treeNodes;
+	public getChildren(/* element: FindResult */): FindResult[] {
+		return this.findResults;
 	}
 
 	// tslint:disable:prefer-function-over-method
-	public getParent(/* element: TreeNode */): vscode.ProviderResult<TreeNode> {
+	public getParent(/* element: FindResult */): vscode.ProviderResult<FindResult> {
 		return undefined;
 	}
 
-	public getTreeItem(element: TreeNode): vscode.TreeItem {
+	public getTreeItem(element: FindResult): vscode.TreeItem {
 		const label: string = (element.line === undefined) ? `${element.text}` : `line ${element.line + 1}: ${element.text}`;
 		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
 
@@ -51,16 +51,16 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeNode>, IOut
 	}
 
 	public item(lineIndex: number, lineText: string): void {
-		this.treeNodes.push(new TreeNode(lineIndex, lineText));
+		this.findResults.push(new FindResult(lineIndex, lineText));
 		this.refreshTree();
 	}
 
 	public start(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void {
 		this.doc = doc;
-		this.treeNodes.length = 0;
+		this.findResults.length = 0;
 		const label: string = `Searching for ${useRegex ? "regex" : caseSensitive ? "case-sensitive string" :
 			"case-insensitive string"} "${findText}" in "${doc.fileName}":`;
-		this.treeNodes.push(new TreeNode(undefined, label));
+		this.findResults.push(new FindResult(undefined, label));
 		this.refreshTree();
 	}
 

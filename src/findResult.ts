@@ -2,7 +2,7 @@
 
 "use strict";
 
-export class TreeNode {
+export class FindResult {
 	public readonly line: number | undefined;
 	public readonly text: string;
 

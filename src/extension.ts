@@ -5,8 +5,8 @@
 import * as vscode from "vscode";
 
 import * as findAllInFile from "./findAllInFile";
+import { FindResult } from "./findResult";
 import { TreeDataProvider } from "./treeDataProvider";
-import { TreeNode } from "./treeNode";
 
 function getActiveDocument(): vscode.TextDocument | undefined {
 	// Make sure there is an active editor window for us to use
@@ -18,8 +18,8 @@ function getActiveDocument(): vscode.TextDocument | undefined {
 	return vscode.window.activeTextEditor.document;
 }
 
-function createTreeView(provider: TreeDataProvider): vscode.TreeView<TreeNode> {
-	const treeViewOptions: vscode.TreeViewOptions<TreeNode> = {
+function createTreeView(provider: TreeDataProvider): vscode.TreeView<FindResult> {
+	const treeViewOptions: vscode.TreeViewOptions<FindResult> = {
 		canSelectMany: false,
 		showCollapseAll: false,
 		treeDataProvider: provider,
@@ -39,7 +39,7 @@ function findRegex(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeNode> = createTreeView(provider);
+			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
 
 			findAllInFile.findRegex(getActiveDocument(), findText, provider);
 
@@ -57,7 +57,7 @@ function findStringCase(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeNode> = createTreeView(provider);
+			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
 
 			findAllInFile.findCase(getActiveDocument(), findText, provider);
 
@@ -75,7 +75,7 @@ function findStringNoCase(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeNode> = createTreeView(provider);
+			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
 			treeView.reveal(provider.getChildren()[0]);
 
 			findAllInFile.findNoCase(getActiveDocument(), findText, provider);
