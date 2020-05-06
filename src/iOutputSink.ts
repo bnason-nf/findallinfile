@@ -5,8 +5,8 @@
 import * as vscode from "vscode";
 
 export interface IOutputSink {
+	begin(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void;
 	end(): void;
-	errorNoDocument(): void;
-	item(lineIndex: number, lineText: string): void;
-	start(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void;
+	item(text: string, line: number, column: number): void;
+	noDocument(): void;
 }

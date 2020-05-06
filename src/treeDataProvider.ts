@@ -18,20 +18,31 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 		this.onDidChangeTreeData = this.eventEmitter.event;
 	}
 
+	public begin(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void {
+		this.doc = doc;
+		this.findResults.length = 0;
+		const label: string = `Searching for ${useRegex ? "regex" : caseSensitive ? "case-sensitive string" :
+			"case-insensitive string"} "${findText}" in "${doc.fileName}":`;
+		this.findResults.push(new FindResult(label));
+		this.refreshTree();
+	}
+
 	public end(): void {
 		const label: string = `Found ${this.findResults.length - 1} occurrences`;
-		this.findResults.push(new FindResult(undefined, label));
+		this.findResults.push(new FindResult(label));
 		this.refreshTree();
 	}
 
-	public errorNoDocument(): void {
-		this.findResults.length = 0;
-		this.findResults.push(new FindResult(undefined, "No active editor document"));
-		this.refreshTree();
+	public getChildren(element: FindResult | undefined): FindResult[] {
+		if (element === undefined) {
+			return this.findResults;
+		}
+
+		return [];
 	}
 
-	public getChildren(/* element: FindResult */): FindResult[] {
-		return this.findResults;
+	public getFirstResult(): FindResult {
+		return this.findResults[0];
 	}
 
 	// tslint:disable:prefer-function-over-method
@@ -39,28 +50,35 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 		return undefined;
 	}
 
-	public getTreeItem(element: FindResult): vscode.TreeItem {
-		const label: string = (element.line === undefined) ? `${element.text}` : `line ${element.line + 1}: ${element.text}`;
+	public getTreeItem(element: FindResult | undefined): vscode.TreeItem {
+		if (element === undefined) {
+			return new vscode.TreeItem("");
+		}
+
+		if ((element.line === undefined) || (element.column === undefined)) {
+			return new vscode.TreeItem(element.text);
+		}
+
+		const label: string = `${element.line + 1}:${element.column + 1}:\t${element.text}`;
 		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
 
 		if (this.doc !== undefined) {
-			treeItem.command = { command: "findallinfile.viewResult", title: "Open File", arguments: [this.doc, element.line] };
+			// tslint:disable:no-any
+			const args: any[] = [ this.doc, element.line, element.column ];
+			treeItem.command = { command: "findallinfile.viewResult", title: "Open File", arguments: args };
 		}
 
 		return treeItem;
 	}
 
-	public item(lineIndex: number, lineText: string): void {
-		this.findResults.push(new FindResult(lineIndex, lineText));
-		this.refreshTree();
+	public item(text: string, line: number, column: number): void {
+		this.findResults.push(new FindResult(text, line, column));
+		// Slow: this.refreshTree();
 	}
 
-	public start(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void {
-		this.doc = doc;
+	public noDocument(): void {
 		this.findResults.length = 0;
-		const label: string = `Searching for ${useRegex ? "regex" : caseSensitive ? "case-sensitive string" :
-			"case-insensitive string"} "${findText}" in "${doc.fileName}":`;
-		this.findResults.push(new FindResult(undefined, label));
+		this.findResults.push(new FindResult("No active editor document"));
 		this.refreshTree();
 	}
 

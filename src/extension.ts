@@ -43,7 +43,7 @@ function findRegex(): void {
 
 			findAllInFile.findRegex(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getChildren()[0], { focus: true, select: false, expand: true });
+			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
 
 			lastFindRegex = findText;
 		}
@@ -61,7 +61,7 @@ function findStringCase(): void {
 
 			findAllInFile.findCase(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getChildren()[0], { focus: true, select: false, expand: true });
+			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
 
 			lastFindString = findText;
 		}
@@ -76,29 +76,39 @@ function findStringNoCase(): void {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
-			treeView.reveal(provider.getChildren()[0]);
 
 			findAllInFile.findNoCase(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getChildren()[0], { focus: true, select: false, expand: true });
+			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
 
 			lastFindString = findText;
 		}
 	});
 }
 
-function viewResult(doc: vscode.TextDocument, line: number): void {
+function viewResult(doc: vscode.TextDocument, line: number, column: number): void {
 	// Make sure document is showing
 	vscode.window.showTextDocument(doc);
 
+	// FIX: there must be a better way to do this
+
 	// Go to the right line
-	// FIX: there must be a better way
 	const currentLine: number | undefined = vscode.window.activeTextEditor?.selection.start.line;
 	if (currentLine !== undefined) {
 		if (currentLine > line) {
 			vscode.commands.executeCommand("cursorMove", { to: "up", by: "line", value: currentLine - line });
 		} else if (currentLine < line) {
 			vscode.commands.executeCommand("cursorMove", { to: "down", by: "line", value: line - currentLine });
+		}
+	}
+
+	// Go to the right column
+	const currentColumn: number | undefined = vscode.window.activeTextEditor?.selection.start.character;
+	if (currentColumn !== undefined) {
+		if (currentColumn > column) {
+			vscode.commands.executeCommand("cursorMove", { to: "left", by: "character", value: currentColumn - column });
+		} else if (currentColumn < column) {
+			vscode.commands.executeCommand("cursorMove", { to: "right", by: "character", value: column - currentColumn });
 		}
 	}
 
