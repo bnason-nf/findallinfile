@@ -8,19 +8,15 @@
 		<rect fill="none" id="bg" height="512" width="512"/>
 	</g>
 
-	<!-- pseudo text lines -->
-	<g stroke-width="25" stroke="#777777">
-		<line id="l1" x1="20" y1= "50" x2="492" y2= "50" stroke-dasharray="50,20,100,20,30,20"/>
-		<line id="l2" x1="20" y1="130" x2="492" y2="130" stroke-dasharray="100,20,30,20,50,20"/>
-		<line id="l3" x1="20" y1="210" x2="492" y2="210" stroke-dasharray="30,20,50,20,100,20"/>
-		<line id="l4" x1="20" y1="290" x2="492" y2="290" stroke-dasharray="50,20,100,20,30,20"/>
-		<line id="l5" x1="20" y1="370" x2="492" y2="370" stroke-dasharray="100,20,30,20,50,20"/>
-		<line id="l6" x1="20" y1="450" x2="492" y2="450" stroke-dasharray="30,20,50,20,100,20"/>
-	</g>
-
 	<!-- magnifying glass -->
 	<g stroke-width="30" stroke="#6688AA" fill="none">
 		<circle id="glass" cx="180" cy="180" r="150"/>
-		<line id="handle" x1="295" y1="295" x2="485" y2="485"/>
+		<line id="handle" x1="295" y1="295" x2="485" y2="485" stroke-linecap="round"/>
+	</g>
+
+	<!-- plus symbol -->
+	<g stroke-width="35" stroke="#777777" stroke-linecap="round">
+		<line id="h" x1="90" y1= "180" x2="270" y2= "180"/>
+		<line id="v" x1="180" y1= "90" x2="180" y2= "270"/>
 	</g>
 </svg>
