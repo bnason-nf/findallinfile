@@ -4,16 +4,18 @@ This is an extension for [Visual Studio Code](https://code.visualstudio.com/) th
 
 Additionally, you can also view this extension directly on the Visual Studio Code [Marketplace page for Find All In file](https://marketplace.visualstudio.com/items?itemName=bnason-nf.findallinfile).
 
+There is a [GitHub issue](https://github.com/microsoft/vscode/issues/14836) requesting this feature be integrated into Visual Studio Code. If that ever happens then this extension would likely become obsolete.
+
 # Usage
 
 After installing this extension in Visual Studio Code, you should have some new commands available:
 
 - **Find All In File: Regex**<br>
-  search using a [regular expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
+  Search using a [regular expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
 - **Find All In File: Case Sensitive String**<br>
-  does a simple case-sensitive text search.
+  Does a simple case-sensitive text search.
 - **Find All In File: Case Insensitive String**<br>
-  does a simple case-insensitive text search.
+  Does a simple case-insensitive text search.
 
 You can use these commands from the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette), then typing `"Find All In File"` and selecting the variant you want to use.
 
