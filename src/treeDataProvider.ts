@@ -82,6 +82,12 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 		this.refreshTree();
 	}
 
+	public regexFailure(e: string): void {
+		this.findResults.length = 0;
+		this.findResults.push(new FindResult(`Regex failure: ${e}`));
+		this.refreshTree();
+	}
+
 	private refreshTree(): void {
 		this.eventEmitter.fire();
 	}

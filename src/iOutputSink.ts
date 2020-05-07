@@ -11,4 +11,5 @@ export interface IOutputSink {
 	end(): void;
 	item(findResult: FindResult): void;
 	noDocument(): void;
+	regexFailure(e: string): void;
 }

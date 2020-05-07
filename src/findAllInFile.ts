@@ -100,27 +100,33 @@ export function findRegexCase(
 		return;
 	}
 
-	outputSink.begin(doc, findText, true, true);
+	try {
+		const findRegExp: RegExp = new RegExp(findText, "g");
 
-	// Search each line of the document
-	const lineCount: number = doc.lineCount;
-	const findRegExp: RegExp = new RegExp(findText, "g");
-	for (let line: number = 0; line < lineCount; line += 1) {
-		const textLine: vscode.TextLine = doc.lineAt(line);
-		const text: string = textLine.text;
-		// Search for all the instances within each line
-		while (true) {
-			const match: RegExpExecArray | null = findRegExp.exec(text);
-			if (match === null) {
-				break;
+		outputSink.begin(doc, findText, true, true);
+
+		// Search each line of the document
+		const lineCount: number = doc.lineCount;
+		for (let line: number = 0; line < lineCount; line += 1) {
+			const textLine: vscode.TextLine = doc.lineAt(line);
+			const text: string = textLine.text;
+			// Search for all the instances within each line
+			while (true) {
+				const match: RegExpExecArray | null = findRegExp.exec(text);
+				if (match === null) {
+					break;
+				}
+				outputSink.item(
+					new FindResult(text, line, match.index, findRegExp.lastIndex)
+				);
 			}
-			outputSink.item(
-				new FindResult(text, line, match.index, findRegExp.lastIndex)
-			);
 		}
-	}
 
-	outputSink.end();
+		outputSink.end();
+	} catch (e) {
+		// tslint:disable:no-unsafe-any
+		outputSink.regexFailure(e);
+	}
 }
 
 // Search for all occurrences of a case insensitive search regex within the current file
@@ -135,25 +141,31 @@ export function findRegexNoCase(
 		return;
 	}
 
-	outputSink.begin(doc, findText, true, true);
+	try {
+		const findRegExp: RegExp = new RegExp(findText, "gi");
 
-	// Search each line of the document
-	const lineCount: number = doc.lineCount;
-	const findRegExp: RegExp = new RegExp(findText, "gi");
-	for (let line: number = 0; line < lineCount; line += 1) {
-		const textLine: vscode.TextLine = doc.lineAt(line);
-		const text: string = textLine.text;
-		// Search for all the instances within each line
-		while (true) {
-			const match: RegExpExecArray | null = findRegExp.exec(text);
-			if (match === null) {
-				break;
+		outputSink.begin(doc, findText, true, true);
+
+		// Search each line of the document
+		const lineCount: number = doc.lineCount;
+		for (let line: number = 0; line < lineCount; line += 1) {
+			const textLine: vscode.TextLine = doc.lineAt(line);
+			const text: string = textLine.text;
+			// Search for all the instances within each line
+			while (true) {
+				const match: RegExpExecArray | null = findRegExp.exec(text);
+				if (match === null) {
+					break;
+				}
+				outputSink.item(
+					new FindResult(text, line, match.index, findRegExp.lastIndex)
+				);
 			}
-			outputSink.item(
-				new FindResult(text, line, match.index, findRegExp.lastIndex)
-			);
 		}
-	}
 
-	outputSink.end();
+		outputSink.end();
+	} catch (e) {
+		// tslint:disable:no-unsafe-any
+		outputSink.regexFailure(e);
+	}
 }
