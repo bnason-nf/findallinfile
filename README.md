@@ -1,36 +1,41 @@
 # Find All In File
 
-This is an extension for [Visual Studio Code](https://code.visualstudio.com/) that allows you to search for all the occurrences of a search string in the current file.
+This is an extension for [Visual Studio Code](https://code.visualstudio.com/) that allows you to search for all the occurrences of some text within the current file.
 
-Additionally, you can also view this extension directly on the Visual Studio Code [Marketplace page for Find All In file](https://marketplace.visualstudio.com/items?itemName=bnason-nf.findallinfile).
+# Installing
+The simplest way to get this extension is directly from [Extensions Marketplace](https://code.visualstudio.com/docs/editor/extension-gallery) built into Visual Studio Code.
 
-There is a [GitHub issue](https://github.com/microsoft/vscode/issues/14836) requesting this feature be integrated into Visual Studio Code. If that ever happens then this extension would likely become obsolete.
+An alternative way is to get it from the [Marketplace web page](https://marketplace.visualstudio.com/items?itemName=bnason-nf.findallinfile) for Visual Studio Code.
 
 # Usage
 
-After installing this extension in Visual Studio Code, you should have some new commands available:
+After installing this extension in Visual Studio Code, you will have some new commands available:
 
-- **Find All In File: Find Regex (Case Sensitive)**<br>
-  Search using a case sensitive [regular expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
 - **Find All In File: Find Regex (Case Insensitive)**<br>
-  Search using a case insensitive regular expression.
-- **Find All In File: Find String (Case Sensitive)**<br>
-  Does a simple case-sensitive text search.
+  Search using a case insensitive [regular expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
+- **Find All In File: Find Regex (Case Sensitive)**<br>
+  Search using a case sensitive regular expression.
 - **Find All In File: Find String (Case Insensitive)**<br>
-  Does a simple case-insensitive text search.
+  Does a simple case insensitive text search.
+- **Find All In File: Find String (Case Sensitive)**<br>
+  Does a simple case sensitive text search.
 
-You can use these commands from the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette), then typing `"Find All In File"` and selecting the variant you want to use.
+You can use these from the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) by typing `"Find All In File"`, then selecting the command variant you want to use.
 
-Alternately, you can bring up the editor context menu by right mouse clicking on an open document, and the same commands should be available, with slightly different names:
+You can can also access these from the editor context menu by right mouse clicking on an open document. The same commands are available, with slightly different names:
 
-- **Find Regex (Case Sensitive)**
 - **Find Regex (Case Insensitive)**
-- **Find String (Case Sensitive)**
+- **Find Regex (Case Sensitive)**
 - **Find String (Case Insensitive)**
+- **Find String (Case Sensitive)**
 
-For any of these methods you will first be asked to enter a search string, and then all the matching occurrences of your search should show up in the Find All In File [Side Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_basic-layout). You can also manually show the Find All In File Side Bar by selecting the corresponding icon in the [Activity Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar).
+For all of these commands you will first be asked to enter a search string, and then all the matching occurrences of your search will show up in the Find All In File [Side Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_basic-layout). You can also manually show the Find All In File Side Bar by selecting the corresponding icon in the [Activity Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar).
 
-After you complete your search, you should see the results in the side bar, which you can use to quickly preview the matches that were found. If you click on one of the matches, it should take you to that location in the document with the match selected.
+After you complete your search, you will see the results in the side bar. You can use these results to quickly preview the matches that were found. If you click on one of the results, it will take you to that location in the document, and the matching text will be selected.
+
+# Note
+
+There is a [GitHub issue](https://github.com/microsoft/vscode/issues/14836) requesting this feature be integrated into Visual Studio Code. If that ever happens then this extension will become obsolete.
 
 # Legal
 

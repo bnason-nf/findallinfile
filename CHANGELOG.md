@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update package dependencies for security issues
 
 ## [0.0.6] - 2019-09-30
-- Support case-sensitive/insensitive string searches
+- Support case sensitive/insensitive string searches
 - Minor packaging cleanup
 
 ## [0.0.5] - 2019-09-26

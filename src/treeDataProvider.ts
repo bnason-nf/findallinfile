@@ -21,8 +21,8 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 	public begin(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void {
 		this.doc = doc;
 		this.findResults.length = 0;
-		const label: string = `Searching for ${useRegex ? "regex" : caseSensitive ? "case-sensitive string" :
-			"case-insensitive string"} "${findText}" in "${doc.fileName}":`;
+		const label: string = `Searching for ${useRegex ? "regex" : caseSensitive ? "case sensitive string" :
+			"case insensitive string"} "${findText}" in "${doc.fileName}":`;
 		this.findResults.push(new FindResult(label));
 		this.refreshTree();
 	}
