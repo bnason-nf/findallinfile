@@ -72,8 +72,8 @@ export function findNoCase(doc: vscode.TextDocument | undefined, findText: strin
 	outputSink.end();
 }
 
-// Search for all occurrences of a search regex within the current file
-export function findRegex(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
+// Search for all occurrences of a case-sensitive search regex within the current file
+export function findRegexCase(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
 	if (doc === undefined) {
 		outputSink.noDocument();
 
@@ -85,6 +85,35 @@ export function findRegex(doc: vscode.TextDocument | undefined, findText: string
 	// Search each line of the document
 	const lineCount: number = doc.lineCount;
 	const findRegExp: RegExp = new RegExp(findText, "g");
+	for (let line: number = 0; line < lineCount; line += 1) {
+		const textLine: vscode.TextLine = doc.lineAt(line);
+		const text: string = textLine.text;
+		// Search for all the instances within each line
+		while (true) {
+			const match: RegExpExecArray | null = findRegExp.exec(text);
+			if (match === null) {
+				break;
+			}
+			outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex));
+		}
+	}
+
+	outputSink.end();
+}
+
+// Search for all occurrences of a case-insensitive search regex within the current file
+export function findRegexNoCase(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
+	if (doc === undefined) {
+		outputSink.noDocument();
+
+		return;
+	}
+
+	outputSink.begin(doc, findText, true, true);
+
+	// Search each line of the document
+	const lineCount: number = doc.lineCount;
+	const findRegExp: RegExp = new RegExp(findText, "gi");
 	for (let line: number = 0; line < lineCount; line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;

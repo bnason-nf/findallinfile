@@ -34,7 +34,8 @@
 		"theme": "dark"
 	},
 	"activationEvents": [
-		"onCommand:findallinfile.findregex",
+		"onCommand:findallinfile.findregexcase",
+		"onCommand:findallinfile.findregexnocase",
 		"onCommand:findallinfile.findstringcase",
 		"onCommand:findallinfile.findstringnocase"
 	],
@@ -42,18 +43,23 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "findallinfile.findregex",
-				"title": "Find Regex",
+				"command": "findallinfile.findregexcase",
+				"title": "Find Regex (Case Sensitive)",
+				"category": "Find All In File"
+			},
+			{
+				"command": "findallinfile.findregexnocase",
+				"title": "Find Regex (Case Insensitive)",
 				"category": "Find All In File"
 			},
 			{
 				"command": "findallinfile.findstringcase",
-				"title": "Find Case Sensitive String",
+				"title": "Find String (Case Sensitive)",
 				"category": "Find All In File"
 			},
 			{
 				"command": "findallinfile.findstringnocase",
-				"title": "Find Case Insensitive String",
+				"title": "Find String (Case Insensitive)",
 				"category": "Find All In File"
 			}
 		],
@@ -61,7 +67,12 @@
 			"editor/context": [
 				{
 					"when": "true",
-					"command": "findallinfile.findregex",
+					"command": "findallinfile.findregexcase",
+					"group": "findallinfile"
+				},
+				{
+					"when": "true",
+					"command": "findallinfile.findregexnocase",
 					"group": "findallinfile"
 				},
 				{

@@ -10,20 +10,23 @@ There is a [GitHub issue](https://github.com/microsoft/vscode/issues/14836) requ
 
 After installing this extension in Visual Studio Code, you should have some new commands available:
 
-- **Find All In File: Regex**<br>
-  Search using a [regular expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
-- **Find All In File: Case Sensitive String**<br>
+- **Find All In File: Find Regex (Case Sensitive)**<br>
+  Search using a case sensitive [regular expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
+- **Find All In File: Find Regex (Case Insensitive)**<br>
+  Search using a case insensitive regular expression.
+- **Find All In File: Find String (Case Sensitive)**<br>
   Does a simple case-sensitive text search.
-- **Find All In File: Case Insensitive String**<br>
+- **Find All In File: Find String (Case Insensitive)**<br>
   Does a simple case-insensitive text search.
 
 You can use these commands from the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette), then typing `"Find All In File"` and selecting the variant you want to use.
 
 Alternately, you can bring up the editor context menu by right mouse clicking on an open document, and the same commands should be available, with slightly different names:
 
-- **Find Regex**
-- **Find Case Sensitive String**
-- **Find Case Insensitive String**
+- **Find Regex (Case Sensitive)**
+- **Find Regex (Case Insensitive)**
+- **Find String (Case Sensitive)**
+- **Find String (Case Insensitive)**
 
 For any of these methods you will first be asked to enter a search string, and then all the matching occurrences of your search should show up in the Find All In File [Side Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_basic-layout). You can also manually show the Find All In File Side Bar by selecting the corresponding icon in the [Activity Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar).
 

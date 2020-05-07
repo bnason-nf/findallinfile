@@ -32,7 +32,7 @@ function createTreeView(provider: TreeDataProvider): vscode.TreeView<FindResult>
 let lastFindRegex: string = "";
 let lastFindString: string = "";
 
-function findRegex(): void {
+function findRegexCase(): void {
 	vscode.window.showInputBox({
 		prompt: "Please enter regular expression to search for",
 		value: lastFindRegex,
@@ -41,7 +41,25 @@ function findRegex(): void {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
 
-			findAllInFile.findRegex(getActiveDocument(), findText, provider);
+			findAllInFile.findRegexCase(getActiveDocument(), findText, provider);
+
+			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+
+			lastFindRegex = findText;
+		}
+	});
+}
+
+function findRegexNoCase(): void {
+	vscode.window.showInputBox({
+		prompt: "Please enter regular expression to search for",
+		value: lastFindRegex,
+	}).then((findText: string | undefined) => {
+		if (findText !== undefined) {
+			const provider: TreeDataProvider = new TreeDataProvider();
+			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+
+			findAllInFile.findRegexNoCase(getActiveDocument(), findText, provider);
 
 			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
 
@@ -101,7 +119,8 @@ function viewResult(doc: vscode.TextDocument, line: number, columnBegin: number,
 
 // Called once on extension init
 export function activate(context: vscode.ExtensionContext): void {
-	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findregex", findRegex));
+	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findregexcase", findRegexCase));
+	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findregexnocase", findRegexNoCase));
 	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findstringcase", findStringCase));
 	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.findstringnocase", findStringNoCase));
 	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.viewResult", viewResult));
