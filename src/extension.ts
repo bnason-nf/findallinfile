@@ -77,7 +77,7 @@ function findStringCase(): void {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
 
-			findAllInFile.findCase(getActiveDocument(), findText, provider);
+			findAllInFile.findStringCase(getActiveDocument(), findText, provider);
 
 			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
 
@@ -95,7 +95,7 @@ function findStringNoCase(): void {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
 
-			findAllInFile.findNoCase(getActiveDocument(), findText, provider);
+			findAllInFile.findStringNoCase(getActiveDocument(), findText, provider);
 
 			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
 

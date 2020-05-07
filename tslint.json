@@ -6,7 +6,8 @@
 		"newline-per-chained-call": false,
 		"no-implicit-dependencies": [false, "dev"],
 		"no-inferrable-types": false,
-		"only-arrow-functions": false
+		"only-arrow-functions": false,
+		"trailing-comma": false
 	},
 	"defaultSeverity": "warning"
 }

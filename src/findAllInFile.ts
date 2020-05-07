@@ -8,7 +8,11 @@ import { FindResult } from "./findResult";
 import { IOutputSink } from "./iOutputSink";
 
 // Search for all occurrences of a case-sensitive search string within the current file
-export function findCase(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
+export function findStringCase(
+	doc: vscode.TextDocument | undefined,
+	findText: string,
+	outputSink: IOutputSink
+): void {
 	if (doc === undefined) {
 		outputSink.noDocument();
 
@@ -40,7 +44,11 @@ export function findCase(doc: vscode.TextDocument | undefined, findText: string,
 }
 
 // Search for all occurrences of a case-insensitive search string within the current file
-export function findNoCase(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
+export function findStringNoCase(
+	doc: vscode.TextDocument | undefined,
+	findText: string,
+	outputSink: IOutputSink
+): void {
 	if (doc === undefined) {
 		outputSink.noDocument();
 
@@ -73,7 +81,11 @@ export function findNoCase(doc: vscode.TextDocument | undefined, findText: strin
 }
 
 // Search for all occurrences of a case-sensitive search regex within the current file
-export function findRegexCase(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
+export function findRegexCase(
+	doc: vscode.TextDocument | undefined,
+	findText: string,
+	outputSink: IOutputSink
+): void {
 	if (doc === undefined) {
 		outputSink.noDocument();
 
@@ -94,7 +106,9 @@ export function findRegexCase(doc: vscode.TextDocument | undefined, findText: st
 			if (match === null) {
 				break;
 			}
-			outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex));
+			outputSink.item(
+				new FindResult(text, line, match.index, findRegExp.lastIndex)
+			);
 		}
 	}
 
@@ -102,7 +116,11 @@ export function findRegexCase(doc: vscode.TextDocument | undefined, findText: st
 }
 
 // Search for all occurrences of a case-insensitive search regex within the current file
-export function findRegexNoCase(doc: vscode.TextDocument | undefined, findText: string, outputSink: IOutputSink): void {
+export function findRegexNoCase(
+	doc: vscode.TextDocument | undefined,
+	findText: string,
+	outputSink: IOutputSink
+): void {
 	if (doc === undefined) {
 		outputSink.noDocument();
 
@@ -123,7 +141,9 @@ export function findRegexNoCase(doc: vscode.TextDocument | undefined, findText: 
 			if (match === null) {
 				break;
 			}
-			outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex));
+			outputSink.item(
+				new FindResult(text, line, match.index, findRegExp.lastIndex)
+			);
 		}
 	}
 
