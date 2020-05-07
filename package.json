@@ -30,7 +30,7 @@
 	},
 	"license": "ISC",
 	"galleryBanner": {
-		"color": "#6688AA",
+		"color": "#222222",
 		"theme": "dark"
 	},
 	"activationEvents": [
@@ -112,7 +112,7 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run lint && npm run compile",
 		"test": "node ./out/test/runTest.js",
-		"convert-icon": "magick convert -size 128x128 -define png:include-chunk=none data/icon.svg data/icon.png",
+		"convert-icon": "magick convert -size 128x128 -background none -define png:include-chunk=none data/icon.svg data/icon.png",
 		"publish": "vsce package && vsce publish"
 	},
 	"engines": {
