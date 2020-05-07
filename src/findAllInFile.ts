@@ -34,9 +34,13 @@ export function findStringCase(
 			if (tmpColumn < 0) {
 				break;
 			}
-			column += tmpColumn;
-			outputSink.item(new FindResult(text, line, column, column + findText.length));
-			tmpText = tmpText.substr(tmpColumn + 1);
+
+			const columnBegin: number = column + tmpColumn;
+			const columnEnd: number = column + tmpColumn + findText.length;
+			outputSink.item(new FindResult(text, line, columnBegin, columnEnd));
+			tmpText = tmpText.substr(tmpColumn + findText.length);
+
+			column = columnEnd;
 		}
 	}
 
@@ -71,9 +75,13 @@ export function findStringNoCase(
 			if (tmpColumn < 0) {
 				break;
 			}
-			column += tmpColumn;
-			outputSink.item(new FindResult(text, line, column, column + findText.length));
-			tmpText = tmpText.substr(tmpColumn + 1);
+
+			const columnBegin: number = column + tmpColumn;
+			const columnEnd: number = column + tmpColumn + findText.length;
+			outputSink.item(new FindResult(text, line, columnBegin, columnEnd));
+			tmpText = tmpText.substr(tmpColumn + findText.length);
+
+			column = columnEnd;
 		}
 	}
 
