@@ -31,7 +31,7 @@
 	"license": "ISC",
 	"galleryBanner": {
 		"color": "#222222",
-		"theme": "dark"
+		"theme": "light"
 	},
 	"activationEvents": [
 		"onCommand:findallinfile.findregexcase",
