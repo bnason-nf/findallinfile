@@ -17,10 +17,14 @@
         "findallinfile",
         "findallview",
         "findregexcase",
+        "findregexcaseword",
         "findregexnocase",
+        "findregexnocaseword",
         "findstring",
         "findstringcase",
+        "findstringcaseword",
         "findstringnocase",
+        "findstringnocaseword",
         "magick",
         "vsce"
     ]

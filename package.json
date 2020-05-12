@@ -35,9 +35,13 @@
 	},
 	"activationEvents": [
 		"onCommand:findallinfile.findregexcase",
+		"onCommand:findallinfile.findregexcaseword",
 		"onCommand:findallinfile.findregexnocase",
+		"onCommand:findallinfile.findregexnocaseword",
 		"onCommand:findallinfile.findstringcase",
-		"onCommand:findallinfile.findstringnocase"
+		"onCommand:findallinfile.findstringcaseword",
+		"onCommand:findallinfile.findstringnocase",
+		"onCommand:findallinfile.findstringnocaseword"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -48,8 +52,18 @@
 				"category": "Find All In File"
 			},
 			{
+				"command": "findallinfile.findregexcaseword",
+				"title": "Find Regex (Case Sensitive, Whole Word)",
+				"category": "Find All In File"
+			},
+			{
 				"command": "findallinfile.findregexnocase",
 				"title": "Find Regex (Case Insensitive)",
+				"category": "Find All In File"
+			},
+			{
+				"command": "findallinfile.findregexnocaseword",
+				"title": "Find Regex (Case Insensitive, Whole Word)",
 				"category": "Find All In File"
 			},
 			{
@@ -58,8 +72,18 @@
 				"category": "Find All In File"
 			},
 			{
+				"command": "findallinfile.findstringcaseword",
+				"title": "Find String (Case Sensitive, Whole Word)",
+				"category": "Find All In File"
+			},
+			{
 				"command": "findallinfile.findstringnocase",
 				"title": "Find String (Case Insensitive)",
+				"category": "Find All In File"
+			},
+			{
+				"command": "findallinfile.findstringnocaseword",
+				"title": "Find String (Case Insensitive, Whole Word)",
 				"category": "Find All In File"
 			}
 		],
@@ -72,7 +96,17 @@
 				},
 				{
 					"when": "true",
+					"command": "findallinfile.findregexcaseword",
+					"group": "findallinfile"
+				},
+				{
+					"when": "true",
 					"command": "findallinfile.findregexnocase",
+					"group": "findallinfile"
+				},
+				{
+					"when": "true",
+					"command": "findallinfile.findregexnocaseword",
 					"group": "findallinfile"
 				},
 				{
@@ -82,7 +116,17 @@
 				},
 				{
 					"when": "true",
+					"command": "findallinfile.findstringcaseword",
+					"group": "findallinfile"
+				},
+				{
+					"when": "true",
 					"command": "findallinfile.findstringnocase",
+					"group": "findallinfile"
+				},
+				{
+					"when": "true",
+					"command": "findallinfile.findstringnocaseword",
 					"group": "findallinfile"
 				}
 			]

@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 import { FindResult } from "./findResult";
 
 export interface IOutputSink {
-	begin(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean): void;
+	begin(doc: vscode.TextDocument, findText: string, useRegex: boolean, caseSensitive: boolean, wholeWord: boolean): void;
 	end(): void;
 	item(findResult: FindResult): void;
 	noDocument(): void;
