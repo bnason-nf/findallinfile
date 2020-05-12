@@ -180,11 +180,11 @@ function viewResult(doc: vscode.TextDocument, line: number, columnBegin: number,
 	// Make sure document is showing
 	vscode.window.showTextDocument(doc);
 
-	// Make sure line is showing
-	vscode.commands.executeCommand("revealLine", { lineNumber: line, at: "center" });
-
-	// Select the result
 	if (vscode.window.activeTextEditor !== undefined) {
+		// Make the result visible
+		vscode.window.activeTextEditor.revealRange(new vscode.Range(line, columnBegin, line, columnEnd));
+
+		// Select the result
 		vscode.window.activeTextEditor.selection = new vscode.Selection(line, columnBegin, line, columnEnd);
 	}
 }
