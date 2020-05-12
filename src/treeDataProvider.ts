@@ -95,6 +95,6 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 	}
 
 	private refreshTree(): void {
-		this.eventEmitter.fire();
+		this.eventEmitter.fire(new FindResult(""));
 	}
 }

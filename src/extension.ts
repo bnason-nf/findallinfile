@@ -20,7 +20,6 @@ function getActiveDocument(): vscode.TextDocument | undefined {
 
 function createTreeView(provider: TreeDataProvider): vscode.TreeView<FindResult> {
 	const treeViewOptions: vscode.TreeViewOptions<FindResult> = {
-		canSelectMany: false,
 		showCollapseAll: false,
 		treeDataProvider: provider,
 	};
