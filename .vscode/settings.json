@@ -26,6 +26,15 @@
         "findstringnocase",
         "findstringnocaseword",
         "magick",
+        "mockito",
         "vsce"
+    ],
+    "cSpell.ignorePaths": [
+        "**/package-lock.json",
+        "**/node_modules/**",
+        "**/vscode-extension/**",
+        "**/.git/objects/**",
+        ".vscode",
+        "**/test.txt"
     ]
 }
