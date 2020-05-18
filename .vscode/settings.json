@@ -26,6 +26,9 @@
         "findstringnocaseword",
         "magick",
         "mockito",
+        "notest",
+        "tast",
+        "testno",
         "vsce"
     ],
     "cSpell.ignorePaths": [
