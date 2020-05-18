@@ -63,7 +63,8 @@ Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar).
 
 After you complete your search, you will see the results in the Side Bar. You can use these results
 to quickly preview the matches that were found. If you click on one of the results, it will take you
-to that location in the document, and the matching text will be selected.
+to that location in the document, and the matching text will be selected. It's also possible to view
+the results view at any time by using the "**Find All In File: Focus on View**" command.
 
 ## Note
 
@@ -73,6 +74,6 @@ obsolete.
 
 ## Legal
 
-Copyright 2019 Benbuck Nason.
+Copyright &copy; 2019 Benbuck Nason.
 
 Released under the [ISC license](https://opensource.org/licenses/ISC).
