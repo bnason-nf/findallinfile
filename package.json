@@ -10,6 +10,7 @@
 		"find all",
 		"findallinfile",
 		"find all in file",
+		"find all in current file",
 		"find all occurrences"
 	],
 	"categories": [
