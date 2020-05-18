@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2020-05-18
+
+- Fix command ordering to match documentation
+- Thicker icon lines
+
 ## [0.4.0] - 2020-05-12
 
 - Add whole word searching
@@ -64,7 +69,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Created
 
-[Unreleased]: https://github.com/bnason-nf/findallinfile/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/bnason-nf/findallinfile/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/bnason-nf/findallinfile/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/bnason-nf/findallinfile/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bnason-nf/findallinfile/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/bnason-nf/findallinfile/compare/v0.1.0...v0.2.0
