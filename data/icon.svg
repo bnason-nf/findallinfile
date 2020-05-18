@@ -9,13 +9,13 @@
 	</g>
 
 	<!-- magnifying glass -->
-	<g stroke-width="30" stroke="#6688AA" fill="none">
+	<g stroke-width="50" stroke="#6688AA" fill="none">
 		<circle id="glass" cx="180" cy="180" r="150"/>
 		<line id="handle" x1="295" y1="295" x2="485" y2="485" stroke-linecap="round"/>
 	</g>
 
 	<!-- plus symbol -->
-	<g stroke-width="35" stroke="#777777" stroke-linecap="round">
+	<g stroke-width="50" stroke="#777777" stroke-linecap="round">
 		<line id="h" x1="90" y1= "180" x2="270" y2= "180"/>
 		<line id="v" x1="180" y1= "90" x2="180" y2= "270"/>
 	</g>
