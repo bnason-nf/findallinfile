@@ -11,7 +11,6 @@
     "cSpell.words": [
         "activitybar",
         "bnason",
-        "dasharray",
         "findall",
         "findallcontainer",
         "findallinfile",
@@ -30,11 +29,8 @@
         "vsce"
     ],
     "cSpell.ignorePaths": [
-        "**/package-lock.json",
-        "**/node_modules/**",
-        "**/vscode-extension/**",
-        "**/.git/objects/**",
+        "node_modules/**",
         ".vscode",
-        "**/test.txt"
+        "src/test/**/test.txt"
     ]
 }
