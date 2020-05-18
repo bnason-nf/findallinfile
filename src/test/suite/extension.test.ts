@@ -1,3 +1,7 @@
+// Copyright 2019 Benbuck Nason
+
+"use strict";
+
 // TMP import * as assert from "assert";
 
 import { before } from "mocha";
