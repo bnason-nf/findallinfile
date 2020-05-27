@@ -188,6 +188,20 @@ function viewResult(doc: vscode.TextDocument, line: number, columnBegin: number,
 	}
 }
 
+function copyResults(provider: TreeDataProvider): void {
+	let resultString: string = "";
+	const results: FindResult[] = provider.getResults();
+	for (const result of results) {
+		if ((result.line === undefined) || (result.columnBegin === undefined) || (result.columnEnd === undefined)) {
+			resultString += `${result.text}\n`;
+		} else {
+			resultString += `${result.line + 1}:${result.columnBegin + 1}\t${result.text}\n`;
+		}
+	}
+
+	vscode.env.clipboard.writeText(resultString);
+	vscode.window.showInformationMessage("Copied results to clipboard");
+}
 // Called once on extension init
 export function activate(context: vscode.ExtensionContext): void {
 	// External commands
@@ -227,6 +241,9 @@ export function activate(context: vscode.ExtensionContext): void {
 	// Internal commands
 	context.subscriptions.push(vscode.commands.registerCommand(
 		"findallinfile.viewResult", viewResult
+	));
+	context.subscriptions.push(vscode.commands.registerCommand(
+		"findallinfile.copyResults", copyResults
 	));
 }
 

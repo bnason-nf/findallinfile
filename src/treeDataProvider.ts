@@ -56,13 +56,22 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 		return undefined;
 	}
 
+	public getResults(): FindResult[] {
+		return this.findResults;
+	}
+
 	public getTreeItem(element: FindResult | undefined): vscode.TreeItem {
 		if (element === undefined) {
 			return new vscode.TreeItem("");
 		}
 
 		if ((element.line === undefined) || (element.columnBegin === undefined) || (element.columnEnd === undefined)) {
-			return new vscode.TreeItem(element.text);
+			const copyTreeItem: vscode.TreeItem = new vscode.TreeItem(element.text);
+			// tslint:disable:no-any
+			const args: any[] = [ this ];
+			copyTreeItem.command = { command: "findallinfile.copyResults", title: "Copy Results", arguments: args };
+
+			return copyTreeItem;
 		}
 
 		const label: string = `${element.line + 1} : ${element.columnBegin + 1}-${element.columnEnd} :\t${element.text}`;
@@ -70,7 +79,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 
 		if (this.doc !== undefined) {
 			// tslint:disable:no-any
-			const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd ];
+			const args: any[] = [ this.doc, element.line, element.columnBegin, element.columnEnd ];
 			treeItem.command = { command: "findallinfile.viewResult", title: "Open File", arguments: args };
 		}
 
