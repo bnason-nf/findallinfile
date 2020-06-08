@@ -64,7 +64,10 @@ Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar).
 After you complete your search, you will see the results in the Side Bar. You can use these results
 to quickly preview the matches that were found. If you click on one of the results, it will take you
 to that location in the document, and the matching text will be selected. It's also possible to view
-the results view at any time by using the "**Find All In File: Focus on View**" command.
+the results view at any time by using the "**Find All In File: Focus on View**" command. The format
+of these results is:
+
+`[Match Number] [Line Number]:[Start Column]-[End Column] [Text of matching line from file]`
 
 The first and last lines in the Side Bar are special. The first line shows you the search you
 performed, and the last line shows you the summary of the search results. If you select either of

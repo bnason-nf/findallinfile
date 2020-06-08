@@ -5,6 +5,7 @@
 export class FindResult {
 	public readonly columnBegin: number | undefined;
 	public readonly columnEnd: number | undefined;
+	public readonly index: number | undefined;
 	public readonly line: number | undefined;
 	public readonly text: string;
 
@@ -13,11 +14,13 @@ export class FindResult {
 		text: string,
 		line: number | undefined = undefined,
 		columnBegin: number | undefined = undefined,
-		columnEnd: number | undefined = undefined
+		columnEnd: number | undefined = undefined,
+		index: number | undefined = undefined
 	) {
-		this.line = line;
 		this.columnBegin = columnBegin;
 		this.columnEnd = columnEnd;
+		this.index = index;
+		this.line = line;
 		this.text = text;
 	}
 }

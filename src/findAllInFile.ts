@@ -40,6 +40,7 @@ export function findStringCase(
 	outputSink.begin(doc, findText, false, true, false);
 
 	// Search each line of the document
+	let findCount: number = 0;
 	const lineCount: number = doc.lineCount;
 	for (let line: number = 0; line < lineCount; line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
@@ -53,9 +54,10 @@ export function findStringCase(
 				break;
 			}
 
+			findCount += 1;
 			const columnBegin: number = column + tmpColumn;
 			const columnEnd: number = column + tmpColumn + findText.length;
-			outputSink.item(new FindResult(text, line, columnBegin, columnEnd));
+			outputSink.item(new FindResult(text, line, columnBegin, columnEnd, findCount));
 			tmpText = tmpText.substr(tmpColumn + findText.length);
 
 			column = columnEnd;
@@ -80,6 +82,7 @@ export function findStringCaseWord(
 	outputSink.begin(doc, findText, false, true, true);
 
 	// Search each line of the document
+	let findCount: number = 0;
 	const lineCount: number = doc.lineCount;
 	for (let line: number = 0; line < lineCount; line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
@@ -93,10 +96,11 @@ export function findStringCaseWord(
 				break;
 			}
 
+			findCount += 1;
 			const columnBegin: number = column + tmpColumn;
 			const columnEnd: number = column + tmpColumn + findText.length;
 			if (isWord(text, columnBegin, columnEnd)) {
-				outputSink.item(new FindResult(text, line, columnBegin, columnEnd));
+				outputSink.item(new FindResult(text, line, columnBegin, columnEnd, findCount));
 			}
 			tmpText = tmpText.substr(tmpColumn + findText.length);
 
@@ -122,6 +126,7 @@ export function findStringNoCase(
 	outputSink.begin(doc, findText, false, false, false);
 
 	// Search each line of the document
+	let findCount: number = 0;
 	const lineCount: number = doc.lineCount;
 	const findTextLower: string = findText.toLowerCase();
 	for (let line: number = 0; line < lineCount; line += 1) {
@@ -136,9 +141,10 @@ export function findStringNoCase(
 				break;
 			}
 
+			findCount += 1;
 			const columnBegin: number = column + tmpColumn;
 			const columnEnd: number = column + tmpColumn + findText.length;
-			outputSink.item(new FindResult(text, line, columnBegin, columnEnd));
+			outputSink.item(new FindResult(text, line, columnBegin, columnEnd, findCount));
 			tmpText = tmpText.substr(tmpColumn + findText.length);
 
 			column = columnEnd;
@@ -163,6 +169,7 @@ export function findStringNoCaseWord(
 	outputSink.begin(doc, findText, false, false, true);
 
 	// Search each line of the document
+	let findCount: number = 0;
 	const lineCount: number = doc.lineCount;
 	const findTextLower: string = findText.toLowerCase();
 	for (let line: number = 0; line < lineCount; line += 1) {
@@ -177,10 +184,11 @@ export function findStringNoCaseWord(
 				break;
 			}
 
+			findCount += 1;
 			const columnBegin: number = column + tmpColumn;
 			const columnEnd: number = column + tmpColumn + findText.length;
 			if (isWord(text, columnBegin, columnEnd)) {
-				outputSink.item(new FindResult(text, line, columnBegin, columnEnd));
+				outputSink.item(new FindResult(text, line, columnBegin, columnEnd, findCount));
 			}
 			tmpText = tmpText.substr(tmpColumn + findText.length);
 
@@ -209,6 +217,7 @@ export function findRegexCase(
 		outputSink.begin(doc, findText, true, true, false);
 
 		// Search each line of the document
+		let findCount: number = 0;
 		const lineCount: number = doc.lineCount;
 		for (let line: number = 0; line < lineCount; line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
@@ -219,8 +228,9 @@ export function findRegexCase(
 				if (match === null) {
 					break;
 				}
+				findCount += 1;
 				outputSink.item(
-					new FindResult(text, line, match.index, findRegExp.lastIndex)
+					new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
 				);
 			}
 		}
@@ -250,6 +260,7 @@ export function findRegexCaseWord(
 		outputSink.begin(doc, findText, true, true, true);
 
 		// Search each line of the document
+		let findCount: number = 0;
 		const lineCount: number = doc.lineCount;
 		for (let line: number = 0; line < lineCount; line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
@@ -261,8 +272,9 @@ export function findRegexCaseWord(
 					break;
 				}
 				if (isWord(text, match.index, findRegExp.lastIndex)) {
+					findCount += 1;
 					outputSink.item(
-						new FindResult(text, line, match.index, findRegExp.lastIndex)
+						new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
 					);
 				}
 			}
@@ -293,6 +305,7 @@ export function findRegexNoCase(
 		outputSink.begin(doc, findText, true, false, false);
 
 		// Search each line of the document
+		let findCount: number = 0;
 		const lineCount: number = doc.lineCount;
 		for (let line: number = 0; line < lineCount; line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
@@ -303,8 +316,9 @@ export function findRegexNoCase(
 				if (match === null) {
 					break;
 				}
+				findCount += 1;
 				outputSink.item(
-					new FindResult(text, line, match.index, findRegExp.lastIndex)
+					new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
 				);
 			}
 		}
@@ -334,6 +348,7 @@ export function findRegexNoCaseWord(
 		outputSink.begin(doc, findText, true, false, true);
 
 		// Search each line of the document
+		let findCount: number = 0;
 		const lineCount: number = doc.lineCount;
 		for (let line: number = 0; line < lineCount; line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
@@ -345,8 +360,9 @@ export function findRegexNoCaseWord(
 					break;
 				}
 				if (isWord(text, match.index, findRegExp.lastIndex)) {
+					findCount += 1;
 					outputSink.item(
-						new FindResult(text, line, match.index, findRegExp.lastIndex)
+						new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
 					);
 				}
 			}

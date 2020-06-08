@@ -65,7 +65,8 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 			return new vscode.TreeItem("");
 		}
 
-		if ((element.line === undefined) || (element.columnBegin === undefined) || (element.columnEnd === undefined)) {
+		if ((element.line === undefined) || (element.columnBegin === undefined) || (element.columnEnd === undefined) ||
+			(element.index === undefined)) {
 			const copyTreeItem: vscode.TreeItem = new vscode.TreeItem(element.text);
 			// tslint:disable:no-any
 			const args: any[] = [ this ];
@@ -74,7 +75,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 			return copyTreeItem;
 		}
 
-		const label: string = `${element.line + 1} : ${element.columnBegin + 1}-${element.columnEnd} :\t${element.text}`;
+		const label: string = `${element.index}\t${element.line + 1}:${element.columnBegin + 1}-${element.columnEnd}:\t${element.text}`;
 		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
 
 		if (this.doc !== undefined) {
