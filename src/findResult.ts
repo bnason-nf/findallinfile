@@ -23,4 +23,13 @@ export class FindResult {
 		this.line = line;
 		this.text = text;
 	}
+
+	public toString(): string {
+		if ((this.line === undefined) || (this.columnBegin === undefined) || (this.columnEnd === undefined) ||
+			(this.index === undefined)) {
+			return this.text;
+		}
+
+		return `${this.index}\t${this.line + 1}:${this.columnBegin + 1}-${this.columnEnd}\t${this.text}`;
+	}
 }

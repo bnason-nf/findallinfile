@@ -192,13 +192,7 @@ function copyResults(provider: TreeDataProvider): void {
 	let resultString: string = "";
 	const results: FindResult[] = provider.getResults();
 	for (const result of results) {
-		if ((result.line === undefined) || (result.columnBegin === undefined) || (result.columnEnd === undefined) ||
-			(result.index === undefined)) {
-			resultString += `${result.text}\n`;
-		} else {
-			resultString +=
-				`${result.index}\t${result.line + 1}:${result.columnBegin + 1}-${result.columnEnd}\t${result.text}\n`;
-		}
+		resultString += `${result.toString()}\n`;
 	}
 
 	vscode.env.clipboard.writeText(resultString);

@@ -65,22 +65,16 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 			return new vscode.TreeItem("");
 		}
 
-		if ((element.line === undefined) || (element.columnBegin === undefined) || (element.columnEnd === undefined) ||
-			(element.index === undefined)) {
-			const copyTreeItem: vscode.TreeItem = new vscode.TreeItem(element.text);
-			// tslint:disable:no-any
-			const args: any[] = [ this ];
-			copyTreeItem.command = { command: "findallinfile.copyResults", title: "Copy Results", arguments: args };
-
-			return copyTreeItem;
-		}
-
-		const label: string = `${element.index}\t${element.line + 1}:${element.columnBegin + 1}-${element.columnEnd}:\t${element.text}`;
+		const label: string = element.toString();
 		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
 
-		if (this.doc !== undefined) {
+		if (element.line === undefined) {
 			// tslint:disable:no-any
-			const args: any[] = [ this.doc, element.line, element.columnBegin, element.columnEnd ];
+			const args: any[] = [this];
+			treeItem.command = { command: "findallinfile.copyResults", title: "Copy Results", arguments: args };
+		} else if (this.doc !== undefined) {
+			// tslint:disable:no-any
+			const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd];
 			treeItem.command = { command: "findallinfile.viewResult", title: "Open File", arguments: args };
 		}
 
