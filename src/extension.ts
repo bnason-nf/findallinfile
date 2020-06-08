@@ -5,8 +5,7 @@
 import * as vscode from "vscode";
 
 import * as findAllInFile from "./findAllInFile";
-import { FindResult } from "./findResult";
-import { TreeDataProvider } from "./treeDataProvider";
+import { TreeDataProvider, TreeElement } from "./treeDataProvider";
 
 function getActiveDocument(): vscode.TextDocument | undefined {
 	// Make sure there is an active editor window for us to use
@@ -18,8 +17,8 @@ function getActiveDocument(): vscode.TextDocument | undefined {
 	return vscode.window.activeTextEditor.document;
 }
 
-function createTreeView(provider: TreeDataProvider): vscode.TreeView<FindResult> {
-	const treeViewOptions: vscode.TreeViewOptions<FindResult> = {
+function createTreeView(provider: TreeDataProvider): vscode.TreeView<TreeElement> {
+	const treeViewOptions: vscode.TreeViewOptions<TreeElement> = {
 		showCollapseAll: false,
 		treeDataProvider: provider,
 	};
@@ -38,7 +37,7 @@ function findRegexCase(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
 			findAllInFile.findRegexCase(getActiveDocument(), findText, provider);
 
@@ -56,7 +55,7 @@ function findRegexCaseWord(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
 			findAllInFile.findRegexCaseWord(getActiveDocument(), findText, provider);
 
@@ -74,7 +73,7 @@ function findRegexNoCase(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
 			findAllInFile.findRegexNoCase(getActiveDocument(), findText, provider);
 
@@ -92,7 +91,7 @@ function findRegexNoCaseWord(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
 			findAllInFile.findRegexNoCaseWord(getActiveDocument(), findText, provider);
 
@@ -110,7 +109,7 @@ function findStringCase(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
 			findAllInFile.findStringCase(getActiveDocument(), findText, provider);
 
@@ -128,7 +127,7 @@ function findStringCaseWord(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
 			findAllInFile.findStringCaseWord(getActiveDocument(), findText, provider);
 
@@ -146,7 +145,7 @@ function findStringNoCase(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
 			findAllInFile.findStringNoCase(getActiveDocument(), findText, provider);
 
@@ -164,7 +163,7 @@ function findStringNoCaseWord(): void {
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
 			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<FindResult> = createTreeView(provider);
+			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
 			findAllInFile.findStringNoCaseWord(getActiveDocument(), findText, provider);
 
@@ -190,7 +189,7 @@ function viewResult(doc: vscode.TextDocument, line: number, columnBegin: number,
 
 function copyResults(provider: TreeDataProvider): void {
 	let resultString: string = "";
-	const results: FindResult[] = provider.getResults();
+	const results: TreeElement[] = provider.getResults();
 	for (const result of results) {
 		resultString += `${result.toString()}\n`;
 	}

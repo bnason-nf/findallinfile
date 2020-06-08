@@ -4,15 +4,19 @@
 
 import * as vscode from "vscode";
 
+import { FindError } from "./findError";
+import { FindInfo } from "./findInfo";
 import { FindResult } from "./findResult";
 import { IOutputSink } from "./iOutputSink";
 
-export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IOutputSink {
-	public readonly onDidChangeTreeData: vscode.Event<FindResult> | undefined;
+export type TreeElement = FindError | FindInfo | FindResult;
+
+export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, IOutputSink {
+	public readonly onDidChangeTreeData: vscode.Event<TreeElement> | undefined;
 
 	private doc: vscode.TextDocument | undefined;
-	private readonly eventEmitter: vscode.EventEmitter<FindResult> = new vscode.EventEmitter<FindResult>();
-	private readonly findResults: FindResult[] = [];
+	private readonly eventEmitter: vscode.EventEmitter<TreeElement> = new vscode.EventEmitter<TreeElement>();
+	private readonly findResults: TreeElement[] = [];
 
 	public constructor() {
 		this.onDidChangeTreeData = this.eventEmitter.event;
@@ -29,17 +33,17 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 		this.findResults.length = 0;
 		const label: string = `Searching for ${useRegex ? "regex" : caseSensitive ? "case sensitive string" :
 			"case insensitive string"}${wholeWord ? " word" : ""} "${findText}" in "${doc.fileName}":`;
-		this.findResults.push(new FindResult(label));
+		this.findResults.push(new FindInfo(label));
 		this.refreshTree();
 	}
 
 	public end(): void {
 		const label: string = `Found ${this.findResults.length - 1} occurrences`;
-		this.findResults.push(new FindResult(label));
+		this.findResults.push(new FindInfo(label));
 		this.refreshTree();
 	}
 
-	public getChildren(element: FindResult | undefined): FindResult[] {
+	public getChildren(element: TreeElement | undefined): TreeElement[] {
 		if (element === undefined) {
 			return this.findResults;
 		}
@@ -47,20 +51,20 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 		return [];
 	}
 
-	public getFirstResult(): FindResult {
+	public getFirstResult(): TreeElement {
 		return this.findResults[0];
 	}
 
 	// tslint:disable:prefer-function-over-method
-	public getParent(/* element: FindResult */): vscode.ProviderResult<FindResult> {
+	public getParent(/* element: TreeElement */): vscode.ProviderResult<TreeElement> {
 		return undefined;
 	}
 
-	public getResults(): FindResult[] {
+	public getResults(): TreeElement[] {
 		return this.findResults;
 	}
 
-	public getTreeItem(element: FindResult | undefined): vscode.TreeItem {
+	public getTreeItem(element: TreeElement | undefined): vscode.TreeItem {
 		if (element === undefined) {
 			return new vscode.TreeItem("");
 		}
@@ -68,14 +72,18 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 		const label: string = element.toString();
 		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
 
-		if (element.line === undefined) {
+		if (element instanceof FindError) {
+			// No command needed
+		} else if (element instanceof FindInfo) {
 			// tslint:disable:no-any
 			const args: any[] = [this];
 			treeItem.command = { command: "findallinfile.copyResults", title: "Copy Results", arguments: args };
-		} else if (this.doc !== undefined) {
-			// tslint:disable:no-any
-			const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd];
-			treeItem.command = { command: "findallinfile.viewResult", title: "Open File", arguments: args };
+		} else if (element instanceof FindResult) {
+			if (this.doc !== undefined) {
+				// tslint:disable:no-any
+				const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd];
+				treeItem.command = { command: "findallinfile.viewResult", title: "Open File", arguments: args };
+			}
 		}
 
 		return treeItem;
@@ -88,17 +96,17 @@ export class TreeDataProvider implements vscode.TreeDataProvider<FindResult>, IO
 
 	public noDocument(): void {
 		this.findResults.length = 0;
-		this.findResults.push(new FindResult("No active editor document"));
+		this.findResults.push(new FindError("No active editor document"));
 		this.refreshTree();
 	}
 
 	public regexFailure(e: string): void {
 		this.findResults.length = 0;
-		this.findResults.push(new FindResult(`Regex failure: ${e}`));
+		this.findResults.push(new FindError(`Regex failure: ${e}`));
 		this.refreshTree();
 	}
 
 	private refreshTree(): void {
-		this.eventEmitter.fire(new FindResult(""));
+		this.eventEmitter.fire(new FindInfo(""));
 	}
 }
