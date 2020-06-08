@@ -3,7 +3,7 @@
 	"displayName": "Find All In File",
 	"description": "Find all occurrences of text in current file",
 	"icon": "data/icon.png",
-	"version": "0.6.0",
+	"version": "0.7.0",
 	"keywords": [
 		"find",
 		"findall",
