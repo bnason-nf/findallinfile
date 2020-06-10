@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+- Fix result tooltip formatting issue
+
 ## [0.7.0] - 2020-06-08
 
 - Add find index to results.

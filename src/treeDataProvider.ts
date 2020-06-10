@@ -71,6 +71,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 
 		const label: string = element.toString();
 		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
+		treeItem.tooltip = element.text;
 
 		if (element instanceof FindError) {
 			// No command needed
