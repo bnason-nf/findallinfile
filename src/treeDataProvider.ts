@@ -8,6 +8,7 @@ import { FindError } from "./findError";
 import { FindInfo } from "./findInfo";
 import { FindResult } from "./findResult";
 import { IOutputSink } from "./iOutputSink";
+import { localize } from "./localize";
 
 export type TreeElement = FindError | FindInfo | FindResult;
 
@@ -31,14 +32,21 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 	): void {
 		this.doc = doc;
 		this.findResults.length = 0;
-		const label: string = `Searching for ${useRegex ? "regex" : caseSensitive ? "case sensitive string" :
-			"case insensitive string"}${wholeWord ? " word" : ""} "${findText}" in "${doc.fileName}":`;
+		const label: string = localize(
+			"search_header",
+			useRegex ?
+				caseSensitive ? localize("regex_case") : localize("regex_no_case") :
+				caseSensitive ? localize("string_case") : localize("string_no_case"),
+			wholeWord ? localize("whole_word") : " ",
+			findText,
+			doc.fileName
+		);
 		this.findResults.push(new FindInfo(label));
 		this.refreshTree();
 	}
 
 	public end(): void {
-		const label: string = `Found ${this.findResults.length - 1} occurrences`;
+		const label: string = localize("search_footer", this.findResults.length - 1);
 		this.findResults.push(new FindInfo(label));
 		this.refreshTree();
 	}
@@ -78,12 +86,20 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		} else if (element instanceof FindInfo) {
 			// tslint:disable:no-any
 			const args: any[] = [this];
-			treeItem.command = { command: "findallinfile.copyResults", title: "Copy Results", arguments: args };
+			treeItem.command = {
+				arguments: args,
+				command: "findallinfile.copyResults",
+				title: ""
+			};
 		} else if (element instanceof FindResult) {
 			if (this.doc !== undefined) {
 				// tslint:disable:no-any
 				const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd];
-				treeItem.command = { command: "findallinfile.viewResult", title: "Open File", arguments: args };
+				treeItem.command = {
+					arguments: args,
+					command: "findallinfile.viewResult",
+					title: ""
+				};
 			}
 		}
 
@@ -97,13 +113,13 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 
 	public noDocument(): void {
 		this.findResults.length = 0;
-		this.findResults.push(new FindError("No active editor document"));
+		this.findResults.push(new FindError(localize("error_no_document")));
 		this.refreshTree();
 	}
 
 	public regexFailure(e: string): void {
 		this.findResults.length = 0;
-		this.findResults.push(new FindError(`Regex failure: ${e}`));
+		this.findResults.push(new FindError(localize("error_regex", e)));
 		this.refreshTree();
 	}
 

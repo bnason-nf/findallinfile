@@ -1,7 +1,7 @@
 {
 	"name": "findallinfile",
-	"displayName": "Find All In File",
-	"description": "Find all occurrences of text in current file",
+	"displayName": "%displayName%",
+	"description": "%description%",
 	"icon": "data/icon.png",
 	"version": "0.7.0",
 	"keywords": [
@@ -49,52 +49,52 @@
 		"commands": [
 			{
 				"command": "findallinfile.findregexnocase",
-				"title": "Find Regex (Case Insensitive)",
-				"category": "Find All In File"
+				"title": "%findregexnocase%",
+				"category": "%displayName%"
 			},
 			{
 				"command": "findallinfile.findregexnocaseword",
-				"title": "Find Regex (Case Insensitive, Whole Word)",
-				"category": "Find All In File"
+				"title": "%findregexnocaseword%",
+				"category": "%displayName%"
 			},
 			{
 				"command": "findallinfile.findregexcase",
-				"title": "Find Regex (Case Sensitive)",
-				"category": "Find All In File"
+				"title": "%findregexcase%",
+				"category": "%displayName%"
 			},
 			{
 				"command": "findallinfile.findregexcaseword",
-				"title": "Find Regex (Case Sensitive, Whole Word)",
-				"category": "Find All In File"
+				"title": "%findregexcaseword%",
+				"category": "%displayName%"
 			},
 			{
 				"command": "findallinfile.findstringnocase",
-				"title": "Find String (Case Insensitive)",
-				"category": "Find All In File"
+				"title": "%findstringnocase%",
+				"category": "%displayName%"
 			},
 			{
 				"command": "findallinfile.findstringnocaseword",
-				"title": "Find String (Case Insensitive, Whole Word)",
-				"category": "Find All In File"
+				"title": "%findstringnocaseword%",
+				"category": "%displayName%"
 			},
 			{
 				"command": "findallinfile.findstringcase",
-				"title": "Find String (Case Sensitive)",
-				"category": "Find All In File"
+				"title": "%findstringcase%",
+				"category": "%displayName%"
 			},
 			{
 				"command": "findallinfile.findstringcaseword",
-				"title": "Find String (Case Sensitive, Whole Word)",
-				"category": "Find All In File"
+				"title": "%findstringcaseword%",
+				"category": "%displayName%"
 			}
 		],
 		"configuration": {
-			"title": "Find All In File",
+			"title": "%displayName%",
 			"properties": {
 				"findAllInFile.editorContextMenu": {
 					"type": "boolean",
 					"default": true,
-					"description": "Show items in editor context menu."
+					"description": "%editorContextMenu%"
 				}
 			}
 		},
@@ -146,7 +146,7 @@
 			"activitybar": [
 				{
 					"id": "findallcontainer",
-					"title": "Find All In File",
+					"title": "%displayName%",
 					"icon": "data/icon.svg"
 				}
 			]

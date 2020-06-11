@@ -5,6 +5,7 @@
 import * as vscode from "vscode";
 
 import * as findAllInFile from "./findAllInFile";
+import { localize } from "./localize";
 import { TreeDataProvider, TreeElement } from "./treeDataProvider";
 
 function getActiveDocument(): vscode.TextDocument | undefined {
@@ -32,7 +33,7 @@ let lastFindString: string = "";
 
 function findRegexCase(): void {
 	vscode.window.showInputBox({
-		prompt: "Please enter regular expression to search for",
+		prompt: localize("enter_search_regex"),
 		value: lastFindRegex,
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
@@ -50,7 +51,7 @@ function findRegexCase(): void {
 
 function findRegexCaseWord(): void {
 	vscode.window.showInputBox({
-		prompt: "Please enter regular expression to search for",
+		prompt: localize("enter_search_regex"),
 		value: lastFindRegex,
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
@@ -68,7 +69,7 @@ function findRegexCaseWord(): void {
 
 function findRegexNoCase(): void {
 	vscode.window.showInputBox({
-		prompt: "Please enter regular expression to search for",
+		prompt: localize("enter_search_regex"),
 		value: lastFindRegex,
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
@@ -86,7 +87,7 @@ function findRegexNoCase(): void {
 
 function findRegexNoCaseWord(): void {
 	vscode.window.showInputBox({
-		prompt: "Please enter regular expression to search for",
+		prompt: localize("enter_search_regex"),
 		value: lastFindRegex,
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
@@ -104,7 +105,7 @@ function findRegexNoCaseWord(): void {
 
 function findStringCase(): void {
 	vscode.window.showInputBox({
-		prompt: "Please enter string to search for",
+		prompt: localize("enter_search_string"),
 		value: lastFindString,
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
@@ -122,7 +123,7 @@ function findStringCase(): void {
 
 function findStringCaseWord(): void {
 	vscode.window.showInputBox({
-		prompt: "Please enter string to search for",
+		prompt: localize("enter_search_string"),
 		value: lastFindString,
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
@@ -140,7 +141,7 @@ function findStringCaseWord(): void {
 
 function findStringNoCase(): void {
 	vscode.window.showInputBox({
-		prompt: "Please enter string to search for",
+		prompt: localize("enter_search_string"),
 		value: lastFindString,
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
@@ -158,7 +159,7 @@ function findStringNoCase(): void {
 
 function findStringNoCaseWord(): void {
 	vscode.window.showInputBox({
-		prompt: "Please enter string to search for",
+		prompt: localize("enter_search_string"),
 		value: lastFindString,
 	}).then((findText: string | undefined) => {
 		if (findText !== undefined) {
@@ -191,11 +192,12 @@ function copyResults(provider: TreeDataProvider): void {
 	let resultString: string = "";
 	const results: TreeElement[] = provider.getResults();
 	for (const result of results) {
-		resultString += `${result.toString()}\n`;
+		resultString += result.toString();
+		resultString += "\n";
 	}
 
 	vscode.env.clipboard.writeText(resultString);
-	vscode.window.showInformationMessage("Copied results to clipboard");
+	vscode.window.showInformationMessage(localize("copied_to_clipboard"));
 }
 // Called once on extension init
 export function activate(context: vscode.ExtensionContext): void {

@@ -2,6 +2,8 @@
 
 "use strict";
 
+import { localize } from "./localize";
+
 export class FindError {
 	public readonly text: string;
 
@@ -11,6 +13,6 @@ export class FindError {
 	}
 
 	public toString(): string {
-		return `ERROR: ${this.text}`;
+		return localize("find_error", this.text);
 	}
 }

@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+- Implement localization of strings
 - Add setting to disable editor context menu items
 - Fix result tooltip formatting issue
 

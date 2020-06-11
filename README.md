@@ -88,6 +88,11 @@ There is a [GitHub issue](https://github.com/microsoft/vscode/issues/14836) requ
 be integrated into Visual Studio Code. If that ever happens then this extension will become
 obsolete.
 
+## Contributions
+
+If anyone would like to provide translations for the strings in this extension, please contact me
+on the [GitHub project page](https://github.com/bnason-nf/findallinfile/issues)
+
 ## Legal
 
 Copyright &copy; 2019 Benbuck Nason.

@@ -2,6 +2,8 @@
 
 "use strict";
 
+import { localize } from "./localize";
+
 export class FindResult {
 	public readonly columnBegin: number;
 	public readonly columnEnd: number;
@@ -25,6 +27,13 @@ export class FindResult {
 	}
 
 	public toString(): string {
-		return `${this.index}\t${this.line + 1}:${this.columnBegin + 1}-${this.columnEnd}\t${this.text}`;
+		return localize(
+			"find_result_string",
+			this.index,
+			this.line + 1,
+			this.columnBegin + 1,
+			this.columnEnd,
+			this.text
+		);
 	}
 }
