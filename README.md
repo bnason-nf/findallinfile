@@ -74,6 +74,14 @@ performed, and the last line shows you the summary of the search results. If you
 these lines, the search results will be copied to the clipboard so you can use text processing tools
 to interact with the results.
 
+## Settings
+
+There is a section called "Find All In File" in the Visual Studio Code
+[settings](https://code.visualstudio.com/docs/getstarted/settings).
+
+If you don't want to Find All In File to add items to your editor context menu, you can disable the
+"Editor Context Menu" setting ("findAllInFile.editorContextMenu" in settings.json).
+
 ## Note
 
 There is a [GitHub issue](https://github.com/microsoft/vscode/issues/14836) requesting this feature

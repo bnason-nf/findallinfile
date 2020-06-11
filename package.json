@@ -88,47 +88,57 @@
 				"category": "Find All In File"
 			}
 		],
+		"configuration": {
+			"title": "Find All In File",
+			"properties": {
+				"findAllInFile.editorContextMenu": {
+					"type": "boolean",
+					"default": true,
+					"description": "Show items in editor context menu."
+				}
+			}
+		},
 		"menus": {
 			"editor/context": [
 				{
-					"when": "true",
 					"command": "findallinfile.findregexnocase",
-					"group": "findallinfile@1"
+					"group": "findallinfile@1",
+					"when": "config.findAllInFile.editorContextMenu"
 				},
 				{
-					"when": "true",
 					"command": "findallinfile.findregexnocaseword",
-					"group": "findallinfile@2"
+					"group": "findallinfile@2",
+					"when": "config.findAllInFile.editorContextMenu"
 				},
 				{
-					"when": "true",
 					"command": "findallinfile.findregexcase",
-					"group": "findallinfile@3"
+					"group": "findallinfile@3",
+					"when": "config.findAllInFile.editorContextMenu"
 				},
 				{
-					"when": "true",
 					"command": "findallinfile.findregexcaseword",
-					"group": "findallinfile@4"
+					"group": "findallinfile@4",
+					"when": "config.findAllInFile.editorContextMenu"
 				},
 				{
-					"when": "true",
 					"command": "findallinfile.findstringnocase",
-					"group": "findallinfile@5"
+					"group": "findallinfile@5",
+					"when": "config.findAllInFile.editorContextMenu"
 				},
 				{
-					"when": "true",
 					"command": "findallinfile.findstringnocaseword",
-					"group": "findallinfile@6"
+					"group": "findallinfile@6",
+					"when": "config.findAllInFile.editorContextMenu"
 				},
 				{
-					"when": "true",
 					"command": "findallinfile.findstringcase",
-					"group": "findallinfile@7"
+					"group": "findallinfile@7",
+					"when": "config.findAllInFile.editorContextMenu"
 				},
 				{
-					"when": "true",
 					"command": "findallinfile.findstringcaseword",
-					"group": "findallinfile@8"
+					"group": "findallinfile@8",
+					"when": "config.findAllInFile.editorContextMenu"
 				}
 			]
 		},
