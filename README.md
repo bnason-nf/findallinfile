@@ -99,3 +99,7 @@ provide translations for the strings in this extension, please contact me on the
 Copyright &copy; 2019 Benbuck Nason.
 
 Released under the [ISC license](https://opensource.org/licenses/ISC).
+
+## Build Status
+
+![CI](https://github.com/bnason-nf/findallinfile/workflows/CI/badge.svg)
