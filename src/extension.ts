@@ -36,7 +36,7 @@ function findRegexCase(): void {
 		prompt: localize("enter_search_regex"),
 		value: lastFindRegex,
 	}).then((findText: string | undefined) => {
-		if (findText !== undefined) {
+		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -54,7 +54,7 @@ function findRegexCaseWord(): void {
 		prompt: localize("enter_search_regex"),
 		value: lastFindRegex,
 	}).then((findText: string | undefined) => {
-		if (findText !== undefined) {
+		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -72,7 +72,7 @@ function findRegexNoCase(): void {
 		prompt: localize("enter_search_regex"),
 		value: lastFindRegex,
 	}).then((findText: string | undefined) => {
-		if (findText !== undefined) {
+		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -90,7 +90,7 @@ function findRegexNoCaseWord(): void {
 		prompt: localize("enter_search_regex"),
 		value: lastFindRegex,
 	}).then((findText: string | undefined) => {
-		if (findText !== undefined) {
+		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -108,7 +108,7 @@ function findStringCase(): void {
 		prompt: localize("enter_search_string"),
 		value: lastFindString,
 	}).then((findText: string | undefined) => {
-		if (findText !== undefined) {
+		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -126,7 +126,7 @@ function findStringCaseWord(): void {
 		prompt: localize("enter_search_string"),
 		value: lastFindString,
 	}).then((findText: string | undefined) => {
-		if (findText !== undefined) {
+		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -144,7 +144,7 @@ function findStringNoCase(): void {
 		prompt: localize("enter_search_string"),
 		value: lastFindString,
 	}).then((findText: string | undefined) => {
-		if (findText !== undefined) {
+		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -162,7 +162,7 @@ function findStringNoCaseWord(): void {
 		prompt: localize("enter_search_string"),
 		value: lastFindString,
 	}).then((findText: string | undefined) => {
-		if (findText !== undefined) {
+		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
 			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
