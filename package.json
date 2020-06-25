@@ -168,7 +168,8 @@
 		"pretest": "npm run lint && npm run compile",
 		"test": "node ./out/test/runTest.js",
 		"convert-icon": "magick convert -size 128x128 -background none -define png:include-chunk=none data/icon.svg data/icon.png",
-		"publish": "vsce package && vsce publish"
+		"package": "vsce package",
+		"publish": "npm run package && vsce publish"
 	},
 	"engines": {
 		"vscode": "^1.46.0"
