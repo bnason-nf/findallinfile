@@ -39,8 +39,8 @@ jobs:
       - name: Package
         run: npm run package
 
-      - name: Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: package
-          path: findallinfile-*.vsix
+#      - name: Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: package
+#          path: findallinfile-*.vsix
