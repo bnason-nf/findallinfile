@@ -100,3 +100,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 [0.0.3]: https://github.com/bnason-nf/findallinfile/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/bnason-nf/findallinfile/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/bnason-nf/findallinfile/releases/tag/v0.0.1
+
+Copyright &copy; 2019 Benbuck Nason.

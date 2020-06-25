@@ -167,7 +167,7 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run lint && npm run compile",
 		"test": "node ./out/test/runTest.js",
-		"convert-icon": "magick convert -size 128x128 -background none -define png:include-chunk=none data/icon.svg data/icon.png",
+		"convert-icon": "magick convert -size 128x128 -background none -define png:include-chunk=none,tEXt -comment \"Copyright 2019 Benbuck Nason\" data/icon.svg data/icon.png",
 		"package": "npx vsce package",
 		"publish": "npx vsce publish"
 	},

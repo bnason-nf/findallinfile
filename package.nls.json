@@ -1,4 +1,5 @@
 {
+	"__copyright__": "Copyright 2019 Benbuck Nason",
 	"copied_to_clipboard": "Copied results to clipboard",
 	"description": "Find all occurrences of text in current file",
 	"displayName": "Find All In File",

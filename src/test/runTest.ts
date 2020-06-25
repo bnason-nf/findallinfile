@@ -1,3 +1,5 @@
+// Copyright 2019 Benbuck Nason
+
 import * as path from "path";
 
 import { runTests } from "vscode-test";
