@@ -26,12 +26,14 @@
         "findstringcaseword",
         "findstringnocase",
         "findstringnocaseword",
+        "macos",
         "magick",
         "mockito",
         "notest",
         "tast",
         "testno",
-        "vsce"
+        "vsce",
+        "vsix"
     ],
     "cSpell.ignorePaths": [
         "node_modules/**",
