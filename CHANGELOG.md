@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.9.0] - 2020-06-25
+
+- Use current text selection as search input text
+- Add result limit setting
+- Fix handling of empty search text
+
 ## [0.8.0] - 2020-06-12
 
 - Implement localization of strings
