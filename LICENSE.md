@@ -1,4 +1,4 @@
-# [ISC License (ISC)](https://opensource.org/licenses/ISC)
+ISC License (ISC)
 
 Copyright 2019 Benbuck Nason
 
