@@ -29,11 +29,9 @@ jobs:
       run: npm run compile
 
     - name: Test
-      run: |
-        /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-        npm run test
-      env:
-        DISPLAY: ':99.0'
+      uses: GabrielBB/xvfb-action@v1.2
+      with:
+        run: npm run test
 
     - name: Package
       run: npm run package
