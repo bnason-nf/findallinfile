@@ -95,6 +95,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "%editorContextMenu%"
+				},
+				"findAllInFile.resultLimit": {
+					"type": "number",
+					"default": 10000,
+					"description": "%resultLimit%"
 				}
 			}
 		},

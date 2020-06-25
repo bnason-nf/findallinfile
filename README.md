@@ -80,7 +80,12 @@ There is a section called "Find All In File" in the Visual Studio Code
 [settings](https://code.visualstudio.com/docs/getstarted/settings).
 
 If you don't want to Find All In File to add items to your editor context menu, you can disable the
-"Editor Context Menu" setting ("findAllInFile.editorContextMenu" in settings.json).
+"Editor Context Menu" setting ("findAllInFile.editorContextMenu" in settings.json). The default is
+`true` which means enabled, and setting it to `false` will disable it.
+
+If you want to change the limit on the number of results that will be found, you can modify the
+"Result Limit" setting ("findAllInFile.resultLimit" in settings.json). The default is 10000, and
+you can change it to any number, or zero to disable it (no limit).
 
 ## Note
 

@@ -1,9 +1,10 @@
 {
 	"__copyright__": "Copyright 2019 Benbuck Nason",
+
 	"copied_to_clipboard": "Copied results to clipboard",
 	"description": "Find all occurrences of text in current file",
 	"displayName": "Find All In File",
-	"editorContextMenu": "Show items in editor context menu.",
+	"editorContextMenu": "Show items in editor context menu",
 	"enter_search_regex": "Please enter regular expression to search for",
 	"enter_search_string": "Please enter string to search for",
 	"error_no_document": "No active editor document",
@@ -20,6 +21,7 @@
 	"findstringnocaseword": "Find String (Case Insensitive, Whole Word)",
 	"regex_case": "case sensitive regex",
 	"regex_no_case": "case insensitive regex",
+	"resultLimit": "Maximum number of results to find",
 	"search_footer": "Found {0} occurrences",
 	"search_header": "Searching for {0}{1}\"{2}\" in \"{3}\":",
 	"string_case": "case sensitive string",

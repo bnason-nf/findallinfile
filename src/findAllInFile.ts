@@ -7,6 +7,20 @@ import * as vscode from "vscode";
 import { FindResult } from "./findResult";
 import { IOutputSink } from "./iOutputSink";
 
+function getResultLimit(): number {
+	const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("findAllInFile");
+	const resultLimit: number | undefined = config.get("resultLimit");
+	if (resultLimit === undefined) {
+		return Number.MAX_SAFE_INTEGER;
+	}
+
+	if (resultLimit <= 0) {
+		return Number.MAX_SAFE_INTEGER;
+	}
+
+	return resultLimit;
+}
+
 function isWord(text: string, start: number, end: number): boolean {
 	if (start > 0) {
 		const startChar: string = text.charAt(start - 1);
@@ -41,8 +55,9 @@ export function findStringCase(
 
 	// Search each line of the document
 	let findCount: number = 0;
+	const resultLimit: number = getResultLimit();
 	const lineCount: number = doc.lineCount;
-	for (let line: number = 0; line < lineCount; line += 1) {
+	for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;
 		let tmpText: string = text;
@@ -61,6 +76,10 @@ export function findStringCase(
 			tmpText = tmpText.substr(tmpColumn + findText.length);
 
 			column = columnEnd;
+
+			if (findCount >= resultLimit) {
+				break;
+			}
 		}
 	}
 
@@ -83,8 +102,9 @@ export function findStringCaseWord(
 
 	// Search each line of the document
 	let findCount: number = 0;
+	const resultLimit: number = getResultLimit();
 	const lineCount: number = doc.lineCount;
-	for (let line: number = 0; line < lineCount; line += 1) {
+	for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;
 		let tmpText: string = text;
@@ -105,6 +125,10 @@ export function findStringCaseWord(
 			tmpText = tmpText.substr(tmpColumn + findText.length);
 
 			column = columnEnd;
+
+			if (findCount >= resultLimit) {
+				break;
+			}
 		}
 	}
 
@@ -127,9 +151,10 @@ export function findStringNoCase(
 
 	// Search each line of the document
 	let findCount: number = 0;
+	const resultLimit: number = getResultLimit();
 	const lineCount: number = doc.lineCount;
 	const findTextLower: string = findText.toLowerCase();
-	for (let line: number = 0; line < lineCount; line += 1) {
+	for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;
 		let tmpText: string = text.toLowerCase();
@@ -148,6 +173,10 @@ export function findStringNoCase(
 			tmpText = tmpText.substr(tmpColumn + findText.length);
 
 			column = columnEnd;
+
+			if (findCount >= resultLimit) {
+				break;
+			}
 		}
 	}
 
@@ -170,9 +199,10 @@ export function findStringNoCaseWord(
 
 	// Search each line of the document
 	let findCount: number = 0;
+	const resultLimit: number = getResultLimit();
 	const lineCount: number = doc.lineCount;
 	const findTextLower: string = findText.toLowerCase();
-	for (let line: number = 0; line < lineCount; line += 1) {
+	for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;
 		let tmpText: string = text.toLowerCase();
@@ -193,6 +223,10 @@ export function findStringNoCaseWord(
 			tmpText = tmpText.substr(tmpColumn + findText.length);
 
 			column = columnEnd;
+
+			if (findCount >= resultLimit) {
+				break;
+			}
 		}
 	}
 
@@ -218,8 +252,9 @@ export function findRegexCase(
 
 		// Search each line of the document
 		let findCount: number = 0;
+		const resultLimit: number = getResultLimit();
 		const lineCount: number = doc.lineCount;
-		for (let line: number = 0; line < lineCount; line += 1) {
+		for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
@@ -232,6 +267,10 @@ export function findRegexCase(
 				outputSink.item(
 					new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
 				);
+
+				if (findCount >= resultLimit) {
+					break;
+				}
 			}
 		}
 
@@ -261,8 +300,9 @@ export function findRegexCaseWord(
 
 		// Search each line of the document
 		let findCount: number = 0;
+		const resultLimit: number = getResultLimit();
 		const lineCount: number = doc.lineCount;
-		for (let line: number = 0; line < lineCount; line += 1) {
+		for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
@@ -276,6 +316,10 @@ export function findRegexCaseWord(
 					outputSink.item(
 						new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
 					);
+
+					if (findCount >= resultLimit) {
+						break;
+					}
 				}
 			}
 		}
@@ -306,8 +350,9 @@ export function findRegexNoCase(
 
 		// Search each line of the document
 		let findCount: number = 0;
+		const resultLimit: number = getResultLimit();
 		const lineCount: number = doc.lineCount;
-		for (let line: number = 0; line < lineCount; line += 1) {
+		for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
@@ -320,6 +365,10 @@ export function findRegexNoCase(
 				outputSink.item(
 					new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
 				);
+
+				if (findCount >= resultLimit) {
+					break;
+				}
 			}
 		}
 
@@ -349,8 +398,9 @@ export function findRegexNoCaseWord(
 
 		// Search each line of the document
 		let findCount: number = 0;
+		const resultLimit: number = getResultLimit();
 		const lineCount: number = doc.lineCount;
-		for (let line: number = 0; line < lineCount; line += 1) {
+		for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
@@ -364,6 +414,10 @@ export function findRegexNoCaseWord(
 					outputSink.item(
 						new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
 					);
+
+					if (findCount >= resultLimit) {
+						break;
+					}
 				}
 			}
 		}
