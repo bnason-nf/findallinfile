@@ -90,8 +90,9 @@ obsolete.
 
 ## Contributions
 
-If anyone would like to provide translations for the strings in this extension, please contact me
-on the [GitHub project page](https://github.com/bnason-nf/findallinfile/issues)
+If you have any suggestions for improvements, find any problems, have any feedback, or would like to
+provide translations for the strings in this extension, please contact me on the
+[GitHub project page](https://github.com/bnason-nf/findallinfile/issues)
 
 ## Legal
 
