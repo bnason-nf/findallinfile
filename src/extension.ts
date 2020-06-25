@@ -31,10 +31,45 @@ function createTreeView(provider: TreeDataProvider): vscode.TreeView<TreeElement
 let lastFindRegex: string = "";
 let lastFindString: string = "";
 
+function getSelectedText(): string | undefined {
+	const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+	if (editor === undefined) {
+		return undefined;
+	}
+	const selection: vscode.Selection = editor.selection;
+	if (selection.isEmpty) {
+		return undefined;
+	}
+	const text: string = editor.document.getText(selection);
+	if (text.length <= 0) {
+		return undefined;
+	}
+
+	return text;
+}
+
+function defaultFindRegex(): string {
+	const selectedText: string | undefined = getSelectedText();
+	if (selectedText === undefined) {
+		return lastFindRegex;
+	}
+
+	return selectedText;
+}
+
+function defaultFindString(): string {
+	const selectedText: string | undefined = getSelectedText();
+	if (selectedText === undefined) {
+		return lastFindString;
+	}
+
+	return selectedText;
+}
+
 function findRegexCase(): void {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_regex"),
-		value: lastFindRegex,
+		value: defaultFindRegex(),
 	}).then((findText: string | undefined) => {
 		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
@@ -52,7 +87,7 @@ function findRegexCase(): void {
 function findRegexCaseWord(): void {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_regex"),
-		value: lastFindRegex,
+		value: defaultFindRegex(),
 	}).then((findText: string | undefined) => {
 		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
@@ -70,7 +105,7 @@ function findRegexCaseWord(): void {
 function findRegexNoCase(): void {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_regex"),
-		value: lastFindRegex,
+		value: defaultFindRegex(),
 	}).then((findText: string | undefined) => {
 		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
@@ -88,7 +123,7 @@ function findRegexNoCase(): void {
 function findRegexNoCaseWord(): void {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_regex"),
-		value: lastFindRegex,
+		value: defaultFindRegex(),
 	}).then((findText: string | undefined) => {
 		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
@@ -106,7 +141,7 @@ function findRegexNoCaseWord(): void {
 function findStringCase(): void {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_string"),
-		value: lastFindString,
+		value: defaultFindString(),
 	}).then((findText: string | undefined) => {
 		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
@@ -124,7 +159,7 @@ function findStringCase(): void {
 function findStringCaseWord(): void {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_string"),
-		value: lastFindString,
+		value: defaultFindString(),
 	}).then((findText: string | undefined) => {
 		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
@@ -142,7 +177,7 @@ function findStringCaseWord(): void {
 function findStringNoCase(): void {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_string"),
-		value: lastFindString,
+		value: defaultFindString(),
 	}).then((findText: string | undefined) => {
 		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
@@ -160,7 +195,7 @@ function findStringNoCase(): void {
 function findStringNoCaseWord(): void {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_string"),
-		value: lastFindString,
+		value: defaultFindString(),
 	}).then((findText: string | undefined) => {
 		if ((findText !== undefined) && (findText.length > 0)) {
 			const provider: TreeDataProvider = new TreeDataProvider();
