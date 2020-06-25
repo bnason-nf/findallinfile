@@ -42,4 +42,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: package
-        path: build/vstudio/findallinfile-*.vsix
+        path: findallinfile-*.vsix
