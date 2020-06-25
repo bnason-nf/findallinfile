@@ -28,13 +28,9 @@ jobs:
     - name: Build
       run: npm run compile
 
-    - name: Start xvfb
+    - name: Test
       run: |
         /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-        echo ">>> Started xvfb"
-      condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
-
-    - name: Test
-      run: npm run test
+        npm run test
       env:
         DISPLAY: ':99.0'
