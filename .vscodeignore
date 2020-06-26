@@ -5,7 +5,7 @@
 */**
 
 # allowed
-!data/*.png
+!data/**
 !out/*.js
 !package.json
 !package.nls.json
