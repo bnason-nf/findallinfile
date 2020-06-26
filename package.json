@@ -3,7 +3,7 @@
 	"displayName": "%displayName%",
 	"description": "%description%",
 	"icon": "data/icon.png",
-	"version": "0.9.0",
+	"version": "0.9.1",
 	"keywords": [
 		"find",
 		"findall",
