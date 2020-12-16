@@ -15,13 +15,7 @@ export class FindResult {
 
 	public readonly text: string;
 
-	public constructor(
-		text: string,
-		line: number,
-		columnBegin: number,
-		columnEnd: number,
-		index: number
-	) {
+	public constructor(text: string, line: number, columnBegin: number, columnEnd: number, index: number) {
 		this.columnBegin = columnBegin;
 		this.columnEnd = columnEnd;
 		this.index = index;
@@ -43,13 +37,6 @@ export class FindResult {
 	}
 
 	public toString(): string {
-		return localize(
-			"find_result_string",
-			this.index,
-			this.line + 1,
-			this.columnBegin + 1,
-			this.columnEnd,
-			this.text
-		);
+		return localize("find_result_string", this.index, this.line + 1, this.columnBegin + 1, this.columnEnd, this.text);
 	}
 }

@@ -14,12 +14,7 @@ const output: IOutputSink = mock.instance(outputMock);
 
 // eslint-disable-next-line arrow-body-style
 const isEqual = (fr: Readonly<FindResult>, text: string, line: number, columnBegin: number, columnEnd: number): boolean => {
-	return (
-		(fr.line === line) &&
-		(fr.columnBegin === columnBegin) &&
-		(fr.columnEnd === columnEnd) &&
-		(fr.text === text)
-	);
+	return fr.line === line && fr.columnBegin === columnBegin && fr.columnEnd === columnEnd && fr.text === text;
 };
 
 /* eslint-disable max-lines-per-function, @typescript-eslint/no-confusing-void-expression */
@@ -30,13 +25,15 @@ suite("No document", () => {
 	});
 
 	afterEach(() => {
-		mock.verify(outputMock.begin(
-			mock.anything(),
-			mock.anyString(),
-			mock.anyOfClass(Boolean),
-			mock.anyOfClass(Boolean),
-			mock.anyOfClass(Boolean)
-		)).never();
+		mock.verify(
+			outputMock.begin(
+				mock.anything(),
+				mock.anyString(),
+				mock.anyOfClass(Boolean),
+				mock.anyOfClass(Boolean),
+				mock.anyOfClass(Boolean)
+			)
+		).never();
 		mock.verify(outputMock.end()).never();
 	});
 
@@ -89,7 +86,7 @@ suite("Find", (): void => {
 	// eslint-disable-next-line @typescript-eslint/init-declarations
 	let doc: vscode.TextDocument;
 
-	before(async() => {
+	before(async () => {
 		const docUri: string = path.resolve(__dirname, "../../../src/test/suite/test.txt");
 		doc = await vscode.workspace.openTextDocument(docUri);
 		// Unused - const editor: vscode.TextEditor = ...

@@ -17,22 +17,22 @@ Code.
 
 After installing this extension in Visual Studio Code, you will have some new commands available:
 
-- **Find All In File: Find Regex (Case Insensitive)**  
+- **Find All In File: Find Regex (Case Insensitive)**
   Search using a case insensitive [regular
   expression](https://www.w3schools.com/jsref/jsref_obj_regexp.asp).
-- **Find All In File: Find Regex (Case Insensitive, Whole Word)**  
+- **Find All In File: Find Regex (Case Insensitive, Whole Word)**
   Search using a case insensitive regular expression, match whole word.
-- **Find All In File: Find Regex (Case Sensitive)**  
+- **Find All In File: Find Regex (Case Sensitive)**
   Search using a case sensitive regular expression.
-- **Find All In File: Find Regex (Case Sensitive, Whole Word)**  
+- **Find All In File: Find Regex (Case Sensitive, Whole Word)**
   Search using a case sensitive regular expression, match whole word.
-- **Find All In File: Find String (Case Insensitive)**  
+- **Find All In File: Find String (Case Insensitive)**
   Search using a simple case insensitive string.
-- **Find All In File: Find String (Case Insensitive, Whole Word)**  
+- **Find All In File: Find String (Case Insensitive, Whole Word)**
   Search using a simple case insensitive string, match whole word.
-- **Find All In File: Find String (Case Sensitive)**  
+- **Find All In File: Find String (Case Sensitive)**
   Search using a simple case sensitive string.
-- **Find All In File: Find String (Case Sensitive, Whole Word)**  
+- **Find All In File: Find String (Case Sensitive, Whole Word)**
   Search using a simple case sensitive string, match whole word.
 
 All of these combinations match the corresponding options in the built-in Visual Studio Code

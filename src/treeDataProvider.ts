@@ -93,7 +93,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 			treeItem.command = {
 				arguments: args,
 				command: "findallinfile.copyResults",
-				title: ""
+				title: "",
 			};
 		} else if (element instanceof FindResult) {
 			if (typeof this.doc !== "undefined") {
@@ -104,7 +104,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 				treeItem.command = {
 					arguments: args,
 					command: "findallinfile.viewResult",
-					title: ""
+					title: "",
 				};
 			}
 		}

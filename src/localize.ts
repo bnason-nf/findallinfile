@@ -25,18 +25,18 @@ const resolveLanguagePack = (): Record<string, string> => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	options = {
 		...options,
-		...JSON.parse(config)
+		...JSON.parse(config),
 	};
 
 	const languageFormat: string = "package.nls{0}.json";
 	const defaultLanguage: string = languageFormat.replace("{0}", "");
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const extension: vscode.Extension<any> | undefined = vscode.extensions.getExtension("bnason-nf.findallinfile");
-	const rootPath: string = (typeof extension === "undefined") ? "" : extension.extensionPath;
+	const rootPath: string = typeof extension === "undefined" ? "" : extension.extensionPath;
 	const resolvedLanguage: string = recurseCandidates(rootPath, languageFormat, options.locale);
 	const languageFilePath: string = path.resolve(rootPath, resolvedLanguage);
 
-	const usingDefaultLanguage: boolean = (resolvedLanguage !== defaultLanguage);
+	const usingDefaultLanguage: boolean = resolvedLanguage !== defaultLanguage;
 	const json: string = usingDefaultLanguage ? fs.readFileSync(path.resolve(rootPath, defaultLanguage), "utf-8") : "{}";
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
 	const defaultLanguageBundle: any = JSON.parse(json);

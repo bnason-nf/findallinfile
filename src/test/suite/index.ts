@@ -4,10 +4,10 @@ import * as Mocha from "mocha";
 import * as glob from "glob";
 import * as path from "path";
 
-export const run = async(): Promise<void> => {
+export const run = async (): Promise<void> => {
 	// Create the mocha test
 	const mocha: Mocha = new Mocha({
-		ui: "tdd"
+		ui: "tdd",
 	});
 	mocha.useColors(true);
 

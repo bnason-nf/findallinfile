@@ -3,7 +3,9 @@
 		"module": "commonjs",
 		"target": "es6",
 		"outDir": "out",
-		"lib": ["es6"],
+		"lib": [
+			"es6"
+		],
 		"sourceMap": true,
 		"forceConsistentCasingInFileNames": true,
 		"importHelpers": true,
@@ -15,5 +17,8 @@
 		"noUnusedParameters": true,
 		"strictNullChecks": true
 	},
-	"include": [".eslintrc.js", "**/*.ts"]
+	"include": [
+		".eslintrc.js",
+		"**/*.ts",
+	]
 }

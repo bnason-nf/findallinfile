@@ -4,7 +4,7 @@ import * as path from "path";
 
 import { runTests } from "vscode-test";
 
-const main = async(): Promise<void> => {
+const main = async (): Promise<void> => {
 	try {
 		// The folder containing the Extension Manifest package.json passed to `--extensionDevelopmentPath`
 		const extensionDevelopmentPath = path.resolve(__dirname, "../../");
@@ -21,6 +21,6 @@ const main = async(): Promise<void> => {
 };
 
 main().then(
-	() => { },
-	() => { }
+	() => {},
+	() => {}
 );

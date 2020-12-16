@@ -22,14 +22,14 @@ const getResultLimit = (): number => {
 const isWord = (text: string, start: number, end: number): boolean => {
 	if (start > 0) {
 		const startChar: string = text.charAt(start - 1);
-		if ((/\W/u).exec(startChar) === null) {
+		if (/\W/u.exec(startChar) === null) {
 			return false;
 		}
 	}
 
 	if (end < text.length) {
 		const endChar: string = text.charAt(end);
-		if ((/\W/u).exec(endChar) === null) {
+		if (/\W/u.exec(endChar) === null) {
 			return false;
 		}
 	}
@@ -55,7 +55,7 @@ export const findStringCase = (
 	let findCount: number = 0;
 	const resultLimit: number = getResultLimit();
 	const lineCount: number = doc.lineCount;
-	for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
+	for (let line: number = 0; line < lineCount && findCount < resultLimit; line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;
 		let tmpText: string = text;
@@ -102,7 +102,7 @@ export const findStringCaseWord = (
 	let findCount: number = 0;
 	const resultLimit: number = getResultLimit();
 	const lineCount: number = doc.lineCount;
-	for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
+	for (let line: number = 0; line < lineCount && findCount < resultLimit; line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;
 		let tmpText: string = text;
@@ -152,7 +152,7 @@ export const findStringNoCase = (
 	const resultLimit: number = getResultLimit();
 	const lineCount: number = doc.lineCount;
 	const findTextLower: string = findText.toLowerCase();
-	for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
+	for (let line: number = 0; line < lineCount && findCount < resultLimit; line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;
 		let tmpText: string = text.toLowerCase();
@@ -200,7 +200,7 @@ export const findStringNoCaseWord = (
 	const resultLimit: number = getResultLimit();
 	const lineCount: number = doc.lineCount;
 	const findTextLower: string = findText.toLowerCase();
-	for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
+	for (let line: number = 0; line < lineCount && findCount < resultLimit; line += 1) {
 		const textLine: vscode.TextLine = doc.lineAt(line);
 		const text: string = textLine.text;
 		let tmpText: string = text.toLowerCase();
@@ -252,7 +252,7 @@ export const findRegexCase = (
 		let findCount: number = 0;
 		const resultLimit: number = getResultLimit();
 		const lineCount: number = doc.lineCount;
-		for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
+		for (let line: number = 0; line < lineCount && findCount < resultLimit; line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
@@ -297,7 +297,7 @@ export const findRegexCaseWord = (
 		let findCount: number = 0;
 		const resultLimit: number = getResultLimit();
 		const lineCount: number = doc.lineCount;
-		for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
+		for (let line: number = 0; line < lineCount && findCount < resultLimit; line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
@@ -344,7 +344,7 @@ export const findRegexNoCase = (
 		let findCount: number = 0;
 		const resultLimit: number = getResultLimit();
 		const lineCount: number = doc.lineCount;
-		for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
+		for (let line: number = 0; line < lineCount && findCount < resultLimit; line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
@@ -389,7 +389,7 @@ export const findRegexNoCaseWord = (
 		let findCount: number = 0;
 		const resultLimit: number = getResultLimit();
 		const lineCount: number = doc.lineCount;
-		for (let line: number = 0; (line < lineCount) && (findCount < resultLimit); line += 1) {
+		for (let line: number = 0; line < lineCount && findCount < resultLimit; line += 1) {
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
