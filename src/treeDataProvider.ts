@@ -93,6 +93,8 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 			};
 		} else if (element instanceof FindResult) {
 			if (this.doc !== undefined) {
+				treeItem.tooltip = element.toMarkdown();
+
 				// tslint:disable:no-any
 				const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd];
 				treeItem.command = {

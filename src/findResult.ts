@@ -2,6 +2,8 @@
 
 "use strict";
 
+import * as vscode from "vscode";
+
 import { localize } from "./localize";
 
 export class FindResult {
@@ -24,6 +26,19 @@ export class FindResult {
 		this.index = index;
 		this.line = line;
 		this.text = text;
+	}
+
+	public toMarkdown(): vscode.MarkdownString {
+		const markdown: string = localize(
+			"find_result_markdown",
+			this.index,
+			this.line + 1,
+			this.columnBegin + 1,
+			this.columnEnd,
+			this.text
+		);
+
+		return new vscode.MarkdownString(markdown);
 	}
 
 	public toString(): string {

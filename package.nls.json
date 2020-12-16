@@ -11,6 +11,7 @@
 	"error_regex": "Regex failure: {0}",
 	"find_error": "ERROR: {0}",
 	"find_result_string": "{0}\t{1}:{2}-{3}\t{4}",
+	"find_result_markdown": "Occurrence {0}, line {1}, columns {2}-{3}:\n\n`{4}`",
 	"findregexcase": "Find Regex (Case Sensitive)",
 	"findregexcaseword": "Find Regex (Case Sensitive, Whole Word)",
 	"findregexnocase": "Find Regex (Case Insensitive)",
