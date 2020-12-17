@@ -1,16 +1,14 @@
 // Copyright 2019 Benbuck Nason
 
-"use strict";
-
 import * as vscode from "vscode";
 
 import { FindResult } from "./findResult";
-import { IOutputSink } from "./iOutputSink";
+import type { IOutputSink } from "./iOutputSink";
 
-function getResultLimit(): number {
+const getResultLimit = (): number => {
 	const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("findAllInFile");
 	const resultLimit: number | undefined = config.get("resultLimit");
-	if (resultLimit === undefined) {
+	if (typeof resultLimit === "undefined") {
 		return Number.MAX_SAFE_INTEGER;
 	}
 
@@ -19,33 +17,33 @@ function getResultLimit(): number {
 	}
 
 	return resultLimit;
-}
+};
 
-function isWord(text: string, start: number, end: number): boolean {
+const isWord = (text: string, start: number, end: number): boolean => {
 	if (start > 0) {
 		const startChar: string = text.charAt(start - 1);
-		if (startChar.match(/\W/) === null) {
+		if ((/\W/u).exec(startChar) === null) {
 			return false;
 		}
 	}
 
 	if (end < text.length) {
 		const endChar: string = text.charAt(end);
-		if (endChar.match(/\W/) === null) {
+		if ((/\W/u).exec(endChar) === null) {
 			return false;
 		}
 	}
 
 	return true;
-}
+};
 
 // Search for all occurrences of a case sensitive search string within the current file
-export function findStringCase(
+export const findStringCase = (
 	doc: vscode.TextDocument | undefined,
 	findText: string,
-	outputSink: IOutputSink
-): void {
-	if (doc === undefined) {
+	outputSink: Readonly<IOutputSink>
+): void => {
+	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
 		return;
@@ -84,15 +82,15 @@ export function findStringCase(
 	}
 
 	outputSink.end();
-}
+};
 
 // Search for all occurrences of a case sensitive search string word within the current file
-export function findStringCaseWord(
+export const findStringCaseWord = (
 	doc: vscode.TextDocument | undefined,
 	findText: string,
-	outputSink: IOutputSink
-): void {
-	if (doc === undefined) {
+	outputSink: Readonly<IOutputSink>
+): void => {
+	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
 		return;
@@ -133,15 +131,15 @@ export function findStringCaseWord(
 	}
 
 	outputSink.end();
-}
+};
 
 // Search for all occurrences of a case insensitive search string within the current file
-export function findStringNoCase(
+export const findStringNoCase = (
 	doc: vscode.TextDocument | undefined,
 	findText: string,
-	outputSink: IOutputSink
-): void {
-	if (doc === undefined) {
+	outputSink: Readonly<IOutputSink>
+): void => {
+	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
 		return;
@@ -181,15 +179,15 @@ export function findStringNoCase(
 	}
 
 	outputSink.end();
-}
+};
 
 // Search for all occurrences of a case insensitive search string word within the current file
-export function findStringNoCaseWord(
+export const findStringNoCaseWord = (
 	doc: vscode.TextDocument | undefined,
 	findText: string,
-	outputSink: IOutputSink
-): void {
-	if (doc === undefined) {
+	outputSink: Readonly<IOutputSink>
+): void => {
+	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
 		return;
@@ -231,22 +229,22 @@ export function findStringNoCaseWord(
 	}
 
 	outputSink.end();
-}
+};
 
 // Search for all occurrences of a case sensitive search regex within the current file
-export function findRegexCase(
+export const findRegexCase = (
 	doc: vscode.TextDocument | undefined,
 	findText: string,
-	outputSink: IOutputSink
-): void {
-	if (doc === undefined) {
+	outputSink: Readonly<IOutputSink>
+): void => {
+	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
 		return;
 	}
 
 	try {
-		const findRegExp: RegExp = new RegExp(findText, "g");
+		const findRegExp: RegExp = new RegExp(findText, "gu");
 
 		outputSink.begin(doc, findText, true, true, false);
 
@@ -258,15 +256,9 @@ export function findRegexCase(
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
-			while (true) {
-				const match: RegExpExecArray | null = findRegExp.exec(text);
-				if (match === null) {
-					break;
-				}
+			for (let match: RegExpExecArray | null = findRegExp.exec(text); match !== null; match = findRegExp.exec(text)) {
 				findCount += 1;
-				outputSink.item(
-					new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
-				);
+				outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex, findCount));
 
 				if (findCount >= resultLimit) {
 					break;
@@ -275,26 +267,29 @@ export function findRegexCase(
 		}
 
 		outputSink.end();
-	} catch (e) {
-		// tslint:disable:no-unsafe-any
-		outputSink.regexFailure(e);
+	} catch (exception: unknown) {
+		if (typeof exception === "string") {
+			outputSink.regexFailure(exception);
+		} else {
+			outputSink.regexFailure(JSON.stringify(exception));
+		}
 	}
-}
+};
 
 // Search for all occurrences of a case sensitive search regex within the current file
-export function findRegexCaseWord(
+export const findRegexCaseWord = (
 	doc: vscode.TextDocument | undefined,
 	findText: string,
-	outputSink: IOutputSink
-): void {
-	if (doc === undefined) {
+	outputSink: Readonly<IOutputSink>
+): void => {
+	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
 		return;
 	}
 
 	try {
-		const findRegExp: RegExp = new RegExp(findText, "g");
+		const findRegExp: RegExp = new RegExp(findText, "gu");
 
 		outputSink.begin(doc, findText, true, true, true);
 
@@ -306,16 +301,10 @@ export function findRegexCaseWord(
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
-			while (true) {
-				const match: RegExpExecArray | null = findRegExp.exec(text);
-				if (match === null) {
-					break;
-				}
+			for (let match: RegExpExecArray | null = findRegExp.exec(text); match !== null; match = findRegExp.exec(text)) {
 				if (isWord(text, match.index, findRegExp.lastIndex)) {
 					findCount += 1;
-					outputSink.item(
-						new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
-					);
+					outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex, findCount));
 
 					if (findCount >= resultLimit) {
 						break;
@@ -325,26 +314,29 @@ export function findRegexCaseWord(
 		}
 
 		outputSink.end();
-	} catch (e) {
-		// tslint:disable:no-unsafe-any
-		outputSink.regexFailure(e);
+	} catch (exception: unknown) {
+		if (typeof exception === "string") {
+			outputSink.regexFailure(exception);
+		} else {
+			outputSink.regexFailure(JSON.stringify(exception));
+		}
 	}
-}
+};
 
 // Search for all occurrences of a case insensitive search regex within the current file
-export function findRegexNoCase(
+export const findRegexNoCase = (
 	doc: vscode.TextDocument | undefined,
 	findText: string,
-	outputSink: IOutputSink
-): void {
-	if (doc === undefined) {
+	outputSink: Readonly<IOutputSink>
+): void => {
+	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
 		return;
 	}
 
 	try {
-		const findRegExp: RegExp = new RegExp(findText, "gi");
+		const findRegExp: RegExp = new RegExp(findText, "giu");
 
 		outputSink.begin(doc, findText, true, false, false);
 
@@ -356,15 +348,9 @@ export function findRegexNoCase(
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
-			while (true) {
-				const match: RegExpExecArray | null = findRegExp.exec(text);
-				if (match === null) {
-					break;
-				}
+			for (let match: RegExpExecArray | null = findRegExp.exec(text); match !== null; match = findRegExp.exec(text)) {
 				findCount += 1;
-				outputSink.item(
-					new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
-				);
+				outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex, findCount));
 
 				if (findCount >= resultLimit) {
 					break;
@@ -373,26 +359,29 @@ export function findRegexNoCase(
 		}
 
 		outputSink.end();
-	} catch (e) {
-		// tslint:disable:no-unsafe-any
-		outputSink.regexFailure(e);
+	} catch (exception: unknown) {
+		if (typeof exception === "string") {
+			outputSink.regexFailure(exception);
+		} else {
+			outputSink.regexFailure(JSON.stringify(exception));
+		}
 	}
-}
+};
 
 // Search for all occurrences of a case insensitive search regex within the current file
-export function findRegexNoCaseWord(
+export const findRegexNoCaseWord = (
 	doc: vscode.TextDocument | undefined,
 	findText: string,
-	outputSink: IOutputSink
-): void {
-	if (doc === undefined) {
+	outputSink: Readonly<IOutputSink>
+): void => {
+	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
 		return;
 	}
 
 	try {
-		const findRegExp: RegExp = new RegExp(findText, "gi");
+		const findRegExp: RegExp = new RegExp(findText, "giu");
 
 		outputSink.begin(doc, findText, true, false, true);
 
@@ -404,16 +393,10 @@ export function findRegexNoCaseWord(
 			const textLine: vscode.TextLine = doc.lineAt(line);
 			const text: string = textLine.text;
 			// Search for all the instances within each line
-			while (true) {
-				const match: RegExpExecArray | null = findRegExp.exec(text);
-				if (match === null) {
-					break;
-				}
+			for (let match: RegExpExecArray | null = findRegExp.exec(text); match !== null; match = findRegExp.exec(text)) {
 				if (isWord(text, match.index, findRegExp.lastIndex)) {
 					findCount += 1;
-					outputSink.item(
-						new FindResult(text, line, match.index, findRegExp.lastIndex, findCount)
-					);
+					outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex, findCount));
 
 					if (findCount >= resultLimit) {
 						break;
@@ -423,8 +406,11 @@ export function findRegexNoCaseWord(
 		}
 
 		outputSink.end();
-	} catch (e) {
-		// tslint:disable:no-unsafe-any
-		outputSink.regexFailure(e);
+	} catch (exception: unknown) {
+		if (typeof exception === "string") {
+			outputSink.regexFailure(exception);
+		} else {
+			outputSink.regexFailure(JSON.stringify(exception));
+		}
 	}
-}
+};

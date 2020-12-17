@@ -1,24 +1,28 @@
 // Copyright 2019 Benbuck Nason
 
-"use strict";
-
 import * as assert from "assert";
-import { afterEach, before, beforeEach } from "mocha";
+import * as findallinfile from "../../findAllInFile";
 import * as mock from "ts-mockito";
 import * as path from "path";
 import * as vscode from "vscode";
-
-import { findStringCase, findStringCaseWord, findStringNoCase, findStringNoCaseWord, findRegexCase, findRegexCaseWord, findRegexNoCase, findRegexNoCaseWord } from "../../findAllInFile";
+import { afterEach, before, beforeEach } from "mocha";
 import { FindResult } from "../../findResult";
-import { IOutputSink } from "../../iOutputSink";
+import type { IOutputSink } from "../../iOutputSink";
 
 const outputMock: IOutputSink = mock.mock<IOutputSink>();
 const output: IOutputSink = mock.instance(outputMock);
 
-function isEqual(fr: FindResult, text: string, line: number, columnBegin: number, columnEnd: number)
-{
-	return (fr.line == line) && (fr.columnBegin == columnBegin) && (fr.columnEnd == columnEnd) && (fr.text == text);
-}
+// eslint-disable-next-line arrow-body-style
+const isEqual = (fr: Readonly<FindResult>, text: string, line: number, columnBegin: number, columnEnd: number): boolean => {
+	return (
+		(fr.line === line) &&
+		(fr.columnBegin === columnBegin) &&
+		(fr.columnEnd === columnEnd) &&
+		(fr.text === text)
+	);
+};
+
+/* eslint-disable max-lines-per-function, @typescript-eslint/no-confusing-void-expression */
 
 suite("No document", () => {
 	beforeEach(() => {
@@ -26,59 +30,70 @@ suite("No document", () => {
 	});
 
 	afterEach(() => {
-		mock.verify(outputMock.begin(mock.anything(), mock.anyString(), mock.anyOfClass(Boolean),
-			mock.anyOfClass(Boolean), mock.anyOfClass(Boolean))).never();
+		mock.verify(outputMock.begin(
+			mock.anything(),
+			mock.anyString(),
+			mock.anyOfClass(Boolean),
+			mock.anyOfClass(Boolean),
+			mock.anyOfClass(Boolean)
+		)).never();
 		mock.verify(outputMock.end()).never();
 	});
 
+	/* eslint-disable no-undefined */
+
 	test("String case", () => {
-		findStringCase(undefined, "", output);
+		findallinfile.findStringCase(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
 
 	test("String case word", () => {
-		findStringCaseWord(undefined, "", output);
+		findallinfile.findStringCaseWord(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
 
 	test("String no case", () => {
-		findStringNoCase(undefined, "", output);
+		findallinfile.findStringNoCase(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
 
 	test("String no case word", () => {
-		findStringNoCaseWord(undefined, "", output);
+		findallinfile.findStringNoCaseWord(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
 
 	test("Regex case", () => {
-		findRegexCase(undefined, "", output);
+		findallinfile.findRegexCase(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
 
 	test("Regex case word", () => {
-		findRegexCaseWord(undefined, "", output);
+		findallinfile.findRegexCaseWord(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
 
 	test("Regex no case", () => {
-		findRegexNoCase(undefined, "", output);
+		findallinfile.findRegexNoCase(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
 
 	test("Regex no case word", () => {
-		findRegexNoCaseWord(undefined, "", output);
+		findallinfile.findRegexNoCaseWord(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
+
+	/* eslint-enable no-undefined */
 });
 
-suite("Find", async () => {
+suite("Find", (): void => {
+	// eslint-disable-next-line @typescript-eslint/init-declarations
 	let doc: vscode.TextDocument;
 
 	before(async() => {
 		const docUri: string = path.resolve(__dirname, "../../../src/test/suite/test.txt");
 		doc = await vscode.workspace.openTextDocument(docUri);
-		/* const editor: vscode.TextEditor = */ await vscode.window.showTextDocument(doc);
+		// Unused - const editor: vscode.TextEditor = ...
+		await vscode.window.showTextDocument(doc);
 	});
 
 	beforeEach(() => {
@@ -87,8 +102,10 @@ suite("Find", async () => {
 
 	// String tests
 
+	/* eslint-disable no-magic-numbers, @typescript-eslint/no-magic-numbers */
+
 	test("String case", () => {
-		findStringCase(doc, "test", output);
+		findallinfile.findStringCase(doc, "test", output);
 		mock.verify(outputMock.begin(doc, "test", false, true, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(6);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -101,7 +118,7 @@ suite("Find", async () => {
 	});
 
 	test("String case word", () => {
-		findStringCaseWord(doc, "test", output);
+		findallinfile.findStringCaseWord(doc, "test", output);
 		mock.verify(outputMock.begin(doc, "test", false, true, true)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(3);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -111,7 +128,7 @@ suite("Find", async () => {
 	});
 
 	test("String no case", () => {
-		findStringNoCase(doc, "test", output);
+		findallinfile.findStringNoCase(doc, "test", output);
 		mock.verify(outputMock.begin(doc, "test", false, false, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(10);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -128,7 +145,7 @@ suite("Find", async () => {
 	});
 
 	test("String no case word", () => {
-		findStringNoCaseWord(doc, "test", output);
+		findallinfile.findStringNoCaseWord(doc, "test", output);
 		mock.verify(outputMock.begin(doc, "test", false, false, true)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(5);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -142,7 +159,7 @@ suite("Find", async () => {
 	// Trivial regex tests
 
 	test("Regex case", () => {
-		findRegexCase(doc, "test", output);
+		findallinfile.findRegexCase(doc, "test", output);
 		mock.verify(outputMock.begin(doc, "test", true, true, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(6);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -155,7 +172,7 @@ suite("Find", async () => {
 	});
 
 	test("Regex case word", () => {
-		findRegexCaseWord(doc, "test", output);
+		findallinfile.findRegexCaseWord(doc, "test", output);
 		mock.verify(outputMock.begin(doc, "test", true, true, true)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(3);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -165,7 +182,7 @@ suite("Find", async () => {
 	});
 
 	test("Regex no case", () => {
-		findRegexNoCase(doc, "test", output);
+		findallinfile.findRegexNoCase(doc, "test", output);
 		mock.verify(outputMock.begin(doc, "test", true, false, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(10);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -182,7 +199,7 @@ suite("Find", async () => {
 	});
 
 	test("Regex no case word", () => {
-		findRegexNoCaseWord(doc, "test", output);
+		findallinfile.findRegexNoCaseWord(doc, "test", output);
 		mock.verify(outputMock.begin(doc, "test", true, false, true)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(5);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -196,7 +213,7 @@ suite("Find", async () => {
 	// Regex tests
 
 	test("Regex case dot", () => {
-		findRegexCase(doc, "t.st", output);
+		findallinfile.findRegexCase(doc, "t.st", output);
 		mock.verify(outputMock.begin(doc, "t.st", true, true, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(8);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -211,7 +228,7 @@ suite("Find", async () => {
 	});
 
 	test("Regex no case dot", () => {
-		findRegexNoCase(doc, "t.st", output);
+		findallinfile.findRegexNoCase(doc, "t.st", output);
 		mock.verify(outputMock.begin(doc, "t.st", true, false, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(13);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -231,7 +248,7 @@ suite("Find", async () => {
 	});
 
 	test("Regex case dot star", () => {
-		findRegexCase(doc, "test.*", output);
+		findallinfile.findRegexCase(doc, "test.*", output);
 		mock.verify(outputMock.begin(doc, "test.*", true, true, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(2);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 22));
@@ -240,7 +257,7 @@ suite("Find", async () => {
 	});
 
 	test("Regex no case dot star", () => {
-		findRegexNoCase(doc, "test.*", output);
+		findallinfile.findRegexNoCase(doc, "test.*", output);
 		mock.verify(outputMock.begin(doc, "test.*", true, false, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(3);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 22));
@@ -250,7 +267,7 @@ suite("Find", async () => {
 	});
 
 	test("Regex case char class", () => {
-		findRegexCase(doc, "t[ae]st", output);
+		findallinfile.findRegexCase(doc, "t[ae]st", output);
 		mock.verify(outputMock.begin(doc, "t[ae]st", true, true, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(7);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -264,7 +281,7 @@ suite("Find", async () => {
 	});
 
 	test("Regex no case char class", () => {
-		findRegexNoCase(doc, "t[ae]st", output);
+		findallinfile.findRegexNoCase(doc, "t[ae]st", output);
 		mock.verify(outputMock.begin(doc, "t[ae]st", true, false, false)).once();
 		mock.verify(outputMock.item(mock.anyOfClass(FindResult))).times(13);
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(0)[0], "test 123 test abc test", 0, 0, 4));
@@ -282,4 +299,8 @@ suite("Find", async () => {
 		assert(isEqual(mock.capture(outputMock.item).byCallIndex(12)[0], "Test tEst TeSttEST", 3, 14, 18));
 		mock.verify(outputMock.end()).once();
 	});
+
+	/* eslint-enable no-magic-numbers, @typescript-eslint/no-magic-numbers */
 });
+
+/* eslint-enable max-lines-per-function, @typescript-eslint/no-confusing-void-expression */

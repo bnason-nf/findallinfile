@@ -1,21 +1,13 @@
 // Copyright 2019 Benbuck Nason
 
-"use strict";
-
-// TMP import * as assert from "assert";
-
-import { before } from "mocha";
 import * as vscode from "vscode";
-
-// EXAMPLE: import * as myExtension from "../extension";
+import { before } from "mocha";
 
 suite("Extension Test Suite", () => {
-	before(async () => {
-		vscode.window.showInformationMessage("Start all tests.");
+	before(() => {
+		vscode.window.showInformationMessage("Start all tests.").then(
+			() => { },
+			() => { }
+		);
 	});
-
-	// TMP test("Sample test", () => {
-	// TMP 	assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-	// TMP 	assert.strictEqual(-1, [1, 2, 3].indexOf(0));
-	// TMP });
 });

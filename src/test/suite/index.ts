@@ -1,41 +1,40 @@
 // Copyright 2019 Benbuck Nason
 
-"use strict";
-
-import * as glob from "glob";
 import * as Mocha from "mocha";
+import * as glob from "glob";
 import * as path from "path";
 
-export async function run(): Promise<void> {
+export const run = async(): Promise<void> => {
 	// Create the mocha test
 	const mocha: Mocha = new Mocha({
-		ui: "tdd",
+		ui: "tdd"
 	});
 	mocha.useColors(true);
 
 	const testsRoot: string = path.resolve(__dirname, "..");
 
-	return new Promise((c, e) => {
-		glob("**/**.test.js", { cwd: testsRoot }, (err: Error | null, files: string[]) => {
+	return new Promise((onComplete, onError) => {
+		glob("**/**.test.js", { cwd: testsRoot }, (err: Error | null, files: readonly string[]): void => {
 			if (err !== null) {
-				return e(err);
+				onError(err);
+				return;
 			}
 
 			// Add files to the test suite
-			files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
+			files.forEach((file) => mocha.addFile(path.resolve(testsRoot, file)));
 
 			try {
 				// Run the mocha test
 				mocha.run((failures: number) => {
 					if (failures > 0) {
-						e(new Error(`${failures} tests failed.`));
+						onError(new Error(`${failures} tests failed.`));
 					} else {
-						c();
+						onComplete();
 					}
 				});
-			} catch (err) {
-				e(err);
+			} catch (exception: unknown) {
+				onError(exception);
 			}
 		});
 	});
-}
+};

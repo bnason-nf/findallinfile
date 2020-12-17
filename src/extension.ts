@@ -1,229 +1,283 @@
 // Copyright 2019 Benbuck Nason
 
-"use strict";
-
-import * as vscode from "vscode";
-
 import * as findAllInFile from "./findAllInFile";
+import * as vscode from "vscode";
+import type { DeepReadonly } from "./DeepReadonly";
+import { TreeDataProvider } from "./treeDataProvider";
+import type { TreeElement } from "./treeDataProvider";
 import { localize } from "./localize";
-import { TreeDataProvider, TreeElement } from "./treeDataProvider";
 
-function getActiveDocument(): vscode.TextDocument | undefined {
+const getActiveDocument = (): vscode.TextDocument | undefined => {
 	// Make sure there is an active editor window for us to use
-	if (vscode.window.activeTextEditor === undefined) {
+	if (typeof vscode.window.activeTextEditor === "undefined") {
+		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 
 	// Get the active document
 	return vscode.window.activeTextEditor.document;
-}
+};
 
-function createTreeView(provider: TreeDataProvider): vscode.TreeView<TreeElement> {
+const createTreeView = (provider: Readonly<TreeDataProvider>): vscode.TreeView<TreeElement> => {
 	const treeViewOptions: vscode.TreeViewOptions<TreeElement> = {
 		showCollapseAll: false,
-		treeDataProvider: provider,
+		treeDataProvider: provider
 	};
 
 	return vscode.window.createTreeView("findallview", treeViewOptions);
-}
+};
 
 // Remember most recent searches for easy re-use
 let lastFindRegex: string = "";
 let lastFindString: string = "";
 
-function getSelectedText(): string | undefined {
+const getSelectedText = (): string | undefined => {
 	const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
-	if (editor === undefined) {
+	if (typeof editor === "undefined") {
+		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 	const selection: vscode.Selection = editor.selection;
 	if (selection.isEmpty) {
+		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 	const text: string = editor.document.getText(selection);
 	if (text.length <= 0) {
+		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 
 	return text;
-}
+};
 
-function defaultFindRegex(): string {
+const defaultFindRegex = (): string => {
 	const selectedText: string | undefined = getSelectedText();
-	if (selectedText === undefined) {
+	if (typeof selectedText === "undefined") {
 		return lastFindRegex;
 	}
 
 	return selectedText;
-}
+};
 
-function defaultFindString(): string {
+const defaultFindString = (): string => {
 	const selectedText: string | undefined = getSelectedText();
-	if (selectedText === undefined) {
+	if (typeof selectedText === "undefined") {
 		return lastFindString;
 	}
 
 	return selectedText;
-}
+};
 
-function findRegexCase(): void {
+const findRegexCase = (): void => {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_regex"),
-		value: defaultFindRegex(),
-	}).then((findText: string | undefined) => {
-		if ((findText !== undefined) && (findText.length > 0)) {
-			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+		value: defaultFindRegex()
+	}).then(
+		(findText: string | undefined) => {
+			if ((typeof findText !== "undefined") && (findText.length > 0)) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-			findAllInFile.findRegexCase(getActiveDocument(), findText, provider);
+				findAllInFile.findRegexCase(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => { },
+					() => { }
+				);
 
-			lastFindRegex = findText;
-		}
-	});
-}
+				lastFindRegex = findText;
+			}
+		},
+		() => { }
+	);
+};
 
-function findRegexCaseWord(): void {
+const findRegexCaseWord = (): void => {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_regex"),
-		value: defaultFindRegex(),
-	}).then((findText: string | undefined) => {
-		if ((findText !== undefined) && (findText.length > 0)) {
-			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+		value: defaultFindRegex()
+	}).then(
+		(findText: string | undefined) => {
+			if ((typeof findText !== "undefined") && (findText.length > 0)) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-			findAllInFile.findRegexCaseWord(getActiveDocument(), findText, provider);
+				findAllInFile.findRegexCaseWord(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => { },
+					() => { }
+				);
 
-			lastFindRegex = findText;
-		}
-	});
-}
+				lastFindRegex = findText;
+			}
+		},
+		() => { }
+	);
+};
 
-function findRegexNoCase(): void {
+const findRegexNoCase = (): void => {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_regex"),
-		value: defaultFindRegex(),
-	}).then((findText: string | undefined) => {
-		if ((findText !== undefined) && (findText.length > 0)) {
-			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+		value: defaultFindRegex()
+	}).then(
+		(findText: string | undefined) => {
+			if ((typeof findText !== "undefined") && (findText.length > 0)) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-			findAllInFile.findRegexNoCase(getActiveDocument(), findText, provider);
+				findAllInFile.findRegexNoCase(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => { },
+					() => { }
+				);
 
-			lastFindRegex = findText;
-		}
-	});
-}
+				lastFindRegex = findText;
+			}
+		},
+		() => { }
+	);
+};
 
-function findRegexNoCaseWord(): void {
+const findRegexNoCaseWord = (): void => {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_regex"),
-		value: defaultFindRegex(),
-	}).then((findText: string | undefined) => {
-		if ((findText !== undefined) && (findText.length > 0)) {
-			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+		value: defaultFindRegex()
+	}).then(
+		(findText: string | undefined) => {
+			if ((typeof findText !== "undefined") && (findText.length > 0)) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-			findAllInFile.findRegexNoCaseWord(getActiveDocument(), findText, provider);
+				findAllInFile.findRegexNoCaseWord(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => { },
+					() => { }
+				);
 
-			lastFindRegex = findText;
-		}
-	});
-}
+				lastFindRegex = findText;
+			}
+		},
+		() => { }
+	);
+};
 
-function findStringCase(): void {
+const findStringCase = (): void => {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_string"),
-		value: defaultFindString(),
-	}).then((findText: string | undefined) => {
-		if ((findText !== undefined) && (findText.length > 0)) {
-			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+		value: defaultFindString()
+	}).then(
+		(findText: string | undefined) => {
+			if ((typeof findText !== "undefined") && (findText.length > 0)) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-			findAllInFile.findStringCase(getActiveDocument(), findText, provider);
+				findAllInFile.findStringCase(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => { },
+					() => { }
+				);
 
-			lastFindString = findText;
-		}
-	});
-}
+				lastFindString = findText;
+			}
+		},
+		() => { }
+	);
+};
 
-function findStringCaseWord(): void {
+const findStringCaseWord = (): void => {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_string"),
-		value: defaultFindString(),
-	}).then((findText: string | undefined) => {
-		if ((findText !== undefined) && (findText.length > 0)) {
-			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+		value: defaultFindString()
+	}).then(
+		(findText: string | undefined) => {
+			if ((typeof findText !== "undefined") && (findText.length > 0)) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-			findAllInFile.findStringCaseWord(getActiveDocument(), findText, provider);
+				findAllInFile.findStringCaseWord(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => { },
+					() => { }
+				);
 
-			lastFindString = findText;
-		}
-	});
-}
+				lastFindString = findText;
+			}
+		},
+		() => { }
+	);
+};
 
-function findStringNoCase(): void {
+const findStringNoCase = (): void => {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_string"),
-		value: defaultFindString(),
-	}).then((findText: string | undefined) => {
-		if ((findText !== undefined) && (findText.length > 0)) {
-			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+		value: defaultFindString()
+	}).then(
+		(findText: string | undefined) => {
+			if ((typeof findText !== "undefined") && (findText.length > 0)) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-			findAllInFile.findStringNoCase(getActiveDocument(), findText, provider);
+				findAllInFile.findStringNoCase(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => { },
+					() => { }
+				);
 
-			lastFindString = findText;
-		}
-	});
-}
+				lastFindString = findText;
+			}
+		},
+		() => { }
+	);
+};
 
-function findStringNoCaseWord(): void {
+const findStringNoCaseWord = (): void => {
 	vscode.window.showInputBox({
 		prompt: localize("enter_search_string"),
-		value: defaultFindString(),
-	}).then((findText: string | undefined) => {
-		if ((findText !== undefined) && (findText.length > 0)) {
-			const provider: TreeDataProvider = new TreeDataProvider();
-			const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+		value: defaultFindString()
+	}).then(
+		(findText: string | undefined) => {
+			if ((typeof findText !== "undefined") && (findText.length > 0)) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-			findAllInFile.findStringNoCaseWord(getActiveDocument(), findText, provider);
+				findAllInFile.findStringNoCaseWord(getActiveDocument(), findText, provider);
 
-			treeView.reveal(provider.getFirstResult(), { focus: true, select: false, expand: true });
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => { },
+					() => { }
+				);
 
-			lastFindString = findText;
-		}
-	});
-}
+				lastFindString = findText;
+			}
+		},
+		() => { }
+	);
+};
 
-function viewResult(doc: vscode.TextDocument, line: number, columnBegin: number, columnEnd: number): void {
+const viewResult = (doc: DeepReadonly<vscode.TextDocument>, line: number, columnBegin: number, columnEnd: number): void => {
 	// Make sure document is showing
-	vscode.window.showTextDocument(doc);
+	vscode.window.showTextDocument(doc).then(
+		() => { },
+		() => { }
+	);
 
-	if (vscode.window.activeTextEditor !== undefined) {
+	if (typeof vscode.window.activeTextEditor !== "undefined") {
 		// Make the result visible
 		vscode.window.activeTextEditor.revealRange(new vscode.Range(line, columnBegin, line, columnEnd));
 
 		// Select the result
 		vscode.window.activeTextEditor.selection = new vscode.Selection(line, columnBegin, line, columnEnd);
 	}
-}
+};
 
-function copyResults(provider: TreeDataProvider): void {
+const copyResults = (provider: Readonly<TreeDataProvider>): void => {
 	let resultString: string = "";
 	const results: TreeElement[] = provider.getResults();
 	for (const result of results) {
@@ -231,11 +285,19 @@ function copyResults(provider: TreeDataProvider): void {
 		resultString += "\n";
 	}
 
-	vscode.env.clipboard.writeText(resultString);
-	vscode.window.showInformationMessage(localize("copied_to_clipboard"));
-}
+	vscode.env.clipboard.writeText(resultString).then(
+		() => { },
+		() => { }
+	);
+	vscode.window.showInformationMessage(localize("copied_to_clipboard")).then(
+		() => { },
+		() => { }
+	);
+};
+
 // Called once on extension init
-export function activate(context: vscode.ExtensionContext): void {
+// eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+export const activate = (context: Readonly<vscode.ExtensionContext>): void => {
 	// External commands
 	context.subscriptions.push(vscode.commands.registerCommand(
 		"findallinfile.findregexcase",
@@ -272,14 +334,16 @@ export function activate(context: vscode.ExtensionContext): void {
 
 	// Internal commands
 	context.subscriptions.push(vscode.commands.registerCommand(
-		"findallinfile.viewResult", viewResult
+		"findallinfile.viewResult",
+		viewResult
 	));
 	context.subscriptions.push(vscode.commands.registerCommand(
-		"findallinfile.copyResults", copyResults
+		"findallinfile.copyResults",
+		copyResults
 	));
-}
+};
 
 // Called once on extension destroy
-export function deactivate(): void {
+export const deactivate = (): void => {
 	// Nothing to do
-}
+};

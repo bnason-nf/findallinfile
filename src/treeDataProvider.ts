@@ -1,22 +1,24 @@
 // Copyright 2019 Benbuck Nason
 
-"use strict";
-
 import * as vscode from "vscode";
 
+import type { DeepReadonly } from "./DeepReadonly";
 import { FindError } from "./findError";
 import { FindInfo } from "./findInfo";
 import { FindResult } from "./findResult";
-import { IOutputSink } from "./iOutputSink";
+import type { IOutputSink } from "./iOutputSink";
 import { localize } from "./localize";
 
+// eslint-disable-next-line @typescript-eslint/no-type-alias
 export type TreeElement = FindError | FindInfo | FindResult;
 
 export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, IOutputSink {
 	public readonly onDidChangeTreeData: vscode.Event<TreeElement> | undefined;
 
 	private doc: vscode.TextDocument | undefined;
+
 	private readonly eventEmitter: vscode.EventEmitter<TreeElement> = new vscode.EventEmitter<TreeElement>();
+
 	private readonly findResults: TreeElement[] = [];
 
 	public constructor() {
@@ -24,19 +26,20 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 	}
 
 	public begin(
-		doc: vscode.TextDocument,
+		doc: DeepReadonly<vscode.TextDocument>,
 		findText: string,
 		useRegex: boolean,
 		caseSensitive: boolean,
-		wholeWord: boolean,
+		wholeWord: boolean
 	): void {
 		this.doc = doc;
 		this.findResults.length = 0;
+		const regexCase: string = caseSensitive ? localize("regex_case") : localize("regex_no_case");
+		const stringCase: string = caseSensitive ? localize("string_case") : localize("string_no_case");
+		const searchType: string = useRegex ? regexCase : stringCase;
 		const label: string = localize(
 			"search_header",
-			useRegex ?
-				caseSensitive ? localize("regex_case") : localize("regex_no_case") :
-				caseSensitive ? localize("string_case") : localize("string_no_case"),
+			searchType,
 			wholeWord ? localize("whole_word") : " ",
 			findText,
 			doc.fileName
@@ -52,7 +55,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 	}
 
 	public getChildren(element: TreeElement | undefined): TreeElement[] {
-		if (element === undefined) {
+		if (typeof element === "undefined") {
 			return this.findResults;
 		}
 
@@ -63,8 +66,9 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		return this.findResults[0];
 	}
 
-	// tslint:disable:prefer-function-over-method
-	public getParent(/* element: TreeElement */): vscode.ProviderResult<TreeElement> {
+	// eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
+	public getParent(_element: TreeElement): vscode.ProviderResult<TreeElement> {
+		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 
@@ -73,7 +77,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 	}
 
 	public getTreeItem(element: TreeElement | undefined): vscode.TreeItem {
-		if (element === undefined) {
+		if (typeof element === "undefined") {
 			return new vscode.TreeItem("");
 		}
 
@@ -84,7 +88,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		if (element instanceof FindError) {
 			// No command needed
 		} else if (element instanceof FindInfo) {
-			// tslint:disable:no-any
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const args: any[] = [this];
 			treeItem.command = {
 				arguments: args,
@@ -92,10 +96,10 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 				title: ""
 			};
 		} else if (element instanceof FindResult) {
-			if (this.doc !== undefined) {
+			if (typeof this.doc !== "undefined") {
 				treeItem.tooltip = element.toMarkdown();
 
-				// tslint:disable:no-any
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd];
 				treeItem.command = {
 					arguments: args,
@@ -108,7 +112,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		return treeItem;
 	}
 
-	public item(findResult: FindResult): void {
+	public item(findResult: Readonly<FindResult>): void {
 		this.findResults.push(findResult);
 		// Slow: this.refreshTree();
 	}
@@ -119,9 +123,9 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		this.refreshTree();
 	}
 
-	public regexFailure(e: string): void {
+	public regexFailure(error: string): void {
 		this.findResults.length = 0;
-		this.findResults.push(new FindError(localize("error_regex", e)));
+		this.findResults.push(new FindError(localize("error_regex", error)));
 		this.refreshTree();
 	}
 

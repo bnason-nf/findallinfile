@@ -5,8 +5,8 @@
 	// for the documentation about the extensions.json format
 	"recommendations": [
 		"davidanson.vscode-markdownlint",
+		"dbaeumer.vscode-eslint",
 		"editorconfig.editorconfig",
-		"ms-vscode.vscode-typescript-tslint-plugin",
 		"streetsidesoftware.code-spell-checker"
 	]
 }
