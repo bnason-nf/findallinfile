@@ -38,9 +38,9 @@ After installing this extension in Visual Studio Code, you will have some new co
 All of these combinations match the corresponding options in the built-in Visual Studio Code
 [Search](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) interface.
 
-You can use these commands from the [Command
-Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) by typing
-`"Find All In File"`, then selecting the command variant you want to use.
+You can use these commands from the
+[Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette)
+by typing `"Find All In File"`, then selecting the command variant you want to use.
 
 You can can also access these from the editor context menu by right mouse clicking on an open
 document. The same commands are available, with slightly different names:
@@ -54,26 +54,29 @@ document. The same commands are available, with slightly different names:
 - **Find String (Case Sensitive)**
 - **Find String (Case Sensitive, Whole Word)**
 
-For all of these commands you will first be asked to enter a search string. Once you do this, the
-extension will search the current document, and all the matching occurrences of your search will
-show up in the Find All In File [Side
-Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_basic-layout). You can also
-manually show the Find All In File Side Bar by selecting the corresponding icon in the [Activity
-Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar).
+For all of these commands you will first be asked to enter a search string. If you have text
+selected in your document, that should be the default search string. If you have done any previous
+searches, those should also be available in your search history list under that. Of course you can
+also type in a new search string as well. Once you finish entering the string, the extension will
+search the current document and display the results.
 
-After you complete your search, you will see the results in the Side Bar. You can use these results
-to quickly preview the matches that were found. If you hover on one of the results, a tooltip will
-show the complete result details if that information isn't fully visible otherwise. If you click on
-one of the results, it will take you to that location in the document, and the matching text will
-be selected. It's also possible to view the results view at any time by using the
-"**Find All In File: Focus on View**" command. The format of these results is:
+The results of your search (all the matching occurrences of the string or regex) will show up in
+the Find All In File
+[Side Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_basic-layout). You can
+also manually show the Find All In File Side Bar by selecting the corresponding icon in the
+[Activity Bar](https://code.visualstudio.com/docs/getstarted/userinterface#_activity-bar). You can
+use these results to quickly preview the matches that were found. If you hover on one of the
+results, a tooltip will show the complete result details if that information isn't fully visible
+otherwise. If you click on one of the results, it will take you to that location in the document,
+and the matching text will be selected. It's also possible to view the results view at any time by
+using the "**Find All In File: Focus on View**" command. The format of these results is:
 
 `[Match Number] [Line Number]:[Start Column]-[End Column] [Text of matching line from file]`
 
 The first and last lines in the Side Bar are special. The first line shows you the search you
 performed, and the last line shows you the summary of the search results. If you select either of
-these lines, the search results will be copied to the clipboard so you can use text processing
-tools to interact with the results.
+these lines, the entire search results will be copied to the clipboard so you can use text
+processing tools to interact with the results.
 
 ## Settings
 
@@ -85,14 +88,17 @@ If you don't want to Find All In File to add items to your editor context menu, 
 `true` which means enabled, and setting it to `false` will disable it.
 
 If you want to change the limit on the number of results that will be found, you can modify the
-"Result Limit" setting ("findAllInFile.resultLimit" in settings.json). The default is 10000, and
-you can change it to any number, or zero to disable it (no limit).
+"Result Limit" setting ("findAllInFile.resultLimit" in settings.json). The default is 10000, and you can change it to any number, or zero to disable it (no limit).
+
+If you want to change the limit on the number of searches that will stored in the history, you can
+modify the "Search History Limit" setting ("findAllInFile.searchHistoryLimit" in settings.json).
+The default is 10, and you can change it to any number between 1 and 100 inclusive.
 
 ## Note
 
 There is a [GitHub issue](https://github.com/microsoft/vscode/issues/14836) requesting this feature
 be integrated into Visual Studio Code. If that ever happens then this extension will become
-obsolete.
+obsolete (we all hope).
 
 ## Contributions
 

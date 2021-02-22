@@ -99,7 +99,15 @@
 				"findAllInFile.resultLimit": {
 					"type": "number",
 					"default": 10000,
-					"description": "%resultLimit%"
+					"description": "%resultLimit%",
+					"minimum": 0
+				},
+				"findAllInFile.searchHistoryLimit": {
+					"type": "number",
+					"default": 10,
+					"description": "%searchHistoryLimit%",
+					"minimum": 1,
+					"maximum": 100
 				}
 			}
 		},

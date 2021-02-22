@@ -2,7 +2,8 @@
 
 import * as findAllInFile from "./findAllInFile";
 import * as vscode from "vscode";
-import type { DeepReadonly } from "./DeepReadonly";
+import type { DeepReadonly } from "./deepReadonly";
+import { SearchHistory } from "./searchHistory";
 import { TreeDataProvider } from "./treeDataProvider";
 import type { TreeElement } from "./treeDataProvider";
 import { localize } from "./localize";
@@ -10,7 +11,6 @@ import { localize } from "./localize";
 const getActiveDocument = (): vscode.TextDocument | undefined => {
 	// Make sure there is an active editor window for us to use
 	if (typeof vscode.window.activeTextEditor === "undefined") {
-		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 
@@ -27,254 +27,240 @@ const createTreeView = (provider: Readonly<TreeDataProvider>): vscode.TreeView<T
 	return vscode.window.createTreeView("findallview", treeViewOptions);
 };
 
-// Remember most recent searches for easy re-use
-let lastFindRegex: string = "";
-let lastFindString: string = "";
-
 const getSelectedText = (): string | undefined => {
 	const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
 	if (typeof editor === "undefined") {
-		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 	const selection: vscode.Selection = editor.selection;
 	if (selection.isEmpty) {
-		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 	const text: string = editor.document.getText(selection);
 	if (text.length <= 0) {
-		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 
 	return text;
 };
 
-const defaultFindRegex = (): string => {
-	const selectedText: string | undefined = getSelectedText();
-	if (typeof selectedText === "undefined") {
-		return lastFindRegex;
+// eslint-disable-next-line @typescript-eslint/init-declarations
+let searchHistory: SearchHistory | undefined;
+
+const defaultFindRegexes = (): string[] => (searchHistory ? searchHistory.defaultFindRegexes() : ([] as string[]));
+
+const defaultFindStrings = (): string[] => (searchHistory ? searchHistory.defaultFindStrings() : ([] as string[]));
+
+const showQuickPick = async (
+	strings: readonly string[],
+	options: Readonly<vscode.QuickPickOptions>
+): Promise<string | undefined> => {
+	class QuickPickItem implements vscode.QuickPickItem {
+		public label: string = "";
 	}
 
-	return selectedText;
-};
-
-const defaultFindString = (): string => {
-	const selectedText: string | undefined = getSelectedText();
-	if (typeof selectedText === "undefined") {
-		return lastFindString;
+	const quickPick: vscode.QuickPick<QuickPickItem> = vscode.window.createQuickPick();
+	const items: QuickPickItem[] = [];
+	for (const string of strings) {
+		const item: QuickPickItem = new QuickPickItem();
+		item.label = string;
+		items.push(item);
 	}
+	quickPick.items = items;
+	quickPick.placeholder = options.placeHolder;
+	quickPick.onDidChangeValue((value: string) => {
+		const newItems: QuickPickItem[] = quickPick.items.concat();
+		newItems[0].label = value;
+		quickPick.items = newItems;
+	});
+	quickPick.onDidHide(() => {
+		quickPick.dispose();
+	});
+	quickPick.show();
 
-	return selectedText;
+	return new Promise<string | undefined>((resolve) => {
+		quickPick.onDidAccept(() => {
+			const selection = quickPick.selectedItems[0];
+			quickPick.dispose();
+			resolve(selection.label);
+		});
+	});
 };
 
 const findRegexCase = (): void => {
-	vscode.window
-		.showInputBox({
-			prompt: localize("enter_search_regex"),
-			value: defaultFindRegex(),
-		})
-		.then(
-			(findText: string | undefined) => {
-				if (typeof findText !== "undefined" && findText.length > 0) {
-					const provider: TreeDataProvider = new TreeDataProvider();
-					const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_regex") };
+	showQuickPick(defaultFindRegexes(), options).then(
+		(findText: string | undefined) => {
+			if (typeof findText !== "undefined" && findText.length > 0) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-					findAllInFile.findRegexCase(getActiveDocument(), findText, provider);
+				findAllInFile.findRegexCase(getActiveDocument(), findText, provider);
 
-					treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
-						() => {},
-						() => {}
-					);
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => {},
+					() => {}
+				);
 
-					lastFindRegex = findText;
-				}
-			},
-			() => {}
-		);
+				searchHistory?.addFindRegex(findText);
+			}
+		},
+		() => {}
+	);
 };
 
 const findRegexCaseWord = (): void => {
-	vscode.window
-		.showInputBox({
-			prompt: localize("enter_search_regex"),
-			value: defaultFindRegex(),
-		})
-		.then(
-			(findText: string | undefined) => {
-				if (typeof findText !== "undefined" && findText.length > 0) {
-					const provider: TreeDataProvider = new TreeDataProvider();
-					const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_regex") };
+	showQuickPick(defaultFindRegexes(), options).then(
+		(findText: string | undefined) => {
+			if (typeof findText !== "undefined" && findText.length > 0) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-					findAllInFile.findRegexCaseWord(getActiveDocument(), findText, provider);
+				findAllInFile.findRegexCaseWord(getActiveDocument(), findText, provider);
 
-					treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
-						() => {},
-						() => {}
-					);
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => {},
+					() => {}
+				);
 
-					lastFindRegex = findText;
-				}
-			},
-			() => {}
-		);
+				searchHistory?.addFindRegex(findText);
+			}
+		},
+		() => {}
+	);
 };
 
 const findRegexNoCase = (): void => {
-	vscode.window
-		.showInputBox({
-			prompt: localize("enter_search_regex"),
-			value: defaultFindRegex(),
-		})
-		.then(
-			(findText: string | undefined) => {
-				if (typeof findText !== "undefined" && findText.length > 0) {
-					const provider: TreeDataProvider = new TreeDataProvider();
-					const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_regex") };
+	showQuickPick(defaultFindRegexes(), options).then(
+		(findText: string | undefined) => {
+			if (typeof findText !== "undefined" && findText.length > 0) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-					findAllInFile.findRegexNoCase(getActiveDocument(), findText, provider);
+				findAllInFile.findRegexNoCase(getActiveDocument(), findText, provider);
 
-					treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
-						() => {},
-						() => {}
-					);
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => {},
+					() => {}
+				);
 
-					lastFindRegex = findText;
-				}
-			},
-			() => {}
-		);
+				searchHistory?.addFindRegex(findText);
+			}
+		},
+		() => {}
+	);
 };
 
 const findRegexNoCaseWord = (): void => {
-	vscode.window
-		.showInputBox({
-			prompt: localize("enter_search_regex"),
-			value: defaultFindRegex(),
-		})
-		.then(
-			(findText: string | undefined) => {
-				if (typeof findText !== "undefined" && findText.length > 0) {
-					const provider: TreeDataProvider = new TreeDataProvider();
-					const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_regex") };
+	showQuickPick(defaultFindRegexes(), options).then(
+		(findText: string | undefined) => {
+			if (typeof findText !== "undefined" && findText.length > 0) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-					findAllInFile.findRegexNoCaseWord(getActiveDocument(), findText, provider);
+				findAllInFile.findRegexNoCaseWord(getActiveDocument(), findText, provider);
 
-					treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
-						() => {},
-						() => {}
-					);
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => {},
+					() => {}
+				);
 
-					lastFindRegex = findText;
-				}
-			},
-			() => {}
-		);
+				searchHistory?.addFindRegex(findText);
+			}
+		},
+		() => {}
+	);
 };
 
 const findStringCase = (): void => {
-	vscode.window
-		.showInputBox({
-			prompt: localize("enter_search_string"),
-			value: defaultFindString(),
-		})
-		.then(
-			(findText: string | undefined) => {
-				if (typeof findText !== "undefined" && findText.length > 0) {
-					const provider: TreeDataProvider = new TreeDataProvider();
-					const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_string") };
+	showQuickPick(defaultFindStrings(), options).then(
+		(findText: string | undefined) => {
+			if (typeof findText !== "undefined" && findText.length > 0) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-					findAllInFile.findStringCase(getActiveDocument(), findText, provider);
+				findAllInFile.findStringCase(getActiveDocument(), findText, provider);
 
-					treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
-						() => {},
-						() => {}
-					);
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => {},
+					() => {}
+				);
 
-					lastFindString = findText;
-				}
-			},
-			() => {}
-		);
+				searchHistory?.addFindString(findText);
+			}
+		},
+		() => {}
+	);
 };
 
 const findStringCaseWord = (): void => {
-	vscode.window
-		.showInputBox({
-			prompt: localize("enter_search_string"),
-			value: defaultFindString(),
-		})
-		.then(
-			(findText: string | undefined) => {
-				if (typeof findText !== "undefined" && findText.length > 0) {
-					const provider: TreeDataProvider = new TreeDataProvider();
-					const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_string") };
+	showQuickPick(defaultFindStrings(), options).then(
+		(findText: string | undefined) => {
+			if (typeof findText !== "undefined" && findText.length > 0) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-					findAllInFile.findStringCaseWord(getActiveDocument(), findText, provider);
+				findAllInFile.findStringCaseWord(getActiveDocument(), findText, provider);
 
-					treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
-						() => {},
-						() => {}
-					);
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => {},
+					() => {}
+				);
 
-					lastFindString = findText;
-				}
-			},
-			() => {}
-		);
+				searchHistory?.addFindString(findText);
+			}
+		},
+		() => {}
+	);
 };
 
 const findStringNoCase = (): void => {
-	vscode.window
-		.showInputBox({
-			prompt: localize("enter_search_string"),
-			value: defaultFindString(),
-		})
-		.then(
-			(findText: string | undefined) => {
-				if (typeof findText !== "undefined" && findText.length > 0) {
-					const provider: TreeDataProvider = new TreeDataProvider();
-					const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_string") };
+	showQuickPick(defaultFindStrings(), options).then(
+		(findText: string | undefined) => {
+			if (typeof findText !== "undefined" && findText.length > 0) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-					findAllInFile.findStringNoCase(getActiveDocument(), findText, provider);
+				findAllInFile.findStringNoCase(getActiveDocument(), findText, provider);
 
-					treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
-						() => {},
-						() => {}
-					);
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => {},
+					() => {}
+				);
 
-					lastFindString = findText;
-				}
-			},
-			() => {}
-		);
+				searchHistory?.addFindString(findText);
+			}
+		},
+		() => {}
+	);
 };
 
 const findStringNoCaseWord = (): void => {
-	vscode.window
-		.showInputBox({
-			prompt: localize("enter_search_string"),
-			value: defaultFindString(),
-		})
-		.then(
-			(findText: string | undefined) => {
-				if (typeof findText !== "undefined" && findText.length > 0) {
-					const provider: TreeDataProvider = new TreeDataProvider();
-					const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
+	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_string") };
+	showQuickPick(defaultFindStrings(), options).then(
+		(findText: string | undefined) => {
+			if (typeof findText !== "undefined" && findText.length > 0) {
+				const provider: TreeDataProvider = new TreeDataProvider();
+				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
-					findAllInFile.findStringNoCaseWord(getActiveDocument(), findText, provider);
+				findAllInFile.findStringNoCaseWord(getActiveDocument(), findText, provider);
 
-					treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
-						() => {},
-						() => {}
-					);
+				treeView.reveal(provider.getFirstResult(), { expand: true, focus: true, select: false }).then(
+					() => {},
+					() => {}
+				);
 
-					lastFindString = findText;
-				}
-			},
-			() => {}
-		);
+				searchHistory?.addFindString(findText);
+			}
+		},
+		() => {}
+	);
 };
 
 const viewResult = (doc: DeepReadonly<vscode.TextDocument>, line: number, columnBegin: number, columnEnd: number): void => {
@@ -327,6 +313,23 @@ export const activate = (context: Readonly<vscode.ExtensionContext>): void => {
 	// Internal commands
 	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.viewResult", viewResult));
 	context.subscriptions.push(vscode.commands.registerCommand("findallinfile.copyResults", copyResults));
+
+	const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("findAllInFile");
+
+	let resultLimit: number | undefined = config.get("resultLimit");
+	if (typeof resultLimit === "undefined") {
+		resultLimit = Number.MAX_SAFE_INTEGER;
+	}
+	findAllInFile.setResultLimit(resultLimit);
+
+	let searchHistoryLimit: number | undefined = config.get("searchHistoryLimit");
+	if (typeof searchHistoryLimit === "undefined") {
+		const defaultHistoryLimit: number = 10;
+		searchHistoryLimit = defaultHistoryLimit;
+	} else {
+		searchHistoryLimit = Math.round(searchHistoryLimit);
+	}
+	searchHistory = new SearchHistory(context.workspaceState, searchHistoryLimit, getSelectedText);
 };
 
 // Called once on extension destroy

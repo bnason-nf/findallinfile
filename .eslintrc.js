@@ -38,6 +38,7 @@ module.exports = {
 		"no-magic-numbers": ["error", { ignore: [0, 1] }],
 		"no-tabs": ["error", { allowIndentationTabs: true }],
 		"no-ternary": "off",
+		"no-undefined": "off",
 		"object-curly-spacing": ["error", "always"],
 		"object-property-newline": ["error", { allowAllPropertiesOnSameLine: true }],
 		"one-var": ["error", "never"],

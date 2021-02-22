@@ -23,9 +23,10 @@
 	"regex_case": "case sensitive regex",
 	"regex_no_case": "case insensitive regex",
 	"resultLimit": "Maximum number of results to find",
+	"searchHistoryLimit": "Maximum number of search strings to remember",
 	"search_footer": "Found {0} occurrences",
-	"search_header": "Searching for {0}{1}\"{2}\" in \"{3}\":",
+	"search_header": "Searching for {0}{1} \"{2}\" in \"{3}\":",
 	"string_case": "case sensitive string",
 	"string_no_case": "case insensitive string",
-	"whole_word": "word"
+	"whole_word": " word"
 }

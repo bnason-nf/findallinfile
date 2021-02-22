@@ -37,8 +37,6 @@ suite("No document", () => {
 		mock.verify(outputMock.end()).never();
 	});
 
-	/* eslint-disable no-undefined */
-
 	test("String case", () => {
 		findallinfile.findStringCase(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
@@ -78,8 +76,6 @@ suite("No document", () => {
 		findallinfile.findRegexNoCaseWord(undefined, "", output);
 		mock.verify(outputMock.noDocument()).once();
 	});
-
-	/* eslint-enable no-undefined */
 });
 
 suite("Find", (): void => {

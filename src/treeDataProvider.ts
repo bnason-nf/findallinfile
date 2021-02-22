@@ -2,7 +2,7 @@
 
 import * as vscode from "vscode";
 
-import type { DeepReadonly } from "./DeepReadonly";
+import type { DeepReadonly } from "./deepReadonly";
 import { FindError } from "./findError";
 import { FindInfo } from "./findInfo";
 import { FindResult } from "./findResult";
@@ -68,7 +68,6 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 
 	// eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
 	public getParent(_element: TreeElement): vscode.ProviderResult<TreeElement> {
-		// eslint-disable-next-line no-undefined
 		return undefined;
 	}
 
