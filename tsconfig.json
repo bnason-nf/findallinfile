@@ -1,11 +1,9 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es6",
+		"target": "es2020",
 		"outDir": "out",
-		"lib": [
-			"es6"
-		],
+		"lib": ["es2020"],
 		"sourceMap": true,
 		"forceConsistentCasingInFileNames": true,
 		"importHelpers": true,
@@ -17,8 +15,5 @@
 		"noUnusedParameters": true,
 		"strictNullChecks": true
 	},
-	"include": [
-		".eslintrc.js",
-		"**/*.ts",
-	]
+	"include": [".eslintrc.js", "**/*.ts"]
 }
