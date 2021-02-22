@@ -2,7 +2,7 @@
 
 import type * as vscode from "vscode";
 
-import type { DeepReadonly } from "./readonly";
+import type { DeepReadonly } from "./deepReadonly";
 import type { FindResult } from "./findResult";
 
 export interface IOutputSink {
