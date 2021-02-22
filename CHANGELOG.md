@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [unreleased]
 
+## [1.1.2] - 2021-02-22
+
+- Switch to es2020 for tslib fix
+
 ## [1.1.1] - 2021-02-22
 
 - Add tslib package to fix loading
@@ -115,7 +119,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Created
 
-[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.1...HEAD
+[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/bnason-nf/findallinfile/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/bnason-nf/findallinfile/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/bnason-nf/findallinfile/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/bnason-nf/findallinfile/compare/v0.9.3...v1.0.0
