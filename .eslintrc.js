@@ -20,6 +20,7 @@ module.exports = {
 		"@typescript-eslint/no-extra-parens": ["error", "functions"],
 		"@typescript-eslint/no-inferrable-types": "off",
 		"@typescript-eslint/no-magic-numbers": ["error", { ignore: [0, 1] }],
+		"@typescript-eslint/object-curly-spacing": "off",
 		"@typescript-eslint/space-before-function-paren": "off",
 		"array-element-newline": ["error", "consistent"],
 		"comma-dangle": ["error", "always-multiline"],
