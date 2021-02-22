@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [unreleased]
 
+## [1.1.1] - 2021-02-22
+
+- Add tslib package to fix loading
+
 ## [1.1.0] - 2021-02-22
 
 - Add persisted history to search dialog
@@ -111,7 +115,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Created
 
-[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/bnason-nf/findallinfile/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/bnason-nf/findallinfile/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/bnason-nf/findallinfile/compare/v0.9.3...v1.0.0
 [0.9.3]: https://github.com/bnason-nf/findallinfile/compare/v0.9.2...v0.9.3
