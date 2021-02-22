@@ -2,7 +2,7 @@
 
 import * as findAllInFile from "./findAllInFile";
 import * as vscode from "vscode";
-import type { DeepReadonly } from "./deepReadonly";
+import type { DeepReadonly } from "./readonly";
 import { SearchHistory } from "./searchHistory";
 import { TreeDataProvider } from "./treeDataProvider";
 import type { TreeElement } from "./treeDataProvider";

@@ -2,7 +2,7 @@
 
 import * as vscode from "vscode";
 
-import type { DeepReadonly } from "./deepReadonly";
+import type { DeepReadonly } from "./readonly";
 import { FindError } from "./findError";
 import { FindInfo } from "./findInfo";
 import { FindResult } from "./findResult";
