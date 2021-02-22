@@ -15,7 +15,7 @@ export type TreeElement = FindError | FindInfo | FindResult;
 export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, IOutputSink {
 	public readonly onDidChangeTreeData: vscode.Event<TreeElement> | undefined;
 
-	private doc: vscode.TextDocument | undefined;
+	private doc: DeepReadonly<vscode.TextDocument | undefined>;
 
 	private readonly eventEmitter: vscode.EventEmitter<TreeElement> = new vscode.EventEmitter<TreeElement>();
 
