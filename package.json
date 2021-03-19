@@ -186,25 +186,25 @@
 		"update-packages": "npx npm-check-updates -u"
 	},
 	"engines": {
-		"vscode": "^1.53.0"
+		"vscode": "^1.56.0"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
-		"@types/mocha": "^8.2.1",
-		"@types/node": "^14.14.31",
-		"@types/vscode": "^1.53.0",
-		"@typescript-eslint/eslint-plugin": "^4.15.1",
-		"@typescript-eslint/parser": "^4.15.1",
-		"eslint": "^7.20.0",
-		"eslint-config-prettier": "^8.0.0",
-		"eslint-plugin-prettier": "^3.3.1",
-		"glob": "^7.1.6",
-		"mocha": "^8.3.0",
-		"prettier": "^2.2.1",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "^15.0.2",
+		"@types/vscode": "^1.56.0",
+		"@typescript-eslint/eslint-plugin": "^4.23.0",
+		"@typescript-eslint/parser": "^4.23.0",
+		"eslint": "^7.26.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^3.4.0",
+		"glob": "^7.1.7",
+		"mocha": "^8.4.0",
+		"prettier": "^2.3.0",
 		"ts-mockito": "^2.6.1",
-		"typescript": "^4.1.5",
-		"vsce": "^1.85.0",
-		"vscode-test": "^1.5.1"
+		"typescript": "^4.2.4",
+		"vsce": "^1.88.0",
+		"vscode-test": "^1.5.2"
 	},
 	"dependencies": {}
 }

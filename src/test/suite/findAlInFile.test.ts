@@ -17,7 +17,7 @@ const isEqual = (fr: Readonly<FindResult>, text: string, line: number, columnBeg
 	return fr.line === line && fr.columnBegin === columnBegin && fr.columnEnd === columnEnd && fr.text === text;
 };
 
-/* eslint-disable max-lines-per-function, @typescript-eslint/no-confusing-void-expression */
+/* eslint-disable max-lines-per-function, @typescript-eslint/no-confusing-void-expression, @typescript-eslint/no-unsafe-argument */
 
 suite("No document", () => {
 	beforeEach(() => {
@@ -296,4 +296,4 @@ suite("Find", (): void => {
 	/* eslint-enable no-magic-numbers, @typescript-eslint/no-magic-numbers */
 });
 
-/* eslint-enable max-lines-per-function, @typescript-eslint/no-confusing-void-expression */
+/* eslint-enable max-lines-per-function, @typescript-eslint/no-confusing-void-expression, @typescript-eslint/no-unsafe-argument */
