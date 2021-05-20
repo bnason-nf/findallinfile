@@ -80,13 +80,19 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 			return new vscode.TreeItem("");
 		}
 
-		const label: string = element.toString();
-		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
-		treeItem.tooltip = element.text;
-
 		if (element instanceof FindError) {
 			// No command needed
-		} else if (element instanceof FindInfo) {
+			const label: string = element.toString();
+			const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
+			treeItem.tooltip = element.text;
+			return treeItem;
+		}
+
+		if (element instanceof FindInfo) {
+			const label: string = element.toString();
+			const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
+			treeItem.tooltip = element.text;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const args: any[] = [this];
 			treeItem.command = {
@@ -94,7 +100,15 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 				command: "findallinfile.copyResults",
 				title: "",
 			};
-		} else if (element instanceof FindResult) {
+			return treeItem;
+		}
+
+		if (element instanceof FindResult) {
+			const labelStr: string = element.toString();
+			const labelStrIndex: number = labelStr.indexOf(element.text);
+			const highlight: [number, number] = [labelStrIndex + element.columnBegin, labelStrIndex + element.columnEnd];
+			const label: vscode.TreeItemLabel = { highlights: [highlight], label: labelStr };
+			const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
 			if (typeof this.doc !== "undefined") {
 				treeItem.tooltip = element.toMarkdown();
 
@@ -106,9 +120,10 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 					title: "",
 				};
 			}
+			return treeItem;
 		}
 
-		return treeItem;
+		return new vscode.TreeItem("");
 	}
 
 	public item(findResult: Readonly<FindResult>): void {
