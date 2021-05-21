@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [unreleased]
 
+## [1.1.4] - 2021-05-20
+
+- Simplify results pane text
+- Add highlighting of results
+- Update package dependencies
+
 ## [1.1.3] - 2021-05-10
 
 - Update package dependencies for security issues
@@ -123,7 +129,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Created
 
-[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.3...HEAD
+[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.4...HEAD
+[1.1.4]: https://github.com/bnason-nf/findallinfile/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/bnason-nf/findallinfile/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/bnason-nf/findallinfile/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/bnason-nf/findallinfile/compare/v1.1.0...v1.1.1
