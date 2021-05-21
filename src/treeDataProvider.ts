@@ -81,46 +81,17 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		}
 
 		if (element instanceof FindError) {
-			// No command needed
-			const label: string = element.toString();
-			const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
+			const treeItem: vscode.TreeItem = new vscode.TreeItem(element.toString());
 			treeItem.tooltip = element.text;
 			return treeItem;
 		}
 
 		if (element instanceof FindInfo) {
-			const label: string = element.toString();
-			const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
-			treeItem.tooltip = element.text;
-
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const args: any[] = [this];
-			treeItem.command = {
-				arguments: args,
-				command: "findallinfile.copyResults",
-				title: "",
-			};
-			return treeItem;
+			return this.itemFromInfo(element);
 		}
 
 		if (element instanceof FindResult) {
-			const labelStr: string = element.toString();
-			const labelStrIndex: number = labelStr.indexOf(element.text);
-			const highlight: [number, number] = [labelStrIndex + element.columnBegin, labelStrIndex + element.columnEnd];
-			const label: vscode.TreeItemLabel = { highlights: [highlight], label: labelStr };
-			const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
-			if (typeof this.doc !== "undefined") {
-				treeItem.tooltip = element.toMarkdown();
-
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd];
-				treeItem.command = {
-					arguments: args,
-					command: "findallinfile.viewResult",
-					title: "",
-				};
-			}
-			return treeItem;
+			return this.itemFromResult(element);
 		}
 
 		return new vscode.TreeItem("");
@@ -145,5 +116,38 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 
 	private refreshTree(): void {
 		this.eventEmitter.fire(new FindInfo(""));
+	}
+
+	private itemFromInfo(element: Readonly<FindInfo>): vscode.TreeItem {
+		const label: string = element.toString();
+		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
+		treeItem.tooltip = element.text;
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const args: any[] = [this];
+		treeItem.command = {
+			arguments: args,
+			command: "findallinfile.copyResults",
+			title: "",
+		};
+		return treeItem;
+	}
+
+	private itemFromResult(element: Readonly<FindResult>): vscode.TreeItem {
+		const highlight: [number, number] = [element.trimmedColumnBegin, element.trimmedColumnEnd];
+		const label: vscode.TreeItemLabel = { highlights: [highlight], label: element.trimmedText };
+		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
+		if (typeof this.doc !== "undefined") {
+			treeItem.tooltip = element.toMarkdown();
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const args: any[] = [this.doc, element.line, element.columnBegin, element.columnEnd];
+			treeItem.command = {
+				arguments: args,
+				command: "findallinfile.viewResult",
+				title: "",
+			};
+		}
+		return treeItem;
 	}
 }
