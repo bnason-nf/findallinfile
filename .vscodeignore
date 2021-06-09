@@ -1,14 +1,12 @@
 # Copyright 2019 Benbuck Nason
 
-# ignore everything
-*
-*/**
-
-# allowed
-!data/**
-!out/*.js
-!package.json
-!package.nls.json
-!CHANGELOG.md
-!README.md
-!LICENSE.txt
+*.vsix
+.*
+.github/*
+.vscode/*
+node_modules/*
+out/*.map
+out/test/*
+package-lock.json
+src/*
+tsconfig.json
