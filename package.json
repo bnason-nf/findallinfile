@@ -45,6 +45,11 @@
 		"onCommand:findallinfile.findstringcaseword"
 	],
 	"main": "./out/extension.js",
+	"capabilities": {
+		"untrustedWorkspaces": {
+			"supported": true
+		}
+	},
 	"contributes": {
 		"commands": [
 			{

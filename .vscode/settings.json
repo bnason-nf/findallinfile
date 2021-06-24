@@ -40,6 +40,7 @@
 		"preblock",
 		"tast",
 		"testno",
+		"untrusted",
 		"vsce",
 		"vsix"
 	],
