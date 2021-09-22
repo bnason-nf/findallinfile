@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [unreleased]
 
+## [1.1.6] - 2021-09-21
+
+- Update package dependencies for security issues
+
 ## [1.1.5] - 2021-06-23
 
 - Support untrusted workspaces
@@ -134,7 +138,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Created
 
-[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.5...HEAD
+[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.6...HEAD
+[1.1.6]: https://github.com/bnason-nf/findallinfile/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/bnason-nf/findallinfile/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/bnason-nf/findallinfile/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/bnason-nf/findallinfile/compare/v1.1.2...v1.1.3
