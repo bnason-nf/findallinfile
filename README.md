@@ -88,11 +88,19 @@ If you don't want to Find All In File to add items to your editor context menu, 
 `true` which means enabled, and setting it to `false` will disable it.
 
 If you want to change the limit on the number of results that will be found, you can modify the
-"Result Limit" setting ("findAllInFile.resultLimit" in settings.json). The default is 10000, and you can change it to any number, or zero to disable it (no limit).
+"Result Limit" setting ("findAllInFile.resultLimit" in settings.json). The default is 10000, and
+you can change it to any number, or zero to disable it (no limit).
 
 If you want to change the limit on the number of searches that will stored in the history, you can
 modify the "Search History Limit" setting ("findAllInFile.searchHistoryLimit" in settings.json).
 The default is 10, and you can change it to any number between 1 and 100 inclusive.
+
+If you want to change the number of characters to keep on both sides of matching results, you can
+modify the "Trim Keep Count" setting ("findAllInFile.trimKeepCount" in settings.json). The default
+is 15, and you can change it to any number, where zero means only show the matching portion of the
+result with no extra characters, and a very large number will show the whole line. This value only
+affects the results in the Side Bar, not in the tooltip that shows when you hover over one of the
+results.
 
 ## Note
 

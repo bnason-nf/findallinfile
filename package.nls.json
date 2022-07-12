@@ -28,5 +28,6 @@
 	"search_header": "Searching for {0}{1} \"{2}\" in \"{3}\":",
 	"string_case": "case sensitive string",
 	"string_no_case": "case insensitive string",
+	"trimKeepCount": "Number of surrounding characters to keep when trimming result preview text",
 	"whole_word": " word"
 }

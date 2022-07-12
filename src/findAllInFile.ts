@@ -58,7 +58,6 @@ export const findStringCase = (
 				break;
 			}
 
-			findCount += 1;
 			const columnBegin: number = column + tmpColumn;
 			const columnEnd: number = column + tmpColumn + findText.length;
 			outputSink.item(new FindResult(text, line, columnBegin, columnEnd, findCount));
@@ -66,6 +65,7 @@ export const findStringCase = (
 
 			column = columnEnd;
 
+			findCount += 1;
 			if (findCount >= resultLimit) {
 				break;
 			}
@@ -104,7 +104,6 @@ export const findStringCaseWord = (
 				break;
 			}
 
-			findCount += 1;
 			const columnBegin: number = column + tmpColumn;
 			const columnEnd: number = column + tmpColumn + findText.length;
 			if (isWord(text, columnBegin, columnEnd)) {
@@ -114,6 +113,7 @@ export const findStringCaseWord = (
 
 			column = columnEnd;
 
+			findCount += 1;
 			if (findCount >= resultLimit) {
 				break;
 			}
@@ -153,7 +153,6 @@ export const findStringNoCase = (
 				break;
 			}
 
-			findCount += 1;
 			const columnBegin: number = column + tmpColumn;
 			const columnEnd: number = column + tmpColumn + findText.length;
 			outputSink.item(new FindResult(text, line, columnBegin, columnEnd, findCount));
@@ -161,6 +160,7 @@ export const findStringNoCase = (
 
 			column = columnEnd;
 
+			findCount += 1;
 			if (findCount >= resultLimit) {
 				break;
 			}
@@ -200,7 +200,6 @@ export const findStringNoCaseWord = (
 				break;
 			}
 
-			findCount += 1;
 			const columnBegin: number = column + tmpColumn;
 			const columnEnd: number = column + tmpColumn + findText.length;
 			if (isWord(text, columnBegin, columnEnd)) {
@@ -210,6 +209,7 @@ export const findStringNoCaseWord = (
 
 			column = columnEnd;
 
+			findCount += 1;
 			if (findCount >= resultLimit) {
 				break;
 			}
@@ -244,9 +244,9 @@ export const findRegexCase = (
 			const text: string = textLine.text;
 			// Search for all the instances within each line
 			for (let match: RegExpExecArray | null = findRegExp.exec(text); match !== null; match = findRegExp.exec(text)) {
-				findCount += 1;
 				outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex, findCount));
 
+				findCount += 1;
 				if (findCount >= resultLimit) {
 					break;
 				}
@@ -289,9 +289,9 @@ export const findRegexCaseWord = (
 			// Search for all the instances within each line
 			for (let match: RegExpExecArray | null = findRegExp.exec(text); match !== null; match = findRegExp.exec(text)) {
 				if (isWord(text, match.index, findRegExp.lastIndex)) {
-					findCount += 1;
 					outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex, findCount));
 
+					findCount += 1;
 					if (findCount >= resultLimit) {
 						break;
 					}
@@ -334,9 +334,9 @@ export const findRegexNoCase = (
 			const text: string = textLine.text;
 			// Search for all the instances within each line
 			for (let match: RegExpExecArray | null = findRegExp.exec(text); match !== null; match = findRegExp.exec(text)) {
-				findCount += 1;
 				outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex, findCount));
 
+				findCount += 1;
 				if (findCount >= resultLimit) {
 					break;
 				}
@@ -379,9 +379,9 @@ export const findRegexNoCaseWord = (
 			// Search for all the instances within each line
 			for (let match: RegExpExecArray | null = findRegExp.exec(text); match !== null; match = findRegExp.exec(text)) {
 				if (isWord(text, match.index, findRegExp.lastIndex)) {
-					findCount += 1;
 					outputSink.item(new FindResult(text, line, match.index, findRegExp.lastIndex, findCount));
 
+					findCount += 1;
 					if (findCount >= resultLimit) {
 						break;
 					}

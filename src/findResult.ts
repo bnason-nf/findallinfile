@@ -5,17 +5,19 @@ import * as vscode from "vscode";
 import { localize } from "./localize";
 
 export class FindResult {
-	// eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-magic-numbers
-	private static readonly truncateContext: number = 15;
-
+	// Zero based column index for first character
 	public readonly columnBegin: number;
 
+	// Zero based column index for last character
 	public readonly columnEnd: number;
 
+	// Zero based result index
 	public readonly index: number;
 
+	// Zero based file line number
 	public readonly line: number;
 
+	// The entire text of the matching line
 	public readonly text: string;
 
 	public readonly trimmedText: string;
@@ -31,22 +33,38 @@ export class FindResult {
 		this.line = line;
 		this.text = text;
 
-		const trimmedTextBegin: number = this.columnBegin - FindResult.truncateContext;
-		if (trimmedTextBegin < 0) {
-			this.trimmedText = this.text;
-			this.trimmedColumnBegin = this.columnBegin;
-			this.trimmedColumnEnd = this.columnEnd;
-		} else {
-			this.trimmedText = `…${this.text.substr(trimmedTextBegin)}`;
-			this.trimmedColumnBegin = this.columnBegin - trimmedTextBegin + 1;
-			this.trimmedColumnEnd = this.columnEnd - trimmedTextBegin + 1;
+		const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("findAllInFile");
+		let trimKeepCount: number = config.get("trimKeepCount") ?? 0;
+		if (trimKeepCount < 0) {
+			trimKeepCount = 0;
+		}
+
+		let keepColumnBegin: number = this.columnBegin - trimKeepCount;
+		let keepColumnEnd: number = this.columnEnd + trimKeepCount;
+		if (keepColumnBegin < 0) {
+			keepColumnBegin = 0;
+		}
+		if (keepColumnEnd > this.text.length) {
+			keepColumnEnd = this.text.length;
+		}
+
+		this.trimmedText = this.text.substring(keepColumnBegin, keepColumnEnd);
+		this.trimmedColumnBegin = this.columnBegin - keepColumnBegin;
+		this.trimmedColumnEnd = this.columnEnd - keepColumnBegin;
+		if (keepColumnBegin !== 0) {
+			this.trimmedText = `…${this.trimmedText}`;
+			this.trimmedColumnBegin += 1;
+			this.trimmedColumnEnd += 1;
+		}
+		if (keepColumnEnd !== this.text.length) {
+			this.trimmedText = `${this.trimmedText}…`;
 		}
 	}
 
 	public toMarkdown(): vscode.MarkdownString {
 		const markdown: string = localize(
 			"find_result_markdown",
-			this.index,
+			this.index + 1,
 			this.line + 1,
 			this.columnBegin + 1,
 			this.columnEnd,
@@ -57,6 +75,6 @@ export class FindResult {
 	}
 
 	public toString(): string {
-		return localize("find_result_string", this.index, this.line + 1, this.columnBegin + 1, this.columnEnd, this.text);
+		return localize("find_result_string", this.index + 1, this.line + 1, this.columnBegin + 1, this.columnEnd, this.text);
 	}
 }

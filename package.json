@@ -113,6 +113,12 @@
 					"description": "%searchHistoryLimit%",
 					"minimum": 1,
 					"maximum": 100
+				},
+				"findAllInFile.trimKeepCount": {
+					"type": "number",
+					"default": 15,
+					"description": "%trimKeepCount%",
+					"minimum": 0
 				}
 			}
 		},
