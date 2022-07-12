@@ -1,6 +1,7 @@
 // Copyright 2019 Benbuck Nason
 
 import type { TextDocument, TextLine } from "vscode";
+import type { DeepReadonly } from "./readonly";
 import { FindResult } from "./findResult";
 import type { IOutputSink } from "./iOutputSink";
 
@@ -29,7 +30,11 @@ const isWord = (text: string, start: number, end: number): boolean => {
 };
 
 // Search for all occurrences of a case sensitive search string within the current file
-export const findStringCase = (doc: TextDocument | undefined, findText: string, outputSink: Readonly<IOutputSink>): void => {
+export const findStringCase = (
+	doc: DeepReadonly<TextDocument> | undefined,
+	findText: string,
+	outputSink: Readonly<IOutputSink>
+): void => {
 	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
@@ -72,7 +77,7 @@ export const findStringCase = (doc: TextDocument | undefined, findText: string, 
 
 // Search for all occurrences of a case sensitive search string word within the current file
 export const findStringCaseWord = (
-	doc: TextDocument | undefined,
+	doc: DeepReadonly<TextDocument> | undefined,
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
@@ -119,7 +124,11 @@ export const findStringCaseWord = (
 };
 
 // Search for all occurrences of a case insensitive search string within the current file
-export const findStringNoCase = (doc: TextDocument | undefined, findText: string, outputSink: Readonly<IOutputSink>): void => {
+export const findStringNoCase = (
+	doc: DeepReadonly<TextDocument> | undefined,
+	findText: string,
+	outputSink: Readonly<IOutputSink>
+): void => {
 	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
@@ -163,7 +172,7 @@ export const findStringNoCase = (doc: TextDocument | undefined, findText: string
 
 // Search for all occurrences of a case insensitive search string word within the current file
 export const findStringNoCaseWord = (
-	doc: TextDocument | undefined,
+	doc: DeepReadonly<TextDocument> | undefined,
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
@@ -211,7 +220,11 @@ export const findStringNoCaseWord = (
 };
 
 // Search for all occurrences of a case sensitive search regex within the current file
-export const findRegexCase = (doc: TextDocument | undefined, findText: string, outputSink: Readonly<IOutputSink>): void => {
+export const findRegexCase = (
+	doc: DeepReadonly<TextDocument> | undefined,
+	findText: string,
+	outputSink: Readonly<IOutputSink>
+): void => {
 	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
@@ -251,7 +264,11 @@ export const findRegexCase = (doc: TextDocument | undefined, findText: string, o
 };
 
 // Search for all occurrences of a case sensitive search regex within the current file
-export const findRegexCaseWord = (doc: TextDocument | undefined, findText: string, outputSink: Readonly<IOutputSink>): void => {
+export const findRegexCaseWord = (
+	doc: DeepReadonly<TextDocument> | undefined,
+	findText: string,
+	outputSink: Readonly<IOutputSink>
+): void => {
 	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
@@ -293,7 +310,11 @@ export const findRegexCaseWord = (doc: TextDocument | undefined, findText: strin
 };
 
 // Search for all occurrences of a case insensitive search regex within the current file
-export const findRegexNoCase = (doc: TextDocument | undefined, findText: string, outputSink: Readonly<IOutputSink>): void => {
+export const findRegexNoCase = (
+	doc: DeepReadonly<TextDocument> | undefined,
+	findText: string,
+	outputSink: Readonly<IOutputSink>
+): void => {
 	if (typeof doc === "undefined") {
 		outputSink.noDocument();
 
@@ -334,7 +355,7 @@ export const findRegexNoCase = (doc: TextDocument | undefined, findText: string,
 
 // Search for all occurrences of a case insensitive search regex within the current file
 export const findRegexNoCaseWord = (
-	doc: TextDocument | undefined,
+	doc: DeepReadonly<TextDocument> | undefined,
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {

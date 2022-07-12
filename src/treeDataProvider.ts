@@ -54,7 +54,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		this.refreshTree();
 	}
 
-	public getChildren(element: TreeElement | undefined): TreeElement[] {
+	public getChildren(element: Readonly<TreeElement> | undefined): TreeElement[] {
 		if (typeof element === "undefined") {
 			return this.findResults;
 		}
@@ -67,7 +67,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 	}
 
 	// eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
-	public getParent(_element: TreeElement): vscode.ProviderResult<TreeElement> {
+	public getParent(_element: DeepReadonly<TreeElement>): vscode.ProviderResult<TreeElement> {
 		return undefined;
 	}
 
@@ -75,7 +75,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		return this.findResults;
 	}
 
-	public getTreeItem(element: TreeElement | undefined): vscode.TreeItem {
+	public getTreeItem(element: DeepReadonly<TreeElement> | undefined): vscode.TreeItem {
 		if (typeof element === "undefined") {
 			return new vscode.TreeItem("");
 		}

@@ -14,7 +14,7 @@ export const run = async (): Promise<void> => {
 	const testsRoot: string = path.resolve(__dirname, "..");
 
 	return new Promise((onComplete, onError) => {
-		glob("**/**.test.js", { cwd: testsRoot }, (err: Error | null, files: readonly string[]): void => {
+		glob("**/**.test.js", { cwd: testsRoot }, (err: Readonly<Error> | null, files: readonly string[]): void => {
 			if (err !== null) {
 				onError(err);
 				return;
