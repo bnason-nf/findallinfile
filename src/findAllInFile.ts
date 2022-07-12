@@ -35,7 +35,7 @@ export const findStringCase = (
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
-	if (typeof doc === "undefined") {
+	if (doc === undefined) {
 		outputSink.noDocument();
 
 		return;
@@ -81,7 +81,7 @@ export const findStringCaseWord = (
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
-	if (typeof doc === "undefined") {
+	if (doc === undefined) {
 		outputSink.noDocument();
 
 		return;
@@ -129,7 +129,7 @@ export const findStringNoCase = (
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
-	if (typeof doc === "undefined") {
+	if (doc === undefined) {
 		outputSink.noDocument();
 
 		return;
@@ -176,7 +176,7 @@ export const findStringNoCaseWord = (
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
-	if (typeof doc === "undefined") {
+	if (doc === undefined) {
 		outputSink.noDocument();
 
 		return;
@@ -225,7 +225,7 @@ export const findRegexCase = (
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
-	if (typeof doc === "undefined") {
+	if (doc === undefined) {
 		outputSink.noDocument();
 
 		return;
@@ -269,7 +269,7 @@ export const findRegexCaseWord = (
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
-	if (typeof doc === "undefined") {
+	if (doc === undefined) {
 		outputSink.noDocument();
 
 		return;
@@ -315,7 +315,7 @@ export const findRegexNoCase = (
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
-	if (typeof doc === "undefined") {
+	if (doc === undefined) {
 		outputSink.noDocument();
 
 		return;
@@ -359,7 +359,7 @@ export const findRegexNoCaseWord = (
 	findText: string,
 	outputSink: Readonly<IOutputSink>
 ): void => {
-	if (typeof doc === "undefined") {
+	if (doc === undefined) {
 		outputSink.noDocument();
 
 		return;

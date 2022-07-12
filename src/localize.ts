@@ -32,7 +32,7 @@ const resolveLanguagePack = (): Record<string, string> => {
 	const defaultLanguage: string = languageFormat.replace("{0}", "");
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const extension: vscode.Extension<any> | undefined = vscode.extensions.getExtension("bnason-nf.findallinfile");
-	const rootPath: string = typeof extension === "undefined" ? "" : extension.extensionPath;
+	const rootPath: string = extension === undefined ? "" : extension.extensionPath;
 	const resolvedLanguage: string = recurseCandidates(rootPath, languageFormat, options.locale);
 	const languageFilePath: string = path.resolve(rootPath, resolvedLanguage);
 

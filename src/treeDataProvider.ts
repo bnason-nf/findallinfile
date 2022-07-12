@@ -55,7 +55,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 	}
 
 	public getChildren(element: Readonly<TreeElement> | undefined): TreeElement[] {
-		if (typeof element === "undefined") {
+		if (element === undefined) {
 			return this.findResults;
 		}
 
@@ -76,7 +76,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 	}
 
 	public getTreeItem(element: DeepReadonly<TreeElement> | undefined): vscode.TreeItem {
-		if (typeof element === "undefined") {
+		if (element === undefined) {
 			return new vscode.TreeItem("");
 		}
 
@@ -137,7 +137,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeElement>, I
 		const highlight: [number, number] = [element.trimmedColumnBegin, element.trimmedColumnEnd];
 		const label: vscode.TreeItemLabel = { highlights: [highlight], label: element.trimmedText };
 		const treeItem: vscode.TreeItem = new vscode.TreeItem(label);
-		if (typeof this.doc !== "undefined") {
+		if (this.doc !== undefined) {
 			treeItem.tooltip = element.toMarkdown();
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any

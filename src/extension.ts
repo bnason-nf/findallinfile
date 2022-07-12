@@ -10,7 +10,7 @@ import { localize } from "./localize";
 
 const getActiveDocument = (): vscode.TextDocument | undefined => {
 	// Make sure there is an active editor window for us to use
-	if (typeof vscode.window.activeTextEditor === "undefined") {
+	if (vscode.window.activeTextEditor === undefined) {
 		return undefined;
 	}
 
@@ -29,7 +29,7 @@ const createTreeView = (provider: Readonly<TreeDataProvider>): vscode.TreeView<T
 
 const getSelectedText = (): string | undefined => {
 	const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
-	if (typeof editor === "undefined") {
+	if (editor === undefined) {
 		return undefined;
 	}
 	const selection: vscode.Selection = editor.selection;
@@ -91,7 +91,7 @@ const findRegexCase = (): void => {
 	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_regex") };
 	showQuickPick(defaultFindRegexes(), options).then(
 		(findText: string | undefined) => {
-			if (typeof findText !== "undefined" && findText.length > 0) {
+			if (findText !== undefined && findText.length > 0) {
 				const provider: TreeDataProvider = new TreeDataProvider();
 				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -113,7 +113,7 @@ const findRegexCaseWord = (): void => {
 	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_regex") };
 	showQuickPick(defaultFindRegexes(), options).then(
 		(findText: string | undefined) => {
-			if (typeof findText !== "undefined" && findText.length > 0) {
+			if (findText !== undefined && findText.length > 0) {
 				const provider: TreeDataProvider = new TreeDataProvider();
 				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -135,7 +135,7 @@ const findRegexNoCase = (): void => {
 	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_regex") };
 	showQuickPick(defaultFindRegexes(), options).then(
 		(findText: string | undefined) => {
-			if (typeof findText !== "undefined" && findText.length > 0) {
+			if (findText !== undefined && findText.length > 0) {
 				const provider: TreeDataProvider = new TreeDataProvider();
 				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -157,7 +157,7 @@ const findRegexNoCaseWord = (): void => {
 	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_regex") };
 	showQuickPick(defaultFindRegexes(), options).then(
 		(findText: string | undefined) => {
-			if (typeof findText !== "undefined" && findText.length > 0) {
+			if (findText !== undefined && findText.length > 0) {
 				const provider: TreeDataProvider = new TreeDataProvider();
 				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -179,7 +179,7 @@ const findStringCase = (): void => {
 	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_string") };
 	showQuickPick(defaultFindStrings(), options).then(
 		(findText: string | undefined) => {
-			if (typeof findText !== "undefined" && findText.length > 0) {
+			if (findText !== undefined && findText.length > 0) {
 				const provider: TreeDataProvider = new TreeDataProvider();
 				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -201,7 +201,7 @@ const findStringCaseWord = (): void => {
 	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_string") };
 	showQuickPick(defaultFindStrings(), options).then(
 		(findText: string | undefined) => {
-			if (typeof findText !== "undefined" && findText.length > 0) {
+			if (findText !== undefined && findText.length > 0) {
 				const provider: TreeDataProvider = new TreeDataProvider();
 				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -223,7 +223,7 @@ const findStringNoCase = (): void => {
 	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_string") };
 	showQuickPick(defaultFindStrings(), options).then(
 		(findText: string | undefined) => {
-			if (typeof findText !== "undefined" && findText.length > 0) {
+			if (findText !== undefined && findText.length > 0) {
 				const provider: TreeDataProvider = new TreeDataProvider();
 				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -245,7 +245,7 @@ const findStringNoCaseWord = (): void => {
 	const options: vscode.QuickPickOptions = { placeHolder: localize("enter_search_string") };
 	showQuickPick(defaultFindStrings(), options).then(
 		(findText: string | undefined) => {
-			if (typeof findText !== "undefined" && findText.length > 0) {
+			if (findText !== undefined && findText.length > 0) {
 				const provider: TreeDataProvider = new TreeDataProvider();
 				const treeView: vscode.TreeView<TreeElement> = createTreeView(provider);
 
@@ -270,7 +270,7 @@ const viewResult = (doc: DeepReadonly<vscode.TextDocument>, line: number, column
 		() => {}
 	);
 
-	if (typeof vscode.window.activeTextEditor !== "undefined") {
+	if (vscode.window.activeTextEditor !== undefined) {
 		// Make the result visible
 		vscode.window.activeTextEditor.revealRange(new vscode.Range(line, columnBegin, line, columnEnd));
 
@@ -317,13 +317,13 @@ export const activate = (context: Readonly<vscode.ExtensionContext>): void => {
 	const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("findAllInFile");
 
 	let resultLimit: number | undefined = config.get("resultLimit");
-	if (typeof resultLimit === "undefined") {
+	if (resultLimit === undefined) {
 		resultLimit = Number.MAX_SAFE_INTEGER;
 	}
 	findAllInFile.setResultLimit(resultLimit);
 
 	let searchHistoryLimit: number | undefined = config.get("searchHistoryLimit");
-	if (typeof searchHistoryLimit === "undefined") {
+	if (searchHistoryLimit === undefined) {
 		const defaultHistoryLimit: number = 10;
 		searchHistoryLimit = defaultHistoryLimit;
 	} else {
