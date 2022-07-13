@@ -3,6 +3,7 @@
 import * as Mocha from "mocha";
 import * as glob from "glob";
 import * as path from "path";
+import type { DeepReadonly } from "../../readonly";
 
 export const run = async (): Promise<void> => {
 	// Create the mocha test
@@ -14,7 +15,7 @@ export const run = async (): Promise<void> => {
 	const testsRoot: string = path.resolve(__dirname, "..");
 
 	return new Promise((onComplete, onError) => {
-		glob("**/**.test.js", { cwd: testsRoot }, (err: Readonly<Error> | null, files: readonly string[]): void => {
+		glob("**/**.test.js", { cwd: testsRoot }, (err: DeepReadonly<Error> | null, files: readonly string[]): void => {
 			if (err !== null) {
 				onError(err);
 				return;

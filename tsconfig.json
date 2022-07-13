@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es2020",
+		"target": "es2022",
 		"outDir": "out",
-		"lib": ["es2020"],
+		"lib": ["es2022"],
 		"sourceMap": true,
 		"forceConsistentCasingInFileNames": true,
 		"importHelpers": true,
