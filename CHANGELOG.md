@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [unreleased]
 
+## [1.2.0] - 2022-07-12
+
+- Add configurable option to control trimmed results
+- Update tsconfig to use es2022
+- Modernize undefined checks
+- Update packages to latest
+
 ## [1.1.6] - 2021-09-21
 
 - Update package dependencies for security issues
@@ -138,7 +145,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Created
 
-[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.1.6...HEAD
+[unreleased]: https://github.com/bnason-nf/findallinfile/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/bnason-nf/findallinfile/compare/v1.1.6...v1.2.0
 [1.1.6]: https://github.com/bnason-nf/findallinfile/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/bnason-nf/findallinfile/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/bnason-nf/findallinfile/compare/v1.1.3...v1.1.4
