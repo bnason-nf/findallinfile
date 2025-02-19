@@ -2,10 +2,9 @@
 
 import * as findAllInFile from "./findAllInFile";
 import * as vscode from "vscode";
+import { TreeDataProvider, type TreeElement } from "./treeDataProvider";
 import type { DeepReadonly } from "./readonly";
 import { SearchHistory } from "./searchHistory";
-import { TreeDataProvider } from "./treeDataProvider";
-import type { TreeElement } from "./treeDataProvider";
 import { localize } from "./localize";
 
 const getActiveDocument = (): vscode.TextDocument | undefined => {
