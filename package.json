@@ -210,7 +210,7 @@
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"glob": "^8.0.3",
-		"mocha": "^10.8.2",
+		"mocha": "^12.0.1",
 		"prettier": "^2.7.1",
 		"ts-mockito": "^2.6.1",
 		"typescript": "^4.7.4",
